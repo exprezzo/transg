@@ -20,7 +20,7 @@
             "jsClass": "MyForm",
             "snapToGrid": 10,
             "userConfig": {
-                "title": "Nuevo Viaje",
+                "title": "Nuevo Envio",
                 "width": 563,
                 "height": 620,
                 "padding": 10
@@ -436,8 +436,8 @@
                             "jsClass": "MyButton4",
                             "snapToGrid": 10,
                             "userConfig": {
-                                "text": "Imprimir datos de entrega",
-                                "icon": "http://png.findicons.com/files/icons/42/basic/32/print.png",
+                                "text": "Consumo",
+                                "icon": "http://planktom.tk/gas.png",
                                 "scale": "large"
                             }
                         }

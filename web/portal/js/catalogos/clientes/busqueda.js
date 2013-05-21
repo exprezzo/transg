@@ -50,7 +50,7 @@
 	}
 	this.borrar=function(){
 		if (this.selected==undefined) return false;
-		var r=confirm("�Eliminar Elemento?");
+		var r=confirm("¿Eliminar Elemento?");
 		if (r==true){
 		  this.eliminar();
 		}
@@ -102,7 +102,7 @@
 					break;
 					case 'eliminar':
 						if (me.selected==undefined) return false;
-						var r=confirm("?liminar?");
+						var r=confirm("¿Eliminar?");
 						if (r==true){
 						  me.eliminar();
 						}
@@ -168,16 +168,15 @@
 			selectionMode:'singleRow',
 			data:dataSource,
 			columns: [ 
-			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
-				
-{ dataKey: "id", visible:true, headerText: "Id" },
-{ dataKey: "razon_social", visible:true, headerText: "Razon_social" },
-{ dataKey: "rfc", visible:true, headerText: "Rfc" },
-{ dataKey: "direccion", visible:true, headerText: "Direccion" },
-{ dataKey: "telefonos", visible:true, headerText: "Telefonos" },
-{ dataKey: "www", visible:true, headerText: "Www" },
-{ dataKey: "contacto", visible:true, headerText: "Contacto" },
-{ dataKey: "cuenta_bancaria", visible:true, headerText: "Cuenta_bancaria" }
+			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }				
+				{ dataKey: "id", visible:false, headerText: "Id" },
+				{ dataKey: "razon_social", visible:true, headerText: "Razon Social" },
+				{ dataKey: "rfc", visible:true, headerText: "Rfc" },
+				{ dataKey: "direccion", visible:true, headerText: "Direccion" },
+				{ dataKey: "telefonos", visible:true, headerText: "Telefonos" },
+				{ dataKey: "www", visible:true, headerText: "Www" },
+				{ dataKey: "contacto", visible:true, headerText: "Contacto" },
+				{ dataKey: "cuenta_bancaria", visible:true, headerText: "Cuenta Bancaria" }
 			]
 		});
 		

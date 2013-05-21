@@ -97,7 +97,8 @@
 		var tabId = this.tabId;		
 		var id = $(this.tabId + ' [name="'+this.configuracion.pk+'"]').val();
 		if (id>0){
-			$('a[href="'+tabId+'"]').html('Cliente:'+id);
+			var nombre = $(this.tabId + ' [name="razon_social"]').val();
+			$('a[href="'+tabId+'"]').html(nombre);
 		}else{
 			$('a[href="'+tabId+'"]').html('Nuevo');
 		}
