@@ -1,0 +1,381 @@
+{
+    "name": "envios_busqueda.xds",
+    "projectId": "2BEBCC52-F949-434A-8B96-1B43B4C13285",
+    "settings": {
+        "urlPrefix": "http://localhost/",
+        "spacesToIndent": 4,
+        "codeGenFormat": "Class",
+        "extPath": "http://extjs.cachefly.net/ext-3.3.1/",
+        "exportPath": ".",
+        "lineEnding": "CRLF",
+        "instantiateStore": true,
+        "exportXDSFiles": true,
+        "genTimestamps": true
+    },
+    "xdsVersion": "1.1.2",
+    "components": [
+        {
+            "id": "MyViewport",
+            "cid": "viewport",
+            "jsClass": "MyViewport",
+            "snapToGrid": 10,
+            "cn": [
+                {
+                    "id": "MyPanel",
+                    "cid": "panel",
+                    "jsClass": "MyPanel",
+                    "snapToGrid": 10,
+                    "userConfig": {
+                        "title": "-ext-undefined-",
+                        "height": "-ext-undefined-",
+                        "style": "",
+                        "bodyStyle": "padding:10px;background: black; color:white; height:auto;"
+                    },
+                    "cn": [
+                        {
+                            "id": "MyContainer",
+                            "cid": "container",
+                            "jsClass": "MyContainer2",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "width": 22,
+                                "height": 22,
+                                "style": "background-image:url(http://www.sistemassacsa.com/images/trailer.png);"
+                            }
+                        },
+                        {
+                            "id": "MyContainer1",
+                            "cid": "container",
+                            "jsClass": "MyContainer",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "layout": "-ext-undefined-",
+                                "style": "display: inline; float:right;"
+                            },
+                            "cn": [
+                                {
+                                    "id": "MyDisplayField",
+                                    "cid": "displayfield",
+                                    "jsClass": "MyDisplayField",
+                                    "snapToGrid": 10,
+                                    "userConfig": {
+                                        "value": "Zesar X",
+                                        "style": "display:inline-block;float:left;"
+                                    }
+                                },
+                                {
+                                    "id": "MyContainer2",
+                                    "cid": "container",
+                                    "jsClass": "MyContainer1",
+                                    "snapToGrid": 10,
+                                    "userConfig": {
+                                        "width": 16,
+                                        "height": 16,
+                                        "style": "display:inline-block; float:rght; background: black;"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": "MyLabel",
+                            "cid": "label",
+                            "jsClass": "MyLabel",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "text": "Empresa de Pruebas"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "MyTabPanel",
+                    "cid": "tabpanel",
+                    "jsClass": "MyTabPanel",
+                    "snapToGrid": 10,
+                    "userConfig": {
+                        "activeTab": 0,
+                        "title": "-ext-undefined-",
+                        "iconCls": "",
+                        "defaults": "{closable:true}"
+                    },
+                    "cn": [
+                        {
+                            "id": "MyTabPanel1",
+                            "cid": "tabpanel",
+                            "jsClass": "MyTabPanel1",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "title": "Diario",
+                                "activeTab": 0,
+                                "iconCls": "icoTab_Diario"
+                            },
+                            "cn": [
+                                {
+                                    "id": "MyPanel1",
+                                    "cid": "panel",
+                                    "jsClass": "MyPanel5",
+                                    "snapToGrid": 10,
+                                    "userConfig": {
+                                        "title": "Busqueda",
+                                        "layout": "-ext-undefined-"
+                                    },
+                                    "cn": [
+                                        {
+                                            "id": "MyGrid",
+                                            "cid": "editorgrid",
+                                            "jsClass": "MyGrid",
+                                            "snapToGrid": 10,
+                                            "userConfig": {
+                                                "title": "My Grid",
+                                                "store": "(none)",
+                                                "height": 288
+                                            },
+                                            "cn": [
+                                                {
+                                                    "id": "MyColumn",
+                                                    "cid": "gridcolumn",
+                                                    "jsClass": "MyColumn",
+                                                    "snapToGrid": 10,
+                                                    "userConfig": {
+                                                        "dataIndex": "string",
+                                                        "header": "Carro",
+                                                        "sortable": true,
+                                                        "resizable": "-ext-undefined-",
+                                                        "width": 100
+                                                    },
+                                                    "cn": [
+                                                        {
+                                                            "id": "MyTextField",
+                                                            "cid": "textfield",
+                                                            "jsClass": "MyTextField",
+                                                            "snapToGrid": 10
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "MyColumn1",
+                                                    "cid": "numbercolumn",
+                                                    "jsClass": "MyColumn1",
+                                                    "snapToGrid": 10,
+                                                    "userConfig": {
+                                                        "dataIndex": "number",
+                                                        "header": "Cantidad",
+                                                        "sortable": true,
+                                                        "resizable": "-ext-undefined-",
+                                                        "width": 100,
+                                                        "align": "right"
+                                                    },
+                                                    "cn": [
+                                                        {
+                                                            "id": "MyNumberField",
+                                                            "cid": "numberfield",
+                                                            "jsClass": "MyNumberField",
+                                                            "snapToGrid": 10
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "MyColumn2",
+                                                    "cid": "datecolumn",
+                                                    "jsClass": "MyColumn2",
+                                                    "snapToGrid": 10,
+                                                    "userConfig": {
+                                                        "dataIndex": "date",
+                                                        "header": "Concepto",
+                                                        "sortable": true,
+                                                        "resizable": "-ext-undefined-",
+                                                        "width": 100
+                                                    },
+                                                    "cn": [
+                                                        {
+                                                            "id": "MyDateField",
+                                                            "cid": "datefield",
+                                                            "jsClass": "MyDateField",
+                                                            "snapToGrid": 10
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "MyColumn3",
+                                                    "cid": "booleancolumn",
+                                                    "jsClass": "MyColumn3",
+                                                    "snapToGrid": 10,
+                                                    "userConfig": {
+                                                        "dataIndex": "bool",
+                                                        "header": "Fecha",
+                                                        "sortable": true,
+                                                        "resizable": "-ext-undefined-",
+                                                        "width": 100
+                                                    },
+                                                    "cn": [
+                                                        {
+                                                            "id": "MyCheckbox",
+                                                            "cid": "checkbox",
+                                                            "jsClass": "MyCheckbox",
+                                                            "snapToGrid": 10,
+                                                            "userConfig": {
+                                                                "boxLabel": "BoxLabel"
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "MyToolbar",
+                                                    "cid": "toolbar",
+                                                    "jsClass": "MyToolbar1",
+                                                    "dock": "tbar",
+                                                    "snapToGrid": 10,
+                                                    "cn": [
+                                                        {
+                                                            "id": "MyButton",
+                                                            "cid": "button",
+                                                            "jsClass": "MyButton",
+                                                            "snapToGrid": 10,
+                                                            "userConfig": {
+                                                                "text": "MyButton"
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": "MyButton1",
+                                                            "cid": "button",
+                                                            "jsClass": "MyButton1",
+                                                            "snapToGrid": 10,
+                                                            "userConfig": {
+                                                                "text": "MyButton"
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": "MyButton2",
+                                                            "cid": "button",
+                                                            "jsClass": "MyButton2",
+                                                            "snapToGrid": 10,
+                                                            "userConfig": {
+                                                                "text": "MyButton"
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": "MyButton3",
+                                                            "cid": "button",
+                                                            "jsClass": "MyButton3",
+                                                            "snapToGrid": 10,
+                                                            "userConfig": {
+                                                                "text": "MyButton"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "MyPanel2",
+                                    "cid": "panel",
+                                    "jsClass": "MyPanel11",
+                                    "snapToGrid": 10,
+                                    "userConfig": {
+                                        "title": "Edicion"
+                                    },
+                                    "cn": [
+                                        {
+                                            "id": "MyToolbar1",
+                                            "cid": "toolbar",
+                                            "jsClass": "MyToolbar",
+                                            "dock": "tbar",
+                                            "snapToGrid": 10
+                                        },
+                                        {
+                                            "id": "MyForm",
+                                            "cid": "form",
+                                            "jsClass": "MyForm",
+                                            "snapToGrid": 10,
+                                            "userConfig": {
+                                                "title": "My Form"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "id": "MyPanel4",
+                            "cid": "panel",
+                            "jsClass": "MyPanel2",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "title": "Envios",
+                                "iconCls": "icoTab_Envio"
+                            }
+                        },
+                        {
+                            "id": "MyPanel5",
+                            "cid": "panel",
+                            "jsClass": "MyPanel8",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "title": "Clientes"
+                            }
+                        },
+                        {
+                            "id": "MyPanel6",
+                            "cid": "panel",
+                            "jsClass": "MyPanel4",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "title": "Conceptos"
+                            }
+                        },
+                        {
+                            "id": "MyPanel7",
+                            "cid": "panel",
+                            "jsClass": "MyPanel3",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "title": "Vehiculos",
+                                "iconCls": "icoTab_Trailer"
+                            }
+                        },
+                        {
+                            "id": "MyPanel8",
+                            "cid": "panel",
+                            "jsClass": "MyPanel6",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "title": "Cajas"
+                            }
+                        },
+                        {
+                            "id": "MyPanel9",
+                            "cid": "panel",
+                            "jsClass": "MyPanel7",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "title": "Choferes",
+                                "iconCls": "icoTab_Chofer"
+                            }
+                        },
+                        {
+                            "id": "MyPanel10",
+                            "cid": "panel",
+                            "jsClass": "MyPanel9",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "title": "Rutas"
+                            }
+                        },
+                        {
+                            "id": "MyPanel11",
+                            "cid": "panel",
+                            "jsClass": "MyPanel10",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "title": "Guias de entrega"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "stores": []
+}

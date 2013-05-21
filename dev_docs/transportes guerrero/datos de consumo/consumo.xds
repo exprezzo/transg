@@ -1,0 +1,143 @@
+{
+    "name": "consumo.xds",
+    "projectId": "2BEBCC52-F949-434A-8B96-1B43B4C13285",
+    "settings": {
+        "urlPrefix": "http://localhost/",
+        "spacesToIndent": 4,
+        "codeGenFormat": "Class",
+        "extPath": "http://extjs.cachefly.net/ext-3.3.1/",
+        "exportPath": ".",
+        "lineEnding": "CRLF",
+        "instantiateStore": true,
+        "exportXDSFiles": true,
+        "genTimestamps": true
+    },
+    "xdsVersion": "1.1.2",
+    "components": [
+        {
+            "id": "MyForm",
+            "cid": "form",
+            "jsClass": "MyForm",
+            "snapToGrid": 10,
+            "userConfig": {
+                "title": "Nuevo Viaje",
+                "width": 634,
+                "height": 620,
+                "padding": 10
+            },
+            "cn": [
+                {
+                    "id": "MyToolbar",
+                    "cid": "toolbar",
+                    "jsClass": "MyToolbar",
+                    "dock": "tbar",
+                    "snapToGrid": 10,
+                    "userConfig": {
+                        "width": 614
+                    },
+                    "cn": [
+                        {
+                            "id": "MyButton",
+                            "cid": "button",
+                            "jsClass": "MyButton1",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "text": "Guardar",
+                                "icon": "http://png.findicons.com/files/icons/2166/oxygen/32/document_save.png",
+                                "scale": "large"
+                            }
+                        },
+                        {
+                            "id": "MyButton1",
+                            "cid": "button",
+                            "jsClass": "MyButton2",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "text": "Nuevo",
+                                "scale": "large",
+                                "icon": "http://png.findicons.com/files/icons/573/must_have/32/new.png"
+                            }
+                        },
+                        {
+                            "id": "MyButton2",
+                            "cid": "button",
+                            "jsClass": "MyButton3",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "text": "Cancelar",
+                                "icon": "http://png.findicons.com/files/icons/1572/minicons/32/stop.png",
+                                "scale": "large"
+                            }
+                        },
+                        {
+                            "id": "MyButton3",
+                            "cid": "button",
+                            "jsClass": "MyButton4",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "text": "Print",
+                                "icon": "http://png.findicons.com/files/icons/753/gnome_desktop/32/gnome_printer.png",
+                                "scale": "large"
+                            }
+                        },
+                        {
+                            "id": "MyButton4",
+                            "cid": "button",
+                            "jsClass": "MyButton5",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "text": "Email",
+                                "icon": "http://png.findicons.com/files/icons/573/must_have/32/mail.png",
+                                "scale": "large"
+                            }
+                        },
+                        {
+                            "id": "MySeparator",
+                            "cid": "tbseparator",
+                            "jsClass": "MySeparator",
+                            "snapToGrid": 10
+                        },
+                        {
+                            "id": "MyButton5",
+                            "cid": "button",
+                            "jsClass": "MyButton4",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "text": "Imprimir datos de entrega",
+                                "icon": "http://png.findicons.com/files/icons/42/basic/32/print.png",
+                                "scale": "large"
+                            }
+                        },
+                        {
+                            "id": "MySeparator1",
+                            "cid": "tbseparator",
+                            "jsClass": "MySeparator1",
+                            "snapToGrid": 10
+                        },
+                        {
+                            "id": "MyButton6",
+                            "cid": "button",
+                            "jsClass": "MyButton",
+                            "snapToGrid": 10,
+                            "userConfig": {
+                                "text": "Ver Formulario",
+                                "icon": "http://png.findicons.com/files/icons/1995/web_application/24/forms.png",
+                                "scale": "medium"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "MyFieldSet",
+                    "cid": "fieldset",
+                    "jsClass": "MyFieldSet",
+                    "snapToGrid": 10,
+                    "userConfig": {
+                        "title": "Ruta"
+                    }
+                }
+            ]
+        }
+    ],
+    "stores": []
+}
