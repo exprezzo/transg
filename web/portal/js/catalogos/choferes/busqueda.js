@@ -1,4 +1,4 @@
-﻿var Busquedaclientes=function(){
+﻿var Busquedachoferes=function(){
 	this.tituloNuevo='Nueva';
 	this.eliminar=function(){
 	
@@ -75,7 +75,7 @@
 		jTab.data('tabObj',this);		
 				
 		var jTab=$('a[href="'+tabId+'"]');		//// this.agregarClase('busqueda_'+this.controlador.nombre);
-	    jTab.html('Clientes');		 
+	    jTab.html(this.catalogo.nombre);		 
 		 jTab.addClass('busqueda_'+this.controlador.nombre); 
 		//-------------------------------------------
 		$('div'+tabId).css('padding','0px 0 0 0');
@@ -169,15 +169,13 @@
 			data:dataSource,
 			showFilter:true,
 			columns: [ 
-			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }				
-				{ dataKey: "id", visible:false, headerText: "Id" },
-				{ dataKey: "razon_social", visible:true, headerText: "Raz&oacute;n Social" },
-				{ dataKey: "rfc", visible:true, headerText: "R.F.C" },
-				{ dataKey: "direccion", visible:true, headerText: "Direcci&oacute;n" },
-				{ dataKey: "telefonos", visible:true, headerText: "Tel&eacute;fonos" },
-				{ dataKey: "www", visible:true, headerText: "WWW" },
-				{ dataKey: "contacto", visible:true, headerText: "Contacto" },
-				{ dataKey: "cuenta_bancaria", visible:true, headerText: "Cuenta Bancaria" }
+			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
+				
+{ dataKey: "id", visible:false, headerText: "Id" },
+{ dataKey: "nombre", visible:true, headerText: "Nombre" },
+{ dataKey: "nss", visible:true, headerText: "N.S.S" },
+{ dataKey: "telefonos", visible:true, headerText: "Tel&eacute;fonos" },
+{ dataKey: "cuenta_bancaria", visible:true, headerText: "Cuenta Bancaria" }
 			]
 		});
 		
