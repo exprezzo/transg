@@ -97,7 +97,8 @@
 		var tabId = this.tabId;		
 		var id = $(this.tabId + ' [name="'+this.configuracion.pk+'"]').val();
 		if (id>0){
-			$('a[href="'+tabId+'"]').html(this.configuracion.catalogo.modelo +':'+id);
+			var nombre = $(this.tabId + ' [name=nombre]').val();
+			$('a[href="'+tabId+'"]').html(id + ':' + nombre);
 		}else{
 			$('a[href="'+tabId+'"]').html('Nuevo');
 		}

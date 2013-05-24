@@ -1,4 +1,4 @@
-﻿var Busquedaconceptos=function(){
+﻿var Busquedacajas=function(){
 	this.tituloNuevo='Nueva';
 	this.eliminar=function(){
 	
@@ -173,9 +173,9 @@
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
 				
 { dataKey: "id", visible:false, headerText: "Id" },
-{ dataKey: "nombre", visible:true, headerText: "Nombre" },
-{ dataKey: "costo", visible:true, headerText: "Costo",dataType:'currency' },
-{ dataKey: "nombre_um", visible:true, headerText: "UM" }
+{ dataKey: "codigo", visible:true, headerText: "Codigo" },
+{ dataKey: "modelo", visible:true, headerText: "Modelo" },
+{ dataKey: "horas_de_trabajo", visible:true, headerText: "Horas de trabajo",dataType:'number' }
 			]
 		});
 		

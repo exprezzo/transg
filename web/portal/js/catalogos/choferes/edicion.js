@@ -240,22 +240,12 @@
 			});
 	},
 	
-
-	
-	
 	this.configurarFormulario=function(tabId){		
 		var me=this;
 		$(this.tabId+' input[type="text"]').wijtextbox();		
-		$(this.tabId+' textarea').wijtextbox();		
-	
-		
-		
-	
-		
-		
+		$(this.tabId+' textarea').wijtextbox();			
 	};
-	this.configurarToolbar=function(tabId){		
-			
+	this.configurarToolbar=function(tabId){					
 			var me=this;
 			
 			$(this.tabId + ' .toolbarEdicion .btnGuardar').click( function(){

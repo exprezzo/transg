@@ -22,7 +22,7 @@
 	
 </style>
 
-<div id="menuPrincipal" style="position: absolute; width: 400px;margin-left: 20px;z-index: 6;background-color: white;display: block;right: 0px;top: 35px; display:none; ">
+<div id="menuPrincipal" style="position: absolute; width: 430px;margin-left: 20px;z-index: 6;background-color: white;display: block;right: 0px;top: 35px; display:none; ">
 	<div id="accordion">		
 		<?php 
 			if ( $_SESSION['userInfo']['rol']==1 || $_SESSION['userInfo']['rol']==2  ){
@@ -33,16 +33,16 @@
 				<img src="http://png.findicons.com/files/icons/1681/siena/48/currency_dollar_blue.png">		 
 				<div>Diario</div>
 			</a>				
-			<a tablink="true" href="/envios/busqueda" titulo="Envios" class="link">
+			<a tablink="true" href="/viajes/busqueda" titulo="Viajes" class="link">
 				<img src="http://png.findicons.com/files/icons/52/cargo_boxes/48/shipping1.png">		 
-				<div>Envios</div>
+				<div>Viajes</div>
 			</a>								
 		</div>
 		<h3>Catalogos</h3>		 
 		<div class="submenu">			
-			<a tablink="true" href="/carros/busqueda" titulo="Carros" class="link">
+			<a tablink="true" href="/vehiculos/busqueda" titulo="Vehiculos" class="link">
 				<img src="http://png.findicons.com/files/icons/1789/large_business/48/trailer.png">		 
-				<div>Carros</div>
+				<div>Vehiculos</div>
 			</a>				
 			<a tablink="true" href="/cajas/busqueda" titulo="Cajas" class="link">
 				<img src="http://png.findicons.com/files/icons/2206/austerity/59/com_saurik_winterboard.png" style="height:48px; width:48px;">		 

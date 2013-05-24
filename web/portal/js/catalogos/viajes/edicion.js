@@ -1,4 +1,4 @@
-﻿var Edicionclientes = function(){
+﻿var Edicionviajes = function(){
 	this.editado=false;
 	this.saveAndClose=false;
 	
@@ -97,8 +97,7 @@
 		var tabId = this.tabId;		
 		var id = $(this.tabId + ' [name="'+this.configuracion.pk+'"]').val();
 		if (id>0){
-			var nombre = $(this.tabId + ' [name="razon_social"]').val();
-			$('a[href="'+tabId+'"]').html(id + ': ' + nombre);
+			$('a[href="'+tabId+'"]').html(this.configuracion.catalogo.modelo +':'+id);
 		}else{
 			$('a[href="'+tabId+'"]').html('Nuevo');
 		}

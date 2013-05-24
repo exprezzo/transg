@@ -1,4 +1,4 @@
-﻿var Busquedaconceptos=function(){
+﻿var Busquedavehiculos=function(){
 	this.tituloNuevo='Nueva';
 	this.eliminar=function(){
 	
@@ -61,7 +61,7 @@
 		tab.addClass(clase);		
 		tab=$('a[href="'+tabId+'"]');
 		tab.addClass(clase);
-	}
+	}	
 	this.init=function(config){		
 		//-------------------------------------------Al nucleo		*/		
 		this.controlador=config.controlador;
@@ -74,9 +74,10 @@
 		var jTab=$('div'+tabId);				
 		jTab.data('tabObj',this);		
 				
-		var jTab=$('a[href="'+tabId+'"]');		//// this.agregarClase('busqueda_'+this.controlador.nombre);
+		var jTab=$('a[href="'+tabId+'"]');		//// 
 	    jTab.html(this.catalogo.nombre);		 
 		 jTab.addClass('busqueda_'+this.controlador.nombre); 
+		 
 		 this.agregarClase('tab_'+this.controlador.nombre);
 		//-------------------------------------------
 		$('div'+tabId).css('padding','0px 0 0 0');
@@ -173,9 +174,13 @@
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
 				
 { dataKey: "id", visible:false, headerText: "Id" },
-{ dataKey: "nombre", visible:true, headerText: "Nombre" },
-{ dataKey: "costo", visible:true, headerText: "Costo",dataType:'currency' },
-{ dataKey: "nombre_um", visible:true, headerText: "UM" }
+{ dataKey: "codigo", visible:true, headerText: "Codigo" },
+{ dataKey: "modelo", visible:true, headerText: "Modelo" },
+{ dataKey: "placas", visible:true, headerText: "Placas" },
+{ dataKey: "rendimiento", visible:true, headerText: "Rendimiento" },
+{ dataKey: "kilometraje", visible:true, headerText: "Kilometraje" },
+{ dataKey: "fk_caja", visible:false, headerText: "Caja" },
+{ dataKey: "codCaja", visible:true, headerText: "Caja" }
 			]
 		});
 		

@@ -48,7 +48,7 @@
 	<input type="text" name="costo" class="txt_costo" value="<?php echo $this->datos['costo']; ?>" style="width:500px;" />
 </div>
 <div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-	<label style="">Nombre_um:</label>
+	<label style="">UM:</label>
 	<input type="text" name="nombre_um" class="txt_nombre_um" value="<?php echo $this->datos['nombre_um']; ?>" style="width:500px;" />
 </div>
 

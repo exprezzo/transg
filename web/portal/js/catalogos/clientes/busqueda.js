@@ -77,6 +77,7 @@
 		var jTab=$('a[href="'+tabId+'"]');		//// this.agregarClase('busqueda_'+this.controlador.nombre);
 	    jTab.html('Clientes');		 
 		 jTab.addClass('busqueda_'+this.controlador.nombre); 
+		 this.agregarClase('tab_'+this.controlador.nombre);
 		//-------------------------------------------
 		$('div'+tabId).css('padding','0px 0 0 0');
 		$('div'+tabId).css('margin-top','0px');

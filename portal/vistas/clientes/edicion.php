@@ -60,7 +60,7 @@
 	<input type="text" name="telefonos" class="txt_telefonos" value="<?php echo $this->datos['telefonos']; ?>" style="width:500px;" />
 </div>
 <div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-	<label style="">Www:</label>
+	<label style="">www:</label>
 	<input type="text" name="www" class="txt_www" value="<?php echo $this->datos['www']; ?>" style="width:500px;" />
 </div>
 <div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >

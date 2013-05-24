@@ -1,4 +1,4 @@
-﻿var Edicionclientes = function(){
+﻿var Edicioncajas = function(){
 	this.editado=false;
 	this.saveAndClose=false;
 	
@@ -97,8 +97,8 @@
 		var tabId = this.tabId;		
 		var id = $(this.tabId + ' [name="'+this.configuracion.pk+'"]').val();
 		if (id>0){
-			var nombre = $(this.tabId + ' [name="razon_social"]').val();
-			$('a[href="'+tabId+'"]').html(id + ': ' + nombre);
+			var codigo=$(this.tabId + ' [name=codigo]').val();
+			$('a[href="'+tabId+'"]').html(id +':'+codigo);
 		}else{
 			$('a[href="'+tabId+'"]').html('Nuevo');
 		}
@@ -239,9 +239,6 @@
 				});
 			});
 	},
-	
-
-	
 	
 	this.configurarFormulario=function(tabId){		
 		var me=this;
