@@ -177,8 +177,8 @@
 { dataKey: "codigo", visible:true, headerText: "Codigo" },
 { dataKey: "modelo", visible:true, headerText: "Modelo" },
 { dataKey: "placas", visible:true, headerText: "Placas" },
-{ dataKey: "rendimiento", visible:true, headerText: "Rendimiento" },
-{ dataKey: "kilometraje", visible:true, headerText: "Kilometraje" },
+{ dataKey: "rendimiento", visible:true, headerText: "Rendimiento", dataType:'number' },
+{ dataKey: "kilometraje", visible:true, headerText: "Kilometraje", dataType:'number' },
 { dataKey: "fk_caja", visible:false, headerText: "Caja" },
 { dataKey: "codCaja", visible:true, headerText: "Caja" }
 			]

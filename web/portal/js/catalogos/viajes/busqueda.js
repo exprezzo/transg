@@ -181,7 +181,8 @@
 { dataKey: "fk_chofer", visible:true, headerText: "Fk_chofer" },
 { dataKey: "fk_vehiculo", visible:true, headerText: "Fk_vehiculo" },
 { dataKey: "fk_caja", visible:true, headerText: "Fk_caja" },
-{ dataKey: "fk_cliente", visible:true, headerText: "Fk_cliente" }
+{ dataKey: "fk_cliente", visible:true, headerText: "Fk_cliente" },
+{ dataKey: "creado", visible:true, headerText: "Creado" }
 			]
 		});
 		

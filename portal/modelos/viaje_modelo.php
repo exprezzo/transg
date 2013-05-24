@@ -1,7 +1,7 @@
 <?php
 class viajeModelo extends Modelo{
 	var $tabla="trans_viaje";
-	var $campos=array('id','fecha_a_entregar','contenido','direccion_de_entrega','costo','precio','fk_chofer','fk_vehiculo','fk_caja','fk_cliente');
+	var $campos=array('id','fecha_a_entregar','contenido','direccion_de_entrega','costo','precio','fk_chofer','fk_vehiculo','fk_caja','fk_cliente','creado');
 	var $pk="id";
 	
 	function nuevo($params){

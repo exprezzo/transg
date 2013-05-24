@@ -22,6 +22,11 @@
 		};				
 		 var editor=new Edicionviajes();
 		 editor.init(config);		
+		 
+		 $('#'+config.tab.id+' [name="fk_caja"]').wijcombobox();
+		 $('#'+config.tab.id+' [name="fk_vehiculo"]').wijcombobox();
+		 $('#'+config.tab.id+' [name="fk_cliente"]').wijcombobox();
+		 $('#'+config.tab.id+' [name="fk_chofer"]').wijcombobox();
 	});
 </script>
 
@@ -35,7 +40,7 @@
 		?>
 		
 		<form class="frmEdicion" style="padding-top:10px;">				
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<div class="inputBox" style="margin-bottom:8px;display:none;margin-left:10px;width:100%;"  >
 	<label style="">Id:</label>
 	<input type="text" name="id" class="txt_id" value="<?php echo $this->datos['id']; ?>" style="width:500px;" />
 </div>
@@ -60,22 +65,56 @@
 	<input type="text" name="precio" class="txt_precio" value="<?php echo $this->datos['precio']; ?>" style="width:500px;" />
 </div>
 <div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-	<label style="">Fk_chofer:</label>
-	<input type="text" name="fk_chofer" class="txt_fk_chofer" value="<?php echo $this->datos['fk_chofer']; ?>" style="width:500px;" />
+	<label style="">Chofer:</label>
+	<select name="fk_chofer" class="txt_fk_chofer">
+		<?php
+		foreach($this->choferes as $chofer){
+			$selected = ($this->datos['fk_chofer'] == $chofer['id'] )? 'selected' : '';
+			echo '<option '.$selected.' value="'.$chofer['id'].'">'.$chofer['nombre'].'</option>';
+		}
+		?>
+	</select>
+	
 </div>
 <div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-	<label style="">Fk_vehiculo:</label>
-	<input type="text" name="fk_vehiculo" class="txt_fk_vehiculo" value="<?php echo $this->datos['fk_vehiculo']; ?>" style="width:500px;" />
+	<label style="">Vehiculo:</label>	
+	<select name="fk_vehiculo" class="txt_fk_chofer">
+		<?php
+		foreach($this->vehiculos as $vehiculo){
+			$selected = ($this->datos['fk_vehiculo'] == $vehiculo['id'] )? 'selected' : '';
+			echo '<option '.$selected.' value="'.$vehiculo['id'].'">'.$vehiculo['codigo'].'</option>';
+		}
+		?>
+	</select>
 </div>
 <div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-	<label style="">Fk_caja:</label>
-	<input type="text" name="fk_caja" class="txt_fk_caja" value="<?php echo $this->datos['fk_caja']; ?>" style="width:500px;" />
+	<label style="">Caja:</label>	
+	<select name="fk_caja" class="txt_fk_caja">
+		<?php
+		foreach($this->cajas as $caja){
+			$selected = ($this->datos['fk_caja'] == $caja['id'] )? 'selected' : '';
+			echo '<option '.$selected.' value="'.$caja['id'].'">'.$caja['codigo'].'</option>';
+		}
+		?>
+	</select>
 </div>
 <div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-	<label style="">Fk_cliente:</label>
-	<input type="text" name="fk_cliente" class="txt_fk_cliente" value="<?php echo $this->datos['fk_cliente']; ?>" style="width:500px;" />
+	<label style="">Cliente:</label>	
+	<select name="fk_cliente" class="txt_fk_cliente">
+		<?php
+		foreach($this->clientes as $cliente){
+			$selected = ($this->datos['fk_cliente'] == $cliente['id'] )? 'selected' : '';
+			echo '<option '.$selected.' value="'.$cliente['id'].'">'.$cliente['razon_social'].'</option>';
+		}
+		?>
+	</select>
+</div>
+<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+	<label style="">Creado:</label>
+	<input type="text" name="creado" class="txt_creado" value="<?php echo $this->datos['creado']; ?>" style="width:500px;" />
 </div>
 
 		</form>
 	</div>
 </div>
+
