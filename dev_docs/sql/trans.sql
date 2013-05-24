@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2013-05-21 04:44:36
+Date: 2013-05-23 21:32:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,7 +56,7 @@ CREATE TABLE `system_catalogos` (
   `msg_eliminado` char(255) DEFAULT NULL,
   `msg_cambios` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of system_catalogos
@@ -68,7 +68,12 @@ INSERT INTO `system_catalogos` VALUES ('33', '1', 'Catalogos', 'catalogos', 'Cat
 INSERT INTO `system_catalogos` VALUES ('36', '1', 'seguridad', 'seguridad', 'Seguridad', 'system_acl', 'id', 'http://png.findicons.com/files/icons/1035/human_o2/48/keepassx.png', '', '', '', '', '', '', '', '');
 INSERT INTO `system_catalogos` VALUES ('40', '2', 'Usuarios', 'usuarios2', 'usuario', 'system_users', 'id', 'http://png.findicons.com/files/icons/1620/crystal_project/64/personal.png', '', '', '', '', '', '', '', '');
 INSERT INTO `system_catalogos` VALUES ('42', '1', 'Roles', 'roles', 'rol', 'system_rol', 'id', 'http://png.findicons.com/files/icons/2332/super_mono/48/user_card.png', '', '', '', '', '', '', '', '');
-INSERT INTO `system_catalogos` VALUES ('48', '2', 'Clientes', 'clientes', 'cliente', 'trans_cliente', 'id', '', '', '', '', '', '', '', '', '');
+INSERT INTO `system_catalogos` VALUES ('48', '2', 'Clientes', 'clientes', 'cliente', 'trans_cliente', 'id', 'http://png.findicons.com/files/icons/117/radium/48/user.png', '', '', '', '', '', '', '', '');
+INSERT INTO `system_catalogos` VALUES ('49', '2', 'Choferes', 'choferes', 'chofer', 'trans_chofer', 'id', 'http://png.findicons.com/files/icons/180/urban_ppl/48/xp_ppl02.png', '', '', '', '', '', '', '', '');
+INSERT INTO `system_catalogos` VALUES ('50', '2', 'Conceptos', 'conceptos', 'concepto', 'trans_concepto', 'id', 'http://png.findicons.com/files/icons/2165/office/48/marked_price.png', '', '', '', '', '', '', '', '');
+INSERT INTO `system_catalogos` VALUES ('51', '2', 'Vehiculos', 'vehiculos', 'vehiculo', 'trans_vehiculo', 'id', 'http://png.findicons.com/files/icons/1789/large_business/48/trailer.png', '', '', '', '', '', '', '', '');
+INSERT INTO `system_catalogos` VALUES ('52', '2', 'Cajas', 'cajas', 'caja', 'trans_caja', 'id', 'http://png.findicons.com/files/icons/2206/austerity/59/com_saurik_winterboard.png', '', '', '', '', '', '', '', '');
+INSERT INTO `system_catalogos` VALUES ('53', '2', 'Viajes', 'viajes', 'viaje', 'trans_viaje', 'id', 'http://png.findicons.com/files/icons/52/cargo_boxes/48/shipping1.png', '', '', '', '', '', '', '', '');
 
 -- ----------------------------
 -- Table structure for `system_config`
@@ -148,7 +153,45 @@ CREATE TABLE `system_users` (
 -- Records of system_users
 -- ----------------------------
 INSERT INTO `system_users` VALUES ('1', 'zesar1', 0xABD7D98E5D348AB50FACBA163A26D398, 'cbibriesca@hotmail.com', '1', '0', 'Zesar Octavio', 'pic_1.jpg', 'retro_blue_background.jpg');
-INSERT INTO `system_users` VALUES ('22', 'luis', 0xABD7D98E5D348AB50FACBA163A26D398, 'luis@email.com', '1', null, 'Luis Escobar', null, null);
+INSERT INTO `system_users` VALUES ('22', 'jose', 0xABD7D98E5D348AB50FACBA163A26D398, 'contacto@joseh.com', '1', null, 'JosÃ© Hernandez Olvera', null, null);
+
+-- ----------------------------
+-- Table structure for `trans_caja`
+-- ----------------------------
+DROP TABLE IF EXISTS `trans_caja`;
+CREATE TABLE `trans_caja` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `modelo` char(255) DEFAULT NULL,
+  `codigo` char(255) DEFAULT NULL,
+  `horas_de_trabajo` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of trans_caja
+-- ----------------------------
+INSERT INTO `trans_caja` VALUES ('1', 'MOD-F540', 'c-501', '5000');
+INSERT INTO `trans_caja` VALUES ('2', '', 'c-502', '0');
+INSERT INTO `trans_caja` VALUES ('3', '', 'c-503', '0');
+INSERT INTO `trans_caja` VALUES ('4', '', 'c-504', '0');
+
+-- ----------------------------
+-- Table structure for `trans_chofer`
+-- ----------------------------
+DROP TABLE IF EXISTS `trans_chofer`;
+CREATE TABLE `trans_chofer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` char(255) DEFAULT NULL,
+  `nss` char(255) DEFAULT NULL,
+  `telefonos` char(255) DEFAULT NULL,
+  `cuenta_bancaria` char(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of trans_chofer
+-- ----------------------------
+INSERT INTO `trans_chofer` VALUES ('4', 'df', '', '', '');
 
 -- ----------------------------
 -- Table structure for `trans_cliente`
@@ -164,10 +207,74 @@ CREATE TABLE `trans_cliente` (
   `contacto` char(255) DEFAULT NULL,
   `cuenta_bancaria` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of trans_cliente
 -- ----------------------------
-INSERT INTO `trans_cliente` VALUES ('1', 'Fruteria Adela', 'fr810820fr2', 'calle colonia numero ciudad estado', 'oficina: 9812739, sucursal1: 6691 273354', 'www.fruteriaadela.com', 'esmeralda: ext-121 (compras)', '1185938947 (bancomer)');
-INSERT INTO `trans_cliente` VALUES ('2', 'asdf', 'asdf', 'asdf', 'asdfdfsf', 'dfsfsdf', 'sdf', '');
+INSERT INTO `trans_cliente` VALUES ('3', 'otro clientehh', '', '', '', '', '', '');
+INSERT INTO `trans_cliente` VALUES ('4', '', '', '', '', '', '', '');
+INSERT INTO `trans_cliente` VALUES ('5', '', '', '', '', '', '', '');
+INSERT INTO `trans_cliente` VALUES ('6', '', '', '', '', '', '', '');
+
+-- ----------------------------
+-- Table structure for `trans_concepto`
+-- ----------------------------
+DROP TABLE IF EXISTS `trans_concepto`;
+CREATE TABLE `trans_concepto` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` char(255) DEFAULT NULL,
+  `costo` decimal(18,6) DEFAULT NULL,
+  `nombre_um` char(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of trans_concepto
+-- ----------------------------
+INSERT INTO `trans_concepto` VALUES ('4', 'asdf', '0.000000', '');
+
+-- ----------------------------
+-- Table structure for `trans_vehiculo`
+-- ----------------------------
+DROP TABLE IF EXISTS `trans_vehiculo`;
+CREATE TABLE `trans_vehiculo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `modelo` char(255) DEFAULT NULL,
+  `codigo` char(255) DEFAULT NULL,
+  `placas` char(255) DEFAULT NULL,
+  `rendimiento` decimal(18,2) DEFAULT NULL,
+  `fk_caja` int(11) DEFAULT NULL,
+  `kilometraje` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of trans_vehiculo
+-- ----------------------------
+INSERT INTO `trans_vehiculo` VALUES ('3', 'asdf', 'T-501', 'asdfd', '0.00', '1', '1');
+INSERT INTO `trans_vehiculo` VALUES ('4', '', 'T-502', '', '0.00', '2', '0');
+INSERT INTO `trans_vehiculo` VALUES ('5', '', 'T-503', '', '0.00', '3', '0');
+
+-- ----------------------------
+-- Table structure for `trans_viaje`
+-- ----------------------------
+DROP TABLE IF EXISTS `trans_viaje`;
+CREATE TABLE `trans_viaje` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha_a_entregar` datetime DEFAULT NULL,
+  `contenido` char(255) DEFAULT NULL,
+  `direccion_de_entrega` text,
+  `costo` decimal(18,6) DEFAULT NULL,
+  `precio` decimal(18,6) DEFAULT NULL,
+  `fk_chofer` int(11) DEFAULT NULL,
+  `fk_vehiculo` int(11) DEFAULT NULL,
+  `fk_caja` int(11) DEFAULT NULL,
+  `fk_cliente` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of trans_viaje
+-- ----------------------------
+INSERT INTO `trans_viaje` VALUES ('1', '0000-00-00 00:00:00', '', '', '0.000000', '0.000000', '0', '0', '0', '0');
