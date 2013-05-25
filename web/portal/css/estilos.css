@@ -26,7 +26,7 @@ ul.ui-tabs-nav li a.tabMenu{ background-image:url('http://png.findicons.com/file
 .ribbon .btnRefresh{	background-image:url('../images/token_dark_iconpack/playback_reload.png') !important; background-size: 29px; background-position: 10px;}
 .ribbon button{width:57px;}
 .ribbon .ui-button-text{ padding:0;}
-#tabs span.ui-button-text { padding-top:40px !important; background-repeat: no-repeat; background-position: top center; background-position:center 6px !important; }
+#tabs .lista_toolbar span.ui-button-text { padding-top:40px !important; background-repeat: no-repeat; background-position: top center; background-position:center 6px !important; }
 
 
 

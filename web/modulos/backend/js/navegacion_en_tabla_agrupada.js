@@ -1,19 +1,42 @@
-var NavegacionEnAgrupada=function(){
-	this.eliminar=function(){	
-		console.log("eliminar");
-	};
+var NavegacionEnAgrupada=function(){	
 	this.seleccionarLineaAnterior=function(){
-		console.log("seleccionarLineaAnterior");
+		this.celdaActual.row--;		
+		if (this.celdaActual.row<0) this.celdaActual.row=0;
+
+		if ( this.esCeldaEditable() ){
+			this.editarCelda({
+				col:this.celdaActual.col,
+				row: this.celdaActual.row
+			});
+		}
 	};
-	this.seleccionarSiguienteLinea=function(){
-		console.log("seleccionarSiguienteLinea");
+	this.seleccionarSiguienteLinea=function(){	
+		this.celdaActual.row++;		
+		// console.log('this.celdaActual.row'+this.celdaActual.row);
+		
+		// console.log('this.numRows'+this.numRows - 1 );
+		if (this.celdaActual.row > this.numRows -1){
+			this.nuevo();
+		}
+		
+		
+		
+		
+
+		if ( this.esCeldaEditable() ){
+			this.editarCelda({
+				col:this.celdaActual.col,
+				row: this.celdaActual.row
+			});
+		}
 	};
 	
 	
 	this.nuevo=function(){	
+		
 		var rec={};
 		
-		$.each( this.options.padre.columns, function(indexInArray, valueOfElement){			
+		$.each( this.options.padre.fields, function(indexInArray, valueOfElement){			
 			var campo=valueOfElement.dataKey;
 			rec[campo]='';		
 		} );
@@ -27,18 +50,18 @@ var NavegacionEnAgrupada=function(){
 		
 		this.tmp_id++;
 		// nuevo[0].tmp_id=this.tmp_id;
-		var array3 = nuevo.concat(data); // Merges both arrays
+		var array3 = data.concat(nuevo); // Merges both arrays
 		data.length=0;
 		for(var i=0; i<array3.length; i++){
 			data.push( array3[i] );
 		}
 
 		//data.slice([]);
-		
+		$(this.targetSelector).wijgrid("endEdit");
 		$(this.targetSelector).wijgrid("ensureControl", true);
 		$(this.targetSelector).wijgrid('option','pageIndex',0);			 
 		nuevo = $(this.targetSelector).wijgrid("currentCell", 0, 0);
-		$(this.targetSelector).wijgrid("beginEdit");		
+		// $(this.targetSelector).wijgrid("beginEdit");		
 	};
 	this.configurarToolbar=function(tabId){
 		var me=this;
@@ -201,10 +224,12 @@ var NavegacionEnAgrupada=function(){
 			
 
 			if ( this.celdaActual.row >= this.numRows  ){
-				this.celdaActual.col=this.ultimaCelda.col;
-				this.celdaActual.row=this.ultimaCelda.row;
-				this.editarCelda(this.celdaActual);
-				 return false;
+				// this.celdaActual.col=this.ultimaCelda.col;
+				// this.celdaActual.row=this.ultimaCelda.row;
+				// this.editarCelda(this.celdaActual);
+				// alert("nuevo");
+				 this.nuevo();
+				 // return false;
 				// return this.siguientePagina();
 			}
 			

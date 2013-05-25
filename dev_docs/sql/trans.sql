@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2013-05-23 21:32:27
+Date: 2013-05-25 17:15:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,7 +56,7 @@ CREATE TABLE `system_catalogos` (
   `msg_eliminado` char(255) DEFAULT NULL,
   `msg_cambios` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of system_catalogos
@@ -74,6 +74,7 @@ INSERT INTO `system_catalogos` VALUES ('50', '2', 'Conceptos', 'conceptos', 'con
 INSERT INTO `system_catalogos` VALUES ('51', '2', 'Vehiculos', 'vehiculos', 'vehiculo', 'trans_vehiculo', 'id', 'http://png.findicons.com/files/icons/1789/large_business/48/trailer.png', '', '', '', '', '', '', '', '');
 INSERT INTO `system_catalogos` VALUES ('52', '2', 'Cajas', 'cajas', 'caja', 'trans_caja', 'id', 'http://png.findicons.com/files/icons/2206/austerity/59/com_saurik_winterboard.png', '', '', '', '', '', '', '', '');
 INSERT INTO `system_catalogos` VALUES ('53', '2', 'Viajes', 'viajes', 'viaje', 'trans_viaje', 'id', 'http://png.findicons.com/files/icons/52/cargo_boxes/48/shipping1.png', '', '', '', '', '', '', '', '');
+INSERT INTO `system_catalogos` VALUES ('54', '2', 'Gastos de Viaje', 'gastosdeviaje', 'gastodeviaje', 'trans_viaje_gasto', 'id', '', '', '', '', '', '', '', '', '');
 
 -- ----------------------------
 -- Table structure for `system_config`
@@ -186,12 +187,14 @@ CREATE TABLE `trans_chofer` (
   `telefonos` char(255) DEFAULT NULL,
   `cuenta_bancaria` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of trans_chofer
 -- ----------------------------
-INSERT INTO `trans_chofer` VALUES ('4', 'df', '', '', '');
+INSERT INTO `trans_chofer` VALUES ('4', 'Juan Ramon', '', '', '');
+INSERT INTO `trans_chofer` VALUES ('5', 'Oscar', '', '', '');
+INSERT INTO `trans_chofer` VALUES ('6', 'Cesar Octavio', '', '', '');
 
 -- ----------------------------
 -- Table structure for `trans_cliente`
@@ -213,9 +216,9 @@ CREATE TABLE `trans_cliente` (
 -- Records of trans_cliente
 -- ----------------------------
 INSERT INTO `trans_cliente` VALUES ('3', 'otro clientehh', '', '', '', '', '', '');
-INSERT INTO `trans_cliente` VALUES ('4', '', '', '', '', '', '', '');
-INSERT INTO `trans_cliente` VALUES ('5', '', '', '', '', '', '', '');
-INSERT INTO `trans_cliente` VALUES ('6', '', '', '', '', '', '', '');
+INSERT INTO `trans_cliente` VALUES ('4', 'aa', '', '', '', '', '', '');
+INSERT INTO `trans_cliente` VALUES ('5', 'bbbb', '', '', '', '', '', '');
+INSERT INTO `trans_cliente` VALUES ('6', 'cccc', '', '', '', '', '', '');
 
 -- ----------------------------
 -- Table structure for `trans_concepto`
@@ -232,7 +235,8 @@ CREATE TABLE `trans_concepto` (
 -- ----------------------------
 -- Records of trans_concepto
 -- ----------------------------
-INSERT INTO `trans_concepto` VALUES ('4', 'asdf', '0.000000', '');
+INSERT INTO `trans_concepto` VALUES ('4', 'diesel', '0.000000', '');
+INSERT INTO `trans_concepto` VALUES ('5', 'caseta', '250.000000', '');
 
 -- ----------------------------
 -- Table structure for `trans_vehiculo`
@@ -254,7 +258,7 @@ CREATE TABLE `trans_vehiculo` (
 -- ----------------------------
 INSERT INTO `trans_vehiculo` VALUES ('3', 'asdf', 'T-501', 'asdfd', '0.00', '1', '1');
 INSERT INTO `trans_vehiculo` VALUES ('4', '', 'T-502', '', '0.00', '2', '0');
-INSERT INTO `trans_vehiculo` VALUES ('5', '', 'T-503', '', '0.00', '3', '0');
+INSERT INTO `trans_vehiculo` VALUES ('5', '', 'T-503', '', '0.00', '2', '2344234');
 
 -- ----------------------------
 -- Table structure for `trans_viaje`
@@ -271,10 +275,31 @@ CREATE TABLE `trans_viaje` (
   `fk_vehiculo` int(11) DEFAULT NULL,
   `fk_caja` int(11) DEFAULT NULL,
   `fk_cliente` int(11) DEFAULT NULL,
+  `creado` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of trans_viaje
 -- ----------------------------
-INSERT INTO `trans_viaje` VALUES ('1', '0000-00-00 00:00:00', '', '', '0.000000', '0.000000', '0', '0', '0', '0');
+INSERT INTO `trans_viaje` VALUES ('3', '0000-00-00 00:00:00', 'mangos y platanos', 'Avenida del mar # 340 entre sol y luna , col Centro, Cualian, Sin. Mexico.', '5428.000000', '13.000000', '4', '4', '2', '5', '2013-05-24 13:36:06');
+INSERT INTO `trans_viaje` VALUES ('4', '0000-00-00 00:00:00', 'carne y papas', 'en la casa de doÃ±a petra', '0.000000', '31.000000', '4', '5', '4', '6', '2013-05-24 17:29:31');
+
+-- ----------------------------
+-- Table structure for `trans_viaje_gasto`
+-- ----------------------------
+DROP TABLE IF EXISTS `trans_viaje_gasto`;
+CREATE TABLE `trans_viaje_gasto` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fk_viaje` int(11) DEFAULT NULL,
+  `fk_concepto` int(11) DEFAULT NULL,
+  `costo` decimal(18,6) DEFAULT NULL,
+  `fecha` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of trans_viaje_gasto
+-- ----------------------------
+INSERT INTO `trans_viaje_gasto` VALUES ('1', '3', '4', '5000.000000', '0000-00-00 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('2', '3', '4', '400.000000', '0000-00-00 00:00:00');

@@ -4,6 +4,7 @@ require_once $APPS_PATH.$_PETICION->modulo.'/modelos/chofer_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/vehiculo_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/caja_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/cliente_modelo.php';
+require_once $APPS_PATH.$_PETICION->modulo.'/modelos/gastodeviaje_modelo.php';
 class viajes extends Controlador{
 	var $modelo="viaje";
 	var $campos=array('id','fecha_a_entregar','contenido','direccion_de_entrega','costo','precio','fk_chofer','fk_vehiculo','fk_caja','fk_cliente','creado');
@@ -25,12 +26,20 @@ class viajes extends Controlador{
 	}
 	
 	function guardar(){
+		 unset($_POST['datos']['nombreSerie']);
+		 unset($_POST['datos']['folio']);
+		 unset($_POST['datos']['hora_a_entregar']);
+		 
+		 $_POST['datos']['precio'] =  str_replace ( '$' , '' , $_POST['datos']['precio'] );
 		return parent::guardar();
 	}
 	function borrar(){
 		return parent::borrar();
 	}
 	function editar(){
+		
+		
+	
 		$vista=$this->getVista();
 		
 		$choMod = new choferModelo();
@@ -48,6 +57,18 @@ class viajes extends Controlador{
 		$cliMod = new clienteModelo();
 		$res = $cliMod->buscar( array() );		
 		$vista->clientes=$res['datos'];
+		
+		$gastoMod = new gastodeviajeModelo();
+		$res = $gastoMod->buscar(
+			array('filtros'=>array(
+				array(
+					'filterOperator'=>'equals',
+					'dataKey'=>'fk_viaje',
+					'filterValue'=>$_POST['id']
+				)
+			))
+		);		
+		$vista->gastos=$res['datos'];
 		
 		return parent::editar();
 	}

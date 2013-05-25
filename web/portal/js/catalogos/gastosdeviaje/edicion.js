@@ -1,4 +1,4 @@
-﻿var Edicionviajes = function(){
+﻿var Ediciongastosdeviaje = function(){
 	this.editado=false;
 	this.saveAndClose=false;
 	
@@ -257,7 +257,6 @@
 			
 			var me=this;
 			
-			
 			$(this.tabId + ' .toolbarEdicion .btnGuardar').click( function(){
 				me.guardar();
 				me.editado=true;
@@ -270,30 +269,5 @@
 				  me.editado=true;
 				}
 			});
-			
-			$(this.tabId + ' .toolbarEdicion .btnGeneral').click( function(){
-				$( me.tabId + ' .frmEdicion').fadeIn();
-				$( me.tabId + ' .consumo').hide();
-				$( me.tabId + ' .gastos').hide();
-			});
-			
-			$(this.tabId + ' .toolbarEdicion .btnConsumo').click( function(){
-				alert("En construcción");
-				// $( me.tabId + ' .frmEdicion').hide();
-				// $( me.tabId + ' .consumo').fadeIn();
-				// $( me.tabId + ' .gastos').hide();
-				
-			});
-			
-			$(this.tabId + ' .toolbarEdicion .btnDetalles').click( function(){
-				$( me.tabId + ' .frmEdicion').hide();
-				$( me.tabId + ' .consumo').hide();
-				$( me.tabId + ' .gastos').fadeIn();
-				$(me.tabId+' .grid_articulos').wijgrid('ensureControl',true);
-				
-			});
-			
-			
-			
 	};	
 }
