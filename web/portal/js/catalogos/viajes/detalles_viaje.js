@@ -65,7 +65,7 @@ var DetallesViaje=function (tabId){
 			data:articulos,			
 			columns: [
 				{dataKey: "id", visible:false, headerText: "ID"},
-				{dataKey: "nombreConcepto", headerText: "Concepto",width:"300px"},
+				{dataKey: "nombre", headerText: "Concepto",width:"300px"},
 				{dataKey: "costo", headerText: "Costo",editable:true, dataType: "currency",width:"150px"},
 				{dataKey: "fecha", headerText: "Fecha",width:"100px"},
 				{dataKey: "fk_viaje", headerText: "fk_viaje", visible:false},
@@ -85,20 +85,21 @@ var DetallesViaje=function (tabId){
 				}				
 
 				switch (args.cell.column().dataKey) { 		
-					case "concepto": 
-						// var combo=
-						// $("<input />")
-							// .val(args.cell.value()) 
-							// .appendTo(args.cell.container().empty());   
-						// args.handled = true;   
+					case "nombre": 
+						var combo=
+						$("<input />")
+							.val(args.cell.value()) 
+							.appendTo(args.cell.container().empty());   
+						args.handled = true;   
 						
-						// var domCel = args.cell.tableCell();
-						// combo.css('width',	$(domCel).width()-10 );
-						// combo.css('height',	$(domCel).height()-10 );
+						var domCel = args.cell.tableCell();
+						combo.css('width',	$(domCel).width()-10 );
+						combo.css('height',	$(domCel).height()-10 );
 						
-						// me.configurarComboPresentacion(combo, row.data.cantidad);
+						 me.configurarComboConcepto(combo);
 					break;					
 					default:
+						// alert( args.cell.column().dataKey );
 						var input=$("<input />")
 							.val(args.cell.value())
 							.appendTo(args.cell.container().empty()).focus().select();
@@ -113,28 +114,25 @@ var DetallesViaje=function (tabId){
 		});
 		gridPedidos.wijgrid({beforeCellUpdate:function(e, args) {
 				switch (args.cell.column().dataKey) {					
-					case "concepto":
+					case "nombre":
 						args.value = args.cell.container().find("input").val();
 						if (me.articulo!=undefined){
 							var row=args.cell.row();
-							// console.log("me.articulo"); console.log(me.articulo);
-							row.data.idarticulo = me.articulo.idarticulo;
-							row.data.costo=me.articulo.costo;
-							row.data.impuesto1=me.articulo.impuesto1;
-							row.data.subtotal=me.articulo.subtotal;
-							row.data.total=me.articulo.total;
-							row.data.nombre=me.articulo.nombre;
-							row.data.codigo=me.articulo.codigo;
-							row.data.idarticulopre = me.articulo.value;
-						
+							// console.log("me.articulo"); console.log(me.articulo);							
+							row.data.costo=me.articulo.costo;							
+							row.data.id = me.articulo.value;						
+							row.data.nombre = me.articulo.nombre;
+							row.data.fecha = '2013-01-01';
 							gridPedidos.wijgrid('ensureControl',true);
 							
 						}
-						me.padre.editado=true;
+						// me.padre.editado=true;
 						break;															
-					default:
-						args.value = args.cell.container().find("input").val();						
-						gridPedidos.wijgrid('ensureControl',true);
+					default:						
+						args.value = args.cell.container().find("input").val();	
+						var row=args.cell.row();
+						row.data.costo = args.value;
+						gridPedidos.wijgrid('ensureControl',true);						
 				}
 				me.articulo=undefined;		
 			}			
@@ -332,56 +330,32 @@ var DetallesViaje=function (tabId){
 		
 	};
 	
-	this.configurarComboPresentacion=function(target, cantidad){		
+	this.configurarComboConcepto=function(target){		
 		// alert(cantidad);
 		
 		var tabId=this.tabId;
 		var me=this;
-		var fields=[			
-			{name: 'presentacionId'},			
-			{name: 'presentacionNombre'},
-			{name: 'presentacion'},
-			{name: 'idarticulopre'},
-			{name: 'idarticulo'},
-			{name: 'nombre'},
-			{name: 'codigo'},
-			{name: 'existencia'},
-			{name: 'minimo'},
-			{name: 'maximo'},
-			{name: 'grupo'},
-			{name: 'puntoreorden'},
-			{name: 'impuesto1'},
+		var fields=[										
 			{name: 'costo'},
-		{
-			name: 'label',
-			mapping: 'descripcion'
-		}, {
-			name: 'value',
-			mapping: 'idarticulopre'
-		}, {
-			name: 'selected',
-			defaultValue: false
-		}];
+			{name: 'label',mapping: 'nombre'}, 
+			{name: 'value',mapping: 'id'}, 
+			{name: 'selected',defaultValue: false}
+		];
 		
 		var myReader = new wijarrayreader(fields);
 		
 		var proxy = new wijhttpproxy({
-			url: kore.mod_url_base+'viaje/buscarPresentaciones',
+			url: kore.mod_url_base+'viajes/buscarConceptos',
 			dataType:"json"			
 		});
 		
 		var datasource = new wijdatasource({
 			reader:  new wijarrayreader(fields),
 			proxy: proxy,
-			loaded: function (data) {	
-							
-			},
-			loading: function (dataSource, userData) {                            				
-				 
-				 dataSource.proxy.options.data=dataSource.proxy.options.data || {};				 
-				dataSource.proxy.options.data.descripcion = (userData) ?  userData.value : '';
-				 
-				 // dataSource.proxy.options.data.idalmacen = $('#tabs '+me.tabId+' .txtFkAlmacen').val();		
+			loaded: function (data) {},
+			loading: function (dataSource, userData) {                            								
+				dataSource.proxy.options.data=dataSource.proxy.options.data || {};				 
+				dataSource.proxy.options.data.nombre = (userData) ?  userData.value : '';				 
             }
 		});
 		
@@ -400,29 +374,22 @@ var DetallesViaje=function (tabId){
 			minLength: 1,
 			forceSelectionText: false,
 			autoFilter: true,			
-			search: function (e, obj) {
-				
-			},
+			search: function (e, obj) {},
 			select: function (e, item) 
 			{			
-				var rowdom=$(me.tabId+' .grid_articulos tbody tr:eq('+me.selected.sectionRowIndex +')');				
+				var rowdom=$(me.tabId+' .grid_articulos tbody tr:eq('+me.selected.sectionRowIndex +')');								
+				item.costo*=1;				
 				me.articulo=item;
 				
-				item.costo*=1;
-				item.subtotal*=1;				
-				item.total*=1;
 				
-				item.subtotal=cantidad * item.costo;
-				var iva= (item.impuesto1 / 100) * item.subtotal;
-				item.total= iva + item.subtotal;
-				
-				rowdom.find('td:eq(1) div').html(item.codigo);
-				rowdom.find('td:eq(2) div').html(item.nombre);
+				rowdom.find('td:eq(1) div').html( '$'+item.costo.formatMoney(2,',','.') );
+				rowdom.find('td:eq(2) div').html( 0 );
+				// rowdom.find('td:eq(2) div').html(item.nombre);
 								
-				rowdom.find('td:eq(4) div').html( '$'+item.costo.formatMoney(2,',','.') );
-				rowdom.find('td:eq(5) div').html( '$'+item.subtotal.formatMoney(2,',','.') );
-				rowdom.find('td:eq(6) div').html( '$'+iva.formatMoney(2,',','.') );
-				rowdom.find('td:eq(7) div').html( '$'+item.total.formatMoney(2,',','.') );
+				// rowdom.find('td:eq(4) div').html( '$'+item.costo.formatMoney(2,',','.') );
+				// rowdom.find('td:eq(5) div').html( '$'+item.subtotal.formatMoney(2,',','.') );
+				// rowdom.find('td:eq(6) div').html( '$'+iva.formatMoney(2,',','.') );
+				// rowdom.find('td:eq(7) div').html( '$'+item.total.formatMoney(2,',','.') );
 				return true;
 			}
 		});

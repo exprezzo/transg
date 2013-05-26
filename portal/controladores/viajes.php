@@ -5,6 +5,7 @@ require_once $APPS_PATH.$_PETICION->modulo.'/modelos/vehiculo_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/caja_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/cliente_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/gastodeviaje_modelo.php';
+require_once $APPS_PATH.$_PETICION->modulo.'/modelos/concepto_modelo.php';
 class viajes extends Controlador{
 	var $modelo="viaje";
 	var $campos=array('id','fecha_a_entregar','contenido','direccion_de_entrega','costo','precio','fk_chofer','fk_vehiculo','fk_caja','fk_cliente','creado');
@@ -72,6 +73,24 @@ class viajes extends Controlador{
 		
 		return parent::editar();
 	}
+	
+	function buscarConceptos(){
+		$concepto=new conceptoModelo();
+		
+		
+		$params=array(
+			'filtros'=>array(
+				array('dataKey'=>'nombre', 'filterOperator'=>'contains','filterValue'=>$_REQUEST['nombre'])
+			)				
+		);
+		$res = $concepto->buscar( $params );
+		
+		$respuesta=array(
+			'rows'=>$res['datos']
+		);
+		echo json_encode($respuesta);	
+	}
+	
 	function buscar(){
 		return parent::buscar();
 	}

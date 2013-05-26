@@ -98,10 +98,11 @@
 	background-image: url(http://png.findicons.com/files/icons/573/must_have/24/add.png);
 	width: 31px;
 	height: 27px;
+	padding-top: 3px !important;
 	padding: 3px !important;
 	background-repeat: no-repeat;
-	background-position-x: 7px;
-	background-position-y: 5px;
+	background-position: 7px 5px;
+	
 }
 
 @-moz-document url-prefix()
@@ -233,7 +234,7 @@
 		</form>
 		<div class="consumo" style="display:none;"><h1>CONSUMO EN CONSTRUCCI&Oacute;N</h1></div>
 		<div class="gastos" style="display:none;width:682px;">
-			<div class="toolbarDetalles" style="padding:none;">
+			<div class="toolbarDetalles" style="padding:none; margin-bottom:5px; ">
 				<button class="btnAgregar" style="padding:none;"></button>
 			</div>
 			<table class="grid_articulos">
