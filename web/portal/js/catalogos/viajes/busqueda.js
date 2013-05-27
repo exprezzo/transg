@@ -172,17 +172,17 @@
 			columns: [ 
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
 				
-{ dataKey: "id", visible:true, headerText: "Id" },
-{ dataKey: "fecha_a_entregar", visible:true, headerText: "Fecha_a_entregar" },
+{ dataKey: "id", visible:false, headerText: "Id" },
+{ dataKey: "fecha_a_entregar", visible:true, headerText: "Fecha E." },
 { dataKey: "contenido", visible:true, headerText: "Contenido" },
-{ dataKey: "direccion_de_entrega", visible:true, headerText: "Direccion_de_entrega" },
+{ dataKey: "direccion_de_entrega", visible:false, headerText: "Direccion_de_entrega" },
 { dataKey: "costo", visible:true, headerText: "Costo" },
 { dataKey: "precio", visible:true, headerText: "Precio" },
-{ dataKey: "fk_chofer", visible:true, headerText: "Fk_chofer" },
-{ dataKey: "fk_vehiculo", visible:true, headerText: "Fk_vehiculo" },
-{ dataKey: "fk_caja", visible:true, headerText: "Fk_caja" },
-{ dataKey: "fk_cliente", visible:true, headerText: "Fk_cliente" },
-{ dataKey: "creado", visible:true, headerText: "Creado" }
+{ dataKey: "fk_chofer", visible:false, headerText: "Fk_chofer" },
+{ dataKey: "fk_vehiculo", visible:true, headerText: "Vehiculo" },
+{ dataKey: "fk_caja", visible:false, headerText: "Fk_caja" },
+{ dataKey: "fk_cliente", visible:true, headerText: "Cliente" },
+{ dataKey: "creado", visible:false, headerText: "Creado" }
 			]
 		});
 		

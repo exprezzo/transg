@@ -19,7 +19,7 @@ class viajes extends Controlador{
 			$obj[$campos[$i]]='';
 		}
 		$vista->datos=$obj;		
-		
+		$vista->gastos=array();
 		global $_PETICION;
 		$vista->mostrar('/'.$_PETICION->controlador.'/edicion');
 		

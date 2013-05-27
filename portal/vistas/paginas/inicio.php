@@ -170,7 +170,7 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 			iniciarLinkTabs(); //A los objetos con atributo linkTab=true,  se les agrega comportamiento ajax para abrir tabs.
 			
 		     TabManager.add(kore.mod_url_base+'paginas/home','Inicio',1);
-			 // TabManager.add(kore.mod_url_base+'paginas/diseno','Dise&ntilde;o',1);
+			  TabManager.add(kore.mod_url_base+'viajes/busqueda','Dise&ntilde;o',1);
 			 // TabManager.add(kore.mod_url_base+'paginas/entregas','Entregas',1);
 			 // TabManager.add(kore.mod_url_base+'paginas/cotizacion','Cotizaci&oacute;n',1);
 		  // TabManager.add(kore.mod_url_base+'ordencompra/busqueda','Ordenes',1);

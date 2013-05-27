@@ -12,9 +12,7 @@ var NavegacionEnAgrupada=function(){
 	};
 	this.seleccionarSiguienteLinea=function(){	
 		this.celdaActual.row++;		
-		// console.log('this.celdaActual.row'+this.celdaActual.row);
 		
-		// console.log('this.numRows'+this.numRows - 1 );
 		if (this.celdaActual.row > this.numRows -1){
 			this.nuevo();
 		}

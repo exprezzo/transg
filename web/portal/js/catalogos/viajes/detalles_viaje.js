@@ -49,7 +49,11 @@ var DetallesViaje=function (tabId){
 		gridPedidos.bind('keydown', function(e) {
 			var code = e.keyCode || e.which;
 			code=parseInt( code );			
-			if(e.keyCode==46){
+			
+			
+			if(e.keyCode==46 && e.shiftKey){
+				me.recuperar();
+			}else if(e.keyCode==46){
 				me.eliminar();
 			}
 		});
@@ -62,7 +66,15 @@ var DetallesViaje=function (tabId){
 			allowColMoving: false,			
 			allowKeyboardNavigation:true,
 			selectionMode:'singleRow',
-			data:articulos,			
+			data:articulos,	
+			rowStyleFormatter: function (args) {				
+				if (args.data && args.data.eliminado){
+					$(args.$rows).addClass("eliminado");
+				}
+				// if ((args.state === $.wijmo.wijgrid.renderState.rendering) && (args.type & $.wijmo.wijgrid.rowType.dataAlt)) {
+				  // args.$rows.find("td").css("font-style", "italic");
+				// }
+			},
 			columns: [
 				{dataKey: "id", visible:false, headerText: "ID"},
 				{dataKey: "nombre", headerText: "Concepto",width:"300px"},
@@ -75,31 +87,29 @@ var DetallesViaje=function (tabId){
 		var me=this;
 		
 		gridPedidos.wijgrid({ beforeCellEdit: function(e, args) {
-				var row = args.cell.row() ;								
-				var index = args.cell.rowIndex();				
-				var sel=gridPedidos.wijgrid('selection');				
-				sel.addRows(index);				
+				var row = args.cell.row() ;
+				var index = args.cell.rowIndex();
+				var sel=gridPedidos.wijgrid('selection');
+				sel.addRows(index);
 				
 				if (args.cell.column().editable === false){
 					return false;
-				}				
+				}
 
-				switch (args.cell.column().dataKey) { 		
-					case "nombre": 
+				switch (args.cell.column().dataKey) {
+					case "nombre":
 						var combo=
 						$("<input />")
-							.val(args.cell.value()) 
-							.appendTo(args.cell.container().empty());   
-						args.handled = true;   
+							.val(args.cell.value())
+							.appendTo(args.cell.container().empty());
+						args.handled = true;
 						
 						var domCel = args.cell.tableCell();
 						combo.css('width',	$(domCel).width()-10 );
 						combo.css('height',	$(domCel).height()-10 );
-						
-						 me.configurarComboConcepto(combo);
-					break;					
+						me.configurarComboConcepto(combo);
+					break;
 					default:
-						// alert( args.cell.column().dataKey );
 						var input=$("<input />")
 							.val(args.cell.value())
 							.appendTo(args.cell.container().empty()).focus().select();
@@ -108,8 +118,8 @@ var DetallesViaje=function (tabId){
 						input.css('height',	$(domCel).height() -10 );
 						args.handled = true;
 						return true;
-					break;						
-				} 
+					break;
+				}
 			}
 		});
 		gridPedidos.wijgrid({beforeCellUpdate:function(e, args) {
@@ -117,10 +127,9 @@ var DetallesViaje=function (tabId){
 					case "nombre":
 						args.value = args.cell.container().find("input").val();
 						if (me.articulo!=undefined){
-							var row=args.cell.row();
-							// console.log("me.articulo"); console.log(me.articulo);							
+							var row=args.cell.row();							
 							row.data.costo=me.articulo.costo;							
-							row.data.id = me.articulo.value;						
+							row.data.fk_concepto = me.articulo.value;						
 							row.data.nombre = me.articulo.nombre;
 							row.data.fecha = '2013-01-01';
 							gridPedidos.wijgrid('ensureControl',true);
@@ -130,8 +139,7 @@ var DetallesViaje=function (tabId){
 						break;															
 					default:						
 						args.value = args.cell.container().find("input").val();	
-						var row=args.cell.row();
-						row.data.costo = args.value;
+						var row=args.cell.row();						
 						gridPedidos.wijgrid('ensureControl',true);						
 				}
 				me.articulo=undefined;		
@@ -143,7 +151,7 @@ var DetallesViaje=function (tabId){
 			
 			var costo=0;
 			for(var i=0; i<datos.length; i++ ){
-				costo+= ( datos[i].costo * 1);				
+				if ( !datos[i].eliminado ) costo+= ( datos[i].costo * 1);				
 			}
 			
 			$(me.tabId+' [name="costo"]').val(costo);
@@ -157,7 +165,7 @@ var DetallesViaje=function (tabId){
 		});
 		gridPedidos.wijgrid({ selectionChanged: function (e, args) { 								
 			var item=args.addedCells.item(0);						
-			var row=item.row();						
+			var row=item.row();
 			var data=row.data;			
 			me.selected=data;			
 			me.selected.dataItemIndex=row.dataItemIndex;			
@@ -192,7 +200,16 @@ var DetallesViaje=function (tabId){
 		// });
 	};
 	
-	
+	this.recuperar=function(){
+		
+		var cellInfo= $(this.tabId+" .grid_articulos").wijgrid("currentCell");
+		var row = cellInfo.row();
+		var container=cellInfo.container();
+		$(this.tabId+" .grid_articulos 	tbody tr:eq("+cellInfo.rowIndex()+")").removeClass('eliminado');		
+		row.data.eliminado=false;
+		$(this.tabId+" .grid_articulos").wijgrid("ensureControl", true);
+		
+	}
 	this.eliminar=function(){
 		
 		var cellInfo= $(this.tabId+" .grid_articulos").wijgrid("currentCell");
@@ -200,6 +217,7 @@ var DetallesViaje=function (tabId){
 		var container=cellInfo.container();
 		$(this.tabId+" .grid_articulos 	tbody tr:eq("+cellInfo.rowIndex()+")").addClass('eliminado');		
 		row.data.eliminado=true;
+		$(this.tabId+" .grid_articulos").wijgrid("ensureControl", true);
 		
 	}
 	this.navegarEnter=function(){		

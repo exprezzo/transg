@@ -129,6 +129,9 @@
 		//-----------------------------------
 		var datos=paramObj;
 		
+		var gastos=$(tabId+' .grid_articulos').wijgrid('data');
+		datos.gastos = gastos;
+		
 		//Envia los datos al servidor, el servidor responde success true o false.
 		
 		$.ajax({
@@ -157,6 +160,16 @@
 				var objId = '/'+me.configuracion.modulo.nombre+'/'+me.controlador.nombre+'/editar?id='+resp.datos.id;
 				objId = objId.toLowerCase();
 				$(me.tabId ).attr('objId',objId);				
+				
+				
+				var articulos=resp.datos.gastos;
+				var grid=$(me.tabId+" .grid_articulos");
+				var data=grid.wijgrid('data');
+				data.length=0;
+				for(var i=0; i<articulos.length; i++){
+					data.push(articulos[i]);
+				}
+				grid.wijgrid('ensureControl', true);
 				
 				$.gritter.add({
 					position: 'bottom-left',
