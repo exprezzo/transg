@@ -1,4 +1,4 @@
-﻿var Busquedaviajes=function(){
+﻿var Busquedaseries=function(){
 	this.tituloNuevo='Nueva';
 	this.eliminar=function(){
 	
@@ -55,7 +55,6 @@
 		  this.eliminar();
 		}
 	}
-	
 	this.agregarClase=function(clase){
 		var tabId=this.tabId;		
 		var tab=$('div'+this.tabId);						
@@ -169,38 +168,19 @@
 			pageSize:pageSize,
 			selectionMode:'singleRow',
 			data:dataSource,
-			// showFilter:true,
+			showFilter:true,
 			columns: [ 
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
 				
-{ dataKey: "id", visible:false, headerText: "Id" },
-{ dataKey: "serie", visible:true, headerText: "Serie",
-	cellFormatter: function (args) {
-		if (args.row.type & $.wijmo.wijgrid.rowType.data) {
-			args.$container
-				.css("text-align", "center")
-				.empty()
-				.append($("<div>").html( args.row.data.serie+'-'+args.row.data.folio ));
-			return true; 
-		} 
-	} 					
-					
-},
-{ dataKey: "fecha_a_entregar", visible:true, headerText: "Fecha E.", width:120,dataType: "datetime", dataFormatString: "dd/MM/yyyy HH:mm"},
-{ dataKey: "fk_cliente", visible:false, headerText: "Cliente" },
-{ dataKey: "cliente", visible:true, headerText: "Cliente" },
-{ dataKey: "contenido", visible:true, headerText: "Contenido" },
-{ dataKey: "direccion_de_entrega", visible:false, headerText: "Direccion_de_entrega" },
-{ dataKey: "costo", visible:true, headerText: "Costo",dataType:'currency' },
-{ dataKey: "precio", visible:true, headerText: "Precio",dataType:'currency' },
-{ dataKey: "fk_chofer", visible:false, headerText: "Fk_chofer" },
-{ dataKey: "fk_vehiculo", visible:false, headerText: "Vehiculo" },
-{ dataKey: "vehiculo", visible:true, headerText: "Vehiculo" },
-{ dataKey: "fk_caja", visible:false, headerText: "Fk_caja" },
-{ dataKey: "fk_serie", visible:false, headerText: "folio" },
-
-{ dataKey: "folio", visible:false, headerText: "serie" },
-{ dataKey: "creado", visible:false, headerText: "Creado" }
+{ dataKey: "id", visible:true, headerText: "Id" },
+{ dataKey: "serie", visible:true, headerText: "Serie" },
+{ dataKey: "folio_i", visible:true, headerText: "Folio_i" },
+{ dataKey: "folio_f", visible:true, headerText: "Folio_f" },
+{ dataKey: "sig_folio", visible:true, headerText: "Sig_folio" },
+{ dataKey: "es_default", visible:true, headerText: "Es_default" },
+{ dataKey: "idalmacen", visible:true, headerText: "Idalmacen" },
+{ dataKey: "proceso", visible:true, headerText: "Proceso" },
+{ dataKey: "idsucursal", visible:true, headerText: "Idsucursal" }
 			]
 		});
 		

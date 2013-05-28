@@ -54,8 +54,8 @@
 				<td style="text-align:right; left:32px; position:relative; ">Costo</td>
 			</tr>
 			<tr>
-				<td style="font-size:40px;"><?php echo $this->datos['nombreSerie']; ?></td>
-				<td style="font-size:40px;"><?php echo $this->datos['folio']; ?></td>					
+				<td style="font-size:40px;" class="lblSerie"><?php echo $this->datos['nombreSerie']; ?></td>
+				<td style="font-size:40px;" class="lblFolio"><?php echo $this->datos['folio']; ?></td>					
 				<td style="font-size:40px; left:32px; position:relative; " class="lblGasto">$<?php echo $this->datos['costo']; ?></td>					
 			</tr>
 		</table>

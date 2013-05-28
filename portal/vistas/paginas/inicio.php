@@ -66,10 +66,51 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 			window.location=kore.mod_url_base+'usuarios/logout';
 		}
 		$(function () {
-		
+			
+			shortcut.add("Ctrl+Alt+L", 
+				function() { 
+					TabManager.add(kore.mod_url_base+'clientes/busqueda','Clientes', 1);
+					
+				}, 
+				{ 'type':'keydown', 'propagate':false, 'target':document}
+			);
+			
 			shortcut.add("Ctrl+Alt+C", 
 				function() { 
-					TabManager.add(kore.mod_url_base+'catalogos/busqueda','Menu',0);
+					TabManager.add(kore.mod_url_base+'conceptos/busqueda','Conceptos',1);
+					
+				}, 
+				{ 'type':'keydown', 'propagate':false, 'target':document}
+			);
+			
+			shortcut.add("Ctrl+Alt+J", 
+				function() { 
+					TabManager.add(kore.mod_url_base+'cajas/busqueda','Cajas',1);
+					
+				}, 
+				{ 'type':'keydown', 'propagate':false, 'target':document}
+			);
+			
+			
+			shortcut.add("Ctrl+Alt+T", 
+				function() { 
+					TabManager.add(kore.mod_url_base+'vehiculos/busqueda','Vehiculos',1);
+					
+				}, 
+				{ 'type':'keydown', 'propagate':false, 'target':document}
+			);
+			
+			shortcut.add("Ctrl+Alt+F", 
+				function() { 
+					TabManager.add(kore.mod_url_base+'choferes/busqueda','Choferes', 1);
+					
+				}, 
+				{ 'type':'keydown', 'propagate':false, 'target':document}
+			);
+			
+			shortcut.add("Ctrl+Alt+V", 
+				function() { 
+					TabManager.add(kore.mod_url_base+'viajes/busqueda','Viajes',1);
 					
 				}, 
 				{ 'type':'keydown', 'propagate':false, 'target':document}
@@ -109,7 +150,7 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 			
 			
 			
-			shortcut.add("Ctrl+Alt+W", 
+			shortcut.add("Ctrl+Alt+X", 
 				function() { 
 					//busca el tab seleccionado
 					var tab=$('#tabs > div[aria-hidden="false"]');

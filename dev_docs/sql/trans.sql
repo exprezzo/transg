@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2013-05-25 17:15:51
+Date: 2013-05-27 23:11:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,7 +56,7 @@ CREATE TABLE `system_catalogos` (
   `msg_eliminado` char(255) DEFAULT NULL,
   `msg_cambios` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of system_catalogos
@@ -75,6 +75,7 @@ INSERT INTO `system_catalogos` VALUES ('51', '2', 'Vehiculos', 'vehiculos', 'veh
 INSERT INTO `system_catalogos` VALUES ('52', '2', 'Cajas', 'cajas', 'caja', 'trans_caja', 'id', 'http://png.findicons.com/files/icons/2206/austerity/59/com_saurik_winterboard.png', '', '', '', '', '', '', '', '');
 INSERT INTO `system_catalogos` VALUES ('53', '2', 'Viajes', 'viajes', 'viaje', 'trans_viaje', 'id', 'http://png.findicons.com/files/icons/52/cargo_boxes/48/shipping1.png', '', '', '', '', '', '', '', '');
 INSERT INTO `system_catalogos` VALUES ('54', '2', 'Gastos de Viaje', 'gastosdeviaje', 'gastodeviaje', 'trans_viaje_gasto', 'id', '', '', '', '', '', '', '', '', '');
+INSERT INTO `system_catalogos` VALUES ('55', '2', 'Series', 'series', 'serie', 'trans_serie', 'id', '', '', '', '', '', '', '', '', '');
 
 -- ----------------------------
 -- Table structure for `system_config`
@@ -230,13 +231,39 @@ CREATE TABLE `trans_concepto` (
   `costo` decimal(18,6) DEFAULT NULL,
   `nombre_um` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of trans_concepto
 -- ----------------------------
 INSERT INTO `trans_concepto` VALUES ('4', 'diesel', '0.000000', '');
 INSERT INTO `trans_concepto` VALUES ('5', 'caseta', '250.000000', '');
+INSERT INTO `trans_concepto` VALUES ('6', 'mordida de federal', '1000.000000', '');
+INSERT INTO `trans_concepto` VALUES ('7', 'reparaciones', '0.000000', '');
+INSERT INTO `trans_concepto` VALUES ('8', 'viaticos', '0.000000', '');
+INSERT INTO `trans_concepto` VALUES ('9', 'asdf', '0.000000', '');
+
+-- ----------------------------
+-- Table structure for `trans_serie`
+-- ----------------------------
+DROP TABLE IF EXISTS `trans_serie`;
+CREATE TABLE `trans_serie` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `serie` char(5) NOT NULL,
+  `folio_i` int(11) DEFAULT NULL,
+  `folio_f` int(11) DEFAULT NULL,
+  `sig_folio` int(11) DEFAULT NULL,
+  `es_default` bit(1) DEFAULT NULL,
+  `idalmacen` int(11) DEFAULT NULL,
+  `proceso` varchar(50) NOT NULL,
+  `idsucursal` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of trans_serie
+-- ----------------------------
+INSERT INTO `trans_serie` VALUES ('7', 'MAY', '1', '10000', '29', '', '0', 'viajes', '0');
 
 -- ----------------------------
 -- Table structure for `trans_vehiculo`
@@ -257,7 +284,7 @@ CREATE TABLE `trans_vehiculo` (
 -- Records of trans_vehiculo
 -- ----------------------------
 INSERT INTO `trans_vehiculo` VALUES ('3', 'asdf', 'T-501', 'asdfd', '0.00', '1', '1');
-INSERT INTO `trans_vehiculo` VALUES ('4', '', 'T-502', '', '0.00', '2', '0');
+INSERT INTO `trans_vehiculo` VALUES ('4', '', 'T-502', '', '0.00', '4', '0');
 INSERT INTO `trans_vehiculo` VALUES ('5', '', 'T-503', '', '0.00', '2', '2344234');
 
 -- ----------------------------
@@ -276,14 +303,24 @@ CREATE TABLE `trans_viaje` (
   `fk_caja` int(11) DEFAULT NULL,
   `fk_cliente` int(11) DEFAULT NULL,
   `creado` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `folio` int(11) DEFAULT NULL,
+  `fk_serie` int(11) DEFAULT '7',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of trans_viaje
 -- ----------------------------
-INSERT INTO `trans_viaje` VALUES ('3', '0000-00-00 00:00:00', 'mangos y platanos', 'Avenida del mar # 340 entre sol y luna , col Centro, Cualian, Sin. Mexico.', '5428.000000', '13.000000', '4', '4', '2', '5', '2013-05-24 13:36:06');
-INSERT INTO `trans_viaje` VALUES ('4', '0000-00-00 00:00:00', 'carne y papas', 'en la casa de doÃ±a petra', '0.000000', '31.000000', '4', '5', '4', '6', '2013-05-24 17:29:31');
+INSERT INTO `trans_viaje` VALUES ('29', '2013-05-27 22:41:00', '', '', '0.000000', '0.000000', '4', '3', '1', '5', '2013-05-27 22:41:22', '19', '7');
+INSERT INTO `trans_viaje` VALUES ('30', '2013-05-27 22:41:00', '', '', '1000.000000', '0.000000', '4', '3', '1', '3', '2013-05-27 22:41:34', '20', '7');
+INSERT INTO `trans_viaje` VALUES ('31', '2013-05-27 22:42:00', '', '', '0.000000', '0.000000', '4', '3', '1', '5', '2013-05-27 22:42:33', '21', '7');
+INSERT INTO `trans_viaje` VALUES ('32', '2013-05-27 22:44:00', '', '', '0.000000', '0.000000', null, null, null, null, '2013-05-27 22:44:38', '22', '7');
+INSERT INTO `trans_viaje` VALUES ('33', '2013-05-27 22:44:00', '', '', '0.000000', '0.000000', '4', '3', '1', '3', '2013-05-27 22:44:41', '23', '7');
+INSERT INTO `trans_viaje` VALUES ('34', '2013-05-27 22:44:00', '', '', '0.000000', '0.000000', null, null, null, null, '2013-05-27 22:44:48', '24', '7');
+INSERT INTO `trans_viaje` VALUES ('35', '2013-05-27 22:57:00', '', '', '0.000000', '0.000000', null, null, null, null, '2013-05-27 22:57:18', '25', '7');
+INSERT INTO `trans_viaje` VALUES ('36', '2013-05-27 22:57:00', '', '', '0.000000', '0.000000', null, null, null, null, '2013-05-27 22:57:25', '26', '7');
+INSERT INTO `trans_viaje` VALUES ('37', '2013-05-27 22:58:00', '', '', '0.000000', '0.000000', '4', '3', '1', '3', '2013-05-27 22:58:46', '27', '7');
+INSERT INTO `trans_viaje` VALUES ('38', '2013-05-27 22:59:00', '', '', '1000.000000', '0.000000', '4', '3', '1', '3', '2013-05-27 22:59:34', '28', '7');
 
 -- ----------------------------
 -- Table structure for `trans_viaje_gasto`
@@ -296,10 +333,25 @@ CREATE TABLE `trans_viaje_gasto` (
   `costo` decimal(18,6) DEFAULT NULL,
   `fecha` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of trans_viaje_gasto
 -- ----------------------------
-INSERT INTO `trans_viaje_gasto` VALUES ('1', '3', '4', '5000.000000', '0000-00-00 00:00:00');
-INSERT INTO `trans_viaje_gasto` VALUES ('2', '3', '4', '400.000000', '0000-00-00 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('7', '5', '4', '500.000000', '2013-01-01 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('8', '5', '5', '250.000000', '2013-01-01 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('9', '5', '6', '1000.000000', '2013-01-01 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('10', '6', '4', '1500.000000', '2013-01-01 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('11', '6', '6', '1000.000000', '2013-01-01 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('12', '6', '4', '1500.000000', '2013-01-01 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('13', '6', '6', '1000.000000', '2013-01-01 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('14', '3', '6', '1000.000000', '2013-01-01 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('16', '3', '9', '12.000000', '2013-01-01 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('23', '3', '7', '12.000000', '2013-01-01 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('30', '4', '4', '0.000000', '2013-01-01 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('31', '4', '6', '1000.000000', '2013-01-01 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('32', '4', '8', '0.000000', '2013-01-01 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('33', '7', '0', '0.000000', '0000-00-00 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('41', '30', '6', '1000.000000', '2013-01-01 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('42', '38', '6', '1000.000000', '2013-01-01 00:00:00');
+INSERT INTO `trans_viaje_gasto` VALUES ('43', '31', '7', '0.000000', '2013-01-01 00:00:00');

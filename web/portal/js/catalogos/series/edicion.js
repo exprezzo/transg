@@ -1,13 +1,7 @@
-﻿var Edicionviajes = function(){
+﻿var Edicionseries = function(){
 	this.editado=false;
 	this.saveAndClose=false;
-	this.borrar=function(){
-		
-		var r=confirm("¿Eliminar Elemento?");
-		if (r==true){
-		  this.eliminar();
-		}
-	}
+	
 	this.activate=function(){
 		var tabId=this.tabId;
 		
@@ -69,7 +63,7 @@
 				$(this).removeClass("ui-state-hover");			
 		});
 		
-		  tab.data('tabObj',this); //Este para que?		
+		 // tab.data('tabObj',this); //Este para que?		
 	};
 	//esta funcion pasara al plugin
 	//agrega una clase al panel del contenido y a la pesta�a relacionada.
@@ -103,9 +97,7 @@
 		var tabId = this.tabId;		
 		var id = $(this.tabId + ' [name="'+this.configuracion.pk+'"]').val();
 		if (id>0){
-			var serie=$(this.tabId + ' .lblSerie').html();
-			var folio=$(this.tabId + ' .lblFolio').html();
-			$('a[href="'+tabId+'"]').html(serie+' - '+folio);
+			$('a[href="'+tabId+'"]').html(this.configuracion.catalogo.modelo +':'+id);
 		}else{
 			$('a[href="'+tabId+'"]').html('Nuevo');
 		}
@@ -137,9 +129,6 @@
 		//-----------------------------------
 		var datos=paramObj;
 		
-		var gastos=$(tabId+' .grid_articulos').wijgrid('data');
-		datos.gastos = gastos;
-		
 		//Envia los datos al servidor, el servidor responde success true o false.
 		
 		$.ajax({
@@ -161,25 +150,13 @@
 				
 				title= 'Success';				
 				// tab.find('[name="'+me.configuracion.pk+'"]').val(resp.datos[me.configuracion.pk]);
-				tab.find('[name="'+me.configuracion.pk+'"]').val(resp.datos[me.configuracion.pk]);
-
-				tab.find('.lblFolio').html(resp.datos['folio']);
+				tab.find('[name="'+me.configuracion.pk+'"]').val(resp.datos[me.configuracion.pk]);				
 				
 				me.actualizarTitulo();
 				me.editado=false;
 				var objId = '/'+me.configuracion.modulo.nombre+'/'+me.controlador.nombre+'/editar?id='+resp.datos.id;
 				objId = objId.toLowerCase();
 				$(me.tabId ).attr('objId',objId);				
-				
-				
-				var articulos=resp.datos.gastos;
-				var grid=$(me.tabId+" .grid_articulos");
-				var data=grid.wijgrid('data');
-				data.length=0;
-				for(var i=0; i<articulos.length; i++){
-					data.push(articulos[i]);
-				}
-				grid.wijgrid('ensureControl', true);
 				
 				$.gritter.add({
 					position: 'bottom-left',
@@ -280,7 +257,6 @@
 			
 			var me=this;
 			
-			
 			$(this.tabId + ' .toolbarEdicion .btnGuardar').click( function(){
 				me.guardar();
 				me.editado=true;
@@ -293,30 +269,5 @@
 				  me.editado=true;
 				}
 			});
-			
-			$(this.tabId + ' .toolbarEdicion .btnGeneral').click( function(){
-				$( me.tabId + ' .frmEdicion').fadeIn();
-				$( me.tabId + ' .consumo').hide();
-				$( me.tabId + ' .gastos').hide();
-			});
-			
-			$(this.tabId + ' .toolbarEdicion .btnConsumo').click( function(){
-				alert("En construcción");
-				// $( me.tabId + ' .frmEdicion').hide();
-				// $( me.tabId + ' .consumo').fadeIn();
-				// $( me.tabId + ' .gastos').hide();
-				
-			});
-			
-			$(this.tabId + ' .toolbarEdicion .btnDetalles').click( function(){
-				$( me.tabId + ' .frmEdicion').hide();
-				$( me.tabId + ' .consumo').hide();
-				$( me.tabId + ' .gastos').fadeIn();
-				$(me.tabId+' .grid_articulos').wijgrid('ensureControl',true);
-				
-			});
-			
-			
-			
 	};	
 }

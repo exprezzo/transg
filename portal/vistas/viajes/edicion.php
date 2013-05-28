@@ -30,7 +30,7 @@
 		 $('#'+config.tab.id+' [name="fk_chofer"]').wijcombobox();
 		 
 		 $('#'+config.tab.id+' [name="fecha_a_entregar"]').wijinputdate({ dateFormat: 'dd/MM/yyyy',showTrigger:true });
-		 $('#'+config.tab.id+' [name="hora_a_entregar"]').wijinputdate({ dateFormat: 'HH:mm:ss',showTrigger:false });
+		 $('#'+config.tab.id+' [name="hora_a_entregar"]').wijinputdate({ dateFormat: 'HH:mm',showTrigger:false });
 		 $('#'+config.tab.id+' [name="precio"]').wijinputnumber({type:'currency', decimalPlaces: 2, increment: 1, showSpinner: true});
 		 
 		 
@@ -140,10 +140,11 @@
 				$this->datos=array();		
 			}
 			$this->datos['hora_a_entregar']=$this->datos['fecha_a_entregar'];
-			$this->datos['nombreSerie']='A';
-			$this->datos['folio']='1';
 			
-			
+			if ( empty($this->datos['id']) ){
+				$this->datos['nombreSerie']=$this->series[0]['serie'];
+				$this->datos['folio']=$this->datos['folio'];
+			}			
 			$this->mostrar('/toolbar_edicion');	
 		?>
 		

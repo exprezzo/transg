@@ -33,7 +33,7 @@ var DetallesViaje=function (tabId){
 		// alert(tabId);
 		
 		var fields=[			
-			{ name: "id"},			
+			{ name: "id",default:0},			
 			{ name: "fk_concepto"},
 			{ name: "nombreConcepto"},
 			{ name: "costo"},

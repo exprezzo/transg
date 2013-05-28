@@ -34,9 +34,13 @@ var NavegacionEnAgrupada=function(){
 		
 		var rec={};
 		
+		console.log("this.options.padre.fields"); console.log(this.options.padre.fields);
 		$.each( this.options.padre.fields, function(indexInArray, valueOfElement){			
 			var campo=valueOfElement.dataKey;
-			rec[campo]='';		
+			if (campo!=undefined){
+				rec[campo]='';		
+			}
+			
 		} );
 		
 		var nuevo=new Array(rec);
