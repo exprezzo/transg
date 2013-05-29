@@ -175,6 +175,7 @@
 { dataKey: "id", visible:false, headerText: "Id" },
 { dataKey: "nombre", visible:true, headerText: "Nombre" },
 { dataKey: "costo", visible:true, headerText: "Costo",dataType:'currency' },
+{ dataKey: "fecha", visible:false, headerText: "..." },
 { dataKey: "nombre_um", visible:true, headerText: "UM" }
 			]
 		});

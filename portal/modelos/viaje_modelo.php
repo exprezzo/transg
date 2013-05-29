@@ -43,26 +43,24 @@ class viajeModelo extends Modelo{
 				
 				$art['fk_viaje']=$res['datos']['id'];
 				
-				// echo $art['fecha'];
+				 // echo $art['fecha'];
 				
-				$dateString = strstr($art['fecha'], " (", true); 
 				
-				$fecha=new DateTime( $dateString );
-				$art['fecha'] =  $fecha->format('Y-m-d');
 				
-				// echo $art['fecha']; exit;
+				$fecha=DateTime::createFromFormat('d/m/Y', $art['fecha'] );
+				if ($fecha)
+				$art['fecha'] =  $fecha->format('Y-m-d');				
 				
-				if ( !empty( $art['eliminado'] ) ){
-					// print_r( $art );
-					$resp = $gastoMod->eliminar( $art );
-					
-					// print_r($resp);
+				if ( !empty( $art['eliminado'] ) ){					
+					$resp = $gastoMod->eliminar( $art );					
 				}else{
 					unset( $art['eliminado'] ) ;
-					// if ( !empty($art['idarticulo']) )
-					$resp=$gastoMod->guardar( $art );
+					if ( !empty($art['fk_concepto']) ){
+						$resp=$gastoMod->guardar( $art );
 					
-					if ( !$resp['success'] ) echo json_encode( $resp['msg'] );
+						if ( !$resp['success'] ) echo json_encode( $resp['msg'] );
+					}
+					
 				}			
 			}
 						
@@ -131,7 +129,7 @@ class viajeModelo extends Modelo{
 		}
 		
 		$exito = $sth->execute();
-		// echo $sth->debugDumpParams();
+		  // echo $sth->debugDumpParams();
 		if ( !$exito ){
 			$arr = $sth->errorInfo();
 			echo $sth->debugDumpParams();
@@ -153,19 +151,20 @@ class viajeModelo extends Modelo{
 		if ($paginar){
 			$limit=$params['limit'];
 			$start=$params['start'];
-			$sql = 'SELECT s.serie, c.razon_social as cliente,ve.codigo as vehiculo, v.* FROM '.$this->tabla.' v 
+			$sql = 'SELECT s.serie, c.razon_social as cliente,ve.codigo as vehiculo, v.*,DATE_FORMAT(v.fecha_a_entregar, "%d/%m/%Y %H:%i:%s") as human_fecha FROM '.$this->tabla.' v 
 			LEFT JOIN trans_cliente c ON c.id = v.fk_cliente 
 			LEFT JOIN trans_vehiculo ve ON ve.id = v.fk_vehiculo 
 			LEFT JOIN trans_serie s ON s.id = v.fk_serie 
-			'.$filtros.' limit :start,:limit;';
+			'.$filtros.' ORDER by fecha_a_entregar DESC limit :start,:limit;';
 		}else{			
-			$sql = 'SELECT s.serie, c.razon_social as cliente,ve.codigo as vehiculo, v.* FROM '.$this->tabla.' v 
+			$sql = 'SELECT s.serie, c.razon_social as cliente,ve.codigo as vehiculo, v.*,DATE_FORMAT(v.fecha_a_entregar, "%d/%m/%Y %H:%i:%s") as human_fecha FROM '.$this->tabla.' v 
 			LEFT JOIN trans_cliente c ON c.id = v.fk_cliente 
 			LEFT JOIN trans_vehiculo ve ON ve.id = v.fk_vehiculo 
 			LEFT JOIN trans_serie s ON s.id = v.fk_serie 
-			'.$filtros;
+			'.$filtros.' ORDER by fecha_a_entregar DESC';
 		}
 		
+		// echo $sql;
 		$sth = $con->prepare($sql);
 		if ($paginar){
 			$sth->bindValue(':limit',$limit,PDO::PARAM_INT);

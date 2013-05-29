@@ -79,7 +79,7 @@ var DetallesViaje=function (tabId){
 				{dataKey: "id", visible:false, headerText: "ID"},
 				{dataKey: "nombre", headerText: "Concepto",width:"300px", valueRequired: true},
 				{dataKey: "costo", headerText: "Costo",editable:true, dataType: "currency",width:"150px", valueRequired: true},
-				{dataKey: "fecha", headerText: "Fecha",width:"100px",dataType: "datetime", dataFormatString: "dd/MM/yyyy"},
+				{dataKey: "fecha", headerText: "Fecha",width:"100px"},
 				{dataKey: "fk_viaje", headerText: "fk_viaje", visible:false},
 				{dataKey: "fk_concepto", headerText: "fk_concepto", visible:false}
 			]
@@ -121,6 +121,7 @@ var DetallesViaje=function (tabId){
 						fechaField.css('height',	$(domCel).height()-10 );
 						
 						$(fechaField).wijinputdate({ dateFormat: 'dd/MM/yyyy',showTrigger:true });
+						$(fechaField).focus().select();
 					break;
 					default:
 						var input=$("<input />")
@@ -144,7 +145,7 @@ var DetallesViaje=function (tabId){
 							row.data.costo=me.articulo.costo;							
 							row.data.fk_concepto = me.articulo.value;						
 							row.data.nombre = me.articulo.nombre;
-							row.data.fecha = '2013-01-01';
+							row.data.fecha = me.articulo.fecha;
 							gridPedidos.wijgrid('ensureControl',true);
 							
 						}
@@ -386,6 +387,7 @@ var DetallesViaje=function (tabId){
 			{name: 'costo'},
 			{name: 'label',mapping: 'nombre'}, 
 			{name: 'value',mapping: 'id'}, 
+			{name: 'fecha'}, 
 			{name: 'selected',defaultValue: false}
 		];
 		
@@ -430,7 +432,7 @@ var DetallesViaje=function (tabId){
 				
 				
 				rowdom.find('td:eq(1) div').html( '$'+item.costo.formatMoney(2,',','.') );
-				rowdom.find('td:eq(2) div').html( 0 );
+				rowdom.find('td:eq(2) div').html( item.fecha );
 				// rowdom.find('td:eq(2) div').html(item.nombre);
 								
 				// rowdom.find('td:eq(4) div').html( '$'+item.costo.formatMoney(2,',','.') );

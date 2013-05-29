@@ -32,11 +32,7 @@ class conceptoModelo extends Modelo{
 			$this->bindFiltros($sth, $params['filtros']);
 		}
 		
-		
-		
 		$exito = $sth->execute();
-		
-		
 		
 		if ( !$exito ){
 			return $this->getError( $sth );
@@ -53,17 +49,14 @@ class conceptoModelo extends Modelo{
 			$paginar=true;
 		}
 		
-		
-		
-		
 		if ($paginar){
 			$limit=$params['limit'];
 			$start=$params['start'];		
-			$sql = 'SELECT * FROM '.$this->tabla.$filtros.' limit :start,:limit';
+			$sql = 'SELECT *,DATE_FORMAT(now(), "%d/%m/%Y" ) as fecha FROM '.$this->tabla.$filtros.' limit :start,:limit';
 		}else{			
-			$sql = 'SELECT * FROM '.$this->tabla.$filtros;
+			$sql = 'SELECT *,DATE_FORMAT(now(), "%d/%m/%Y" ) as fecha FROM '.$this->tabla.$filtros;
 		}
-		
+		// echo $sql;
 		$sth = $con->prepare($sql);
 		if ($paginar){
 			$sth->bindValue(':limit',$limit,PDO::PARAM_INT);

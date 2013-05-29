@@ -165,7 +165,30 @@ class viajes extends Controlador{
 		echo json_encode($respuesta);	
 	}
 	
+	function busqueda(){
+		$vista = $this->getVista();
+		$cliMod = new clienteModelo();
+		$res = $cliMod->buscar( array() );		
+		$vista->clientes=$res['datos'];
+		$vista->mostrar();
+	}
 	function buscar(){
+		if ( !empty($_GET['filtering']) )
+		for($i=0; $i<sizeof($_GET['filtering']); $i++ ){
+			if ( !empty($_GET['filtering'][$i]['dataKey']) )
+			if ( $_GET['filtering'][$i]['dataKey']=='fechai' ){
+				$fechai=DateTime::createFromFormat ( 'd/m/Y' , $_GET['filtering'][$i]['filterValue'] );
+				$_GET['filtering'][$i]['filterValue']=$fechai->format('Y-m-d').' 00:00:00';
+				$_GET['filtering'][$i]['field']='v.fecha_a_entregar';
+			}
+			
+			if ( !empty($_GET['filtering'][$i]['dataKey']) )
+			if ( $_GET['filtering'][$i]['dataKey']=='fechaf' ){
+				$fechaf=DateTime::createFromFormat ( 'd/m/Y' , $_GET['filtering'][$i]['filterValue'] );
+				$_GET['filtering'][$i]['filterValue']=$fechaf->format('Y-m-d').' 23:59:59';
+				$_GET['filtering'][$i]['field']='v.fecha_a_entregar';
+			}
+		}
 		return parent::buscar();
 	}
 }

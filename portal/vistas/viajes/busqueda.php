@@ -26,7 +26,7 @@
 </script>
 <?php 	
 	global $_PETICION;
-	$this->mostrar('/backend/componentes/busqueda_toolbar');
+	$this->mostrar('/busqueda_toolbar');
 ?>
 <div >	
 	<table class="grid_busqueda">

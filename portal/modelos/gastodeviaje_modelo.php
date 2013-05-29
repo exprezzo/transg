@@ -9,6 +9,7 @@ class gastodeviajeModelo extends Modelo{
 	}
 	
 	function guardar($params){
+		// print_r($params);
 		return parent::guardar($params);
 	}
 	
@@ -63,9 +64,9 @@ class gastodeviajeModelo extends Modelo{
 		if ($paginar){
 			$limit=$params['limit'];
 			$start=$params['start'];		
-			$sql = 'SELECT c.nombre, vd.* FROM '.$this->tabla.' vd LEFT JOIN trans_concepto c ON c.id = vd.fk_concepto '.$filtros.' limit :start,:limit';
+			$sql = 'SELECT c.nombre, vd.id,vd.fk_viaje,vd.fk_concepto,vd.costo,DATE_FORMAT(vd.fecha, "%d/%m/%Y") as fecha FROM '.$this->tabla.' vd LEFT JOIN trans_concepto c ON c.id = vd.fk_concepto '.$filtros.' ORDER BY fecha DESC limit :start,:limit';
 		}else{			
-			$sql = 'SELECT c.nombre, vd.* FROM '.$this->tabla.' vd LEFT JOIN trans_concepto c ON c.id = vd.fk_concepto '.$filtros;
+			$sql = 'SELECT c.nombre, vd.id,vd.fk_viaje,vd.fk_concepto,vd.costo,DATE_FORMAT(vd.fecha, "%d/%m/%Y") as fecha FROM '.$this->tabla.' vd LEFT JOIN trans_concepto c ON c.id = vd.fk_concepto '.$filtros.' ORDER BY fecha DESC;';
 		}
 		
 		$sth = $con->prepare($sql);

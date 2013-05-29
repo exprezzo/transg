@@ -114,7 +114,15 @@
 						var gridBusqueda=$(me.tabId+" .grid_busqueda");
 						gridBusqueda.wijgrid('ensureControl', true);
 					break;
-										
+					case 'imprimir':
+						alert("Imprimir en construcción");
+					break;
+					case 'filtros':
+						$(me.tabId+" .filtros").toggle({duration:400});
+						$(me.tabId + ' [name="idserie"]').wijcombobox("repaint");
+						$(me.tabId + ' [name="idcliente"]').wijcombobox("repaint");
+						// alert("mostrar filtros");
+					break;		
 					default:						 
 						$.gritter.add({
 							position: 'bottom-left',
@@ -125,13 +133,22 @@
 						});
 						
 					break;
-					case 'imprimir':
-						alert("Imprimir en construcción");
-					break;
+					
 				}
 				
 			}
 		});
+		
+		
+		$(this.tabId + ' [name="fechai"]').wijinputdate({showTrigger:true,dateFormat:'dd/MM/yyyy'});
+		$(this.tabId + ' [name="fechaf"]').wijinputdate({showTrigger:true,dateFormat:'dd/MM/yyyy'});
+		// $(this.tabId + ' [name="folioi"]').wijinputnumber({decimalPlaces: 0});
+		// $(this.tabId + ' [name="foliof"]').wijinputnumber({decimalPlaces: 0});
+		$(this.tabId + ' [name="folioi"]').wijtextbox();
+		$(this.tabId + ' [name="foliof"]').wijtextbox();
+		
+		$(this.tabId + ' [name="idserie"]').wijcombobox();
+		$(this.tabId + ' [name="idcliente"]').wijcombobox();
 		
 	};
 	this.configurarGrid=function(tabId){
@@ -148,7 +165,64 @@
 				dataType: "json"
 			}),
 			dynamic:true,
-			reader:new wijarrayreader(campos)
+			reader:new wijarrayreader(campos),
+			loading: function(e, data) { 
+				
+				var folioi=$(me.tabId + ' [name="folioi"]').val();
+				var foliof=$(me.tabId + ' [name="foliof"]').val();
+				 var idserie=$(me.tabId + ' [name="idserie"]').val();
+								
+				//----------------------
+				var idcliente=$(me.tabId + ' [name="idcliente"]').val();
+				
+				if (folioi!='')
+				data.data.filtering.push({
+					field: 'folio',
+					dataKey:'folioi',
+					filterOperator:'greaterorequal',
+					filterValue:folioi
+				});
+				
+				if (foliof!='')
+				data.data.filtering.push({
+					field: 'folio',
+					dataKey:'foliof',
+					filterOperator:'lessorequal',
+					filterValue:foliof
+				});
+				
+				data.data.filtering.push({
+					field: 'fecha_a_entregar',
+					dataKey:'fechai',
+					filterOperator:'greaterorequal',
+					filterValue:$(me.tabId + ' [name="fechai"]').val()
+				});
+				
+				data.data.filtering.push({
+					field: 'fecha_a_entregar',
+					dataKey:'fechaf',
+					filterOperator:'lessorequal',
+					filterValue:$(me.tabId + ' [name="fechaf"]').val()
+				});
+				
+				if (idcliente!=0)
+				data.data.filtering.push({
+					 dataKey: 'idcliente',
+					 field:'v.fk_cliente',
+					filterOperator:'equals',
+					filterValue:idcliente
+				});
+				
+				if (idserie!=0)
+				data.data.filtering.push({
+					dataKey: 'serie',
+					field:'v.serie',
+					filterOperator:'equals',
+					filterValue:idserie
+				});
+				
+				
+			}
 		});
 				
 		dataSource.reader.read= function (datasource) {						
@@ -169,12 +243,12 @@
 			pageSize:pageSize,
 			selectionMode:'singleRow',
 			data:dataSource,
-			// showFilter:true,
+			 showFilter:false,
 			columns: [ 
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
 				
 { dataKey: "id", visible:false, headerText: "Id" },
-{ dataKey: "serie", visible:true, headerText: "Serie",
+{ dataKey: "serie", visible:true, headerText: "Serie",showFilter:false,
 	cellFormatter: function (args) {
 		if (args.row.type & $.wijmo.wijgrid.rowType.data) {
 			args.$container
@@ -186,9 +260,10 @@
 	} 					
 					
 },
-{ dataKey: "fecha_a_entregar", visible:true, headerText: "Fecha E.", width:120,dataType: "datetime", dataFormatString: "dd/MM/yyyy HH:mm"},
+{ dataKey: "fecha_a_entregar", visible:false, headerText: "Fecha E.", width:120},
+{ dataKey: "human_fecha", visible:true, headerText: "Fecha E.", width:120},
 { dataKey: "fk_cliente", visible:false, headerText: "Cliente" },
-{ dataKey: "cliente", visible:true, headerText: "Cliente" },
+{ dataKey: "cliente", visible:true, headerText: "Cliente",showFilter:false },
 { dataKey: "contenido", visible:true, headerText: "Contenido" },
 { dataKey: "direccion_de_entrega", visible:false, headerText: "Direccion_de_entrega" },
 { dataKey: "costo", visible:true, headerText: "Costo",dataType:'currency' },
