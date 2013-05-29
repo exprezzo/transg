@@ -43,6 +43,15 @@ class viajeModelo extends Modelo{
 				
 				$art['fk_viaje']=$res['datos']['id'];
 				
+				// echo $art['fecha'];
+				
+				$dateString = strstr($art['fecha'], " (", true); 
+				
+				$fecha=new DateTime( $dateString );
+				$art['fecha'] =  $fecha->format('Y-m-d');
+				
+				// echo $art['fecha']; exit;
+				
 				if ( !empty( $art['eliminado'] ) ){
 					// print_r( $art );
 					$resp = $gastoMod->eliminar( $art );

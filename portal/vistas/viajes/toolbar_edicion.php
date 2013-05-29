@@ -51,12 +51,12 @@
 			<tr>
 				<td>Serie</td>
 				<td>Folio</td>					
-				<td style="text-align:right; left:32px; position:relative; ">Costo</td>
+				<td style="text-align:right; position:relative; ">Costo</td>
 			</tr>
 			<tr>
-				<td style="font-size:40px;" class="lblSerie"><?php echo $this->datos['nombreSerie']; ?></td>
-				<td style="font-size:40px;" class="lblFolio"><?php echo $this->datos['folio']; ?></td>					
-				<td style="font-size:40px; left:32px; position:relative; " class="lblGasto">$<?php echo $this->datos['costo']; ?></td>					
+				<td style="font-size:30px;" class="lblSerie"><?php echo $this->datos['nombreSerie']; ?></td>
+				<td style="font-size:30px;" class="lblFolio"><?php echo $this->datos['folio']; ?></td>					
+				<td style="width: 211px; font-size:37px; text-align:right; position:relative; " class="lblGasto">$<?php echo $this->datos['costo']; ?></td>					
 			</tr>
 		</table>
 	

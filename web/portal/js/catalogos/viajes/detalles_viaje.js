@@ -77,9 +77,9 @@ var DetallesViaje=function (tabId){
 			},
 			columns: [
 				{dataKey: "id", visible:false, headerText: "ID"},
-				{dataKey: "nombre", headerText: "Concepto",width:"300px"},
-				{dataKey: "costo", headerText: "Costo",editable:true, dataType: "currency",width:"150px"},
-				{dataKey: "fecha", headerText: "Fecha",width:"100px"},
+				{dataKey: "nombre", headerText: "Concepto",width:"300px", valueRequired: true},
+				{dataKey: "costo", headerText: "Costo",editable:true, dataType: "currency",width:"150px", valueRequired: true},
+				{dataKey: "fecha", headerText: "Fecha",width:"100px",dataType: "datetime", dataFormatString: "dd/MM/yyyy"},
 				{dataKey: "fk_viaje", headerText: "fk_viaje", visible:false},
 				{dataKey: "fk_concepto", headerText: "fk_concepto", visible:false}
 			]
@@ -109,6 +109,19 @@ var DetallesViaje=function (tabId){
 						combo.css('height',	$(domCel).height()-10 );
 						me.configurarComboConcepto(combo);
 					break;
+					case 'fecha':
+						
+						var fechaField= $("<input />")
+							.val(args.cell.value())
+							.appendTo(args.cell.container().empty());
+						args.handled = true;
+						
+						var domCel = args.cell.tableCell();
+						fechaField.css('width',	$(domCel).width()-10 );
+						fechaField.css('height',	$(domCel).height()-10 );
+						
+						$(fechaField).wijinputdate({ dateFormat: 'dd/MM/yyyy',showTrigger:true });
+					break;
 					default:
 						var input=$("<input />")
 							.val(args.cell.value())
@@ -136,11 +149,26 @@ var DetallesViaje=function (tabId){
 							
 						}
 						// me.padre.editado=true;
-						break;															
+						break;	
+					case 'fecha':
+						args.value = args.cell.container().find("input").val();
+						var row=args.cell.row();							
+						row.data.fecha =args.value;						
+						gridPedidos.wijgrid('ensureControl',true);
+						
+					break;
+					case 'costo':
+						args.value = args.cell.container().find("input").val();
+						var row=args.cell.row();							
+						row.data.costo =args.value;												
+						gridPedidos.wijgrid('ensureControl',true);
+						
+					break;
 					default:						
 						args.value = args.cell.container().find("input").val();	
 						var row=args.cell.row();						
 						gridPedidos.wijgrid('ensureControl',true);						
+						console.log("DEFAULT");
 				}
 				me.articulo=undefined;		
 			}			
@@ -154,8 +182,9 @@ var DetallesViaje=function (tabId){
 				if ( !datos[i].eliminado ) costo+= ( datos[i].costo * 1);				
 			}
 			
+			
 			$(me.tabId+' [name="costo"]').val(costo);
-			$(me.tabId+' .lblGasto').html(costo);
+			$(me.tabId+' .lblGasto').html( "$" +costo.formatMoney(2,',','.') );
 			
 		}}); 
 

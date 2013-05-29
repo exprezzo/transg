@@ -24,6 +24,8 @@ function ajustarTab(){
 	$('#tabs').css('min-height',newH);			
 }
 
+// "$" +subtotal.formatMoney(2,',','.')
+
 Number.prototype.formatMoney = function(decPlaces, thouSeparator, decSeparator) {
     var n = this,
     decPlaces = isNaN(decPlaces = Math.abs(decPlaces)) ? 2 : decPlaces,

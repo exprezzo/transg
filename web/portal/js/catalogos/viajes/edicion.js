@@ -43,7 +43,6 @@
 		tab.css('padding','0');
 		tab.css('border','0 1px 1px 1px');
 		
-		
 		this.agregarClase('frm'+this.controlador.nombre);		
 		this.agregarClase('tab_'+this.controlador.nombre);
 		
@@ -218,11 +217,9 @@
 	};	
 	this.eliminar=function(){
 		var id = $(this.tabId + ' [name="'+this.configuracion.pk+'"]').val();
-		var me=this;
-		
+		var me=this;		
 		var params={};
 		params[this.configuracion.pk]=id;
-		
 		
 		$.ajax({
 				type: "POST",
@@ -260,27 +257,14 @@
 					class_name: 'my-sticky-class'
 				});
 			});
-	},
-	
-
-	
-	
+	},	
 	this.configurarFormulario=function(tabId){		
 		var me=this;
 		$(this.tabId+' input[type="text"]').wijtextbox();		
-		$(this.tabId+' textarea').wijtextbox();		
-	
-		
-		
-	
-		
-		
+		$(this.tabId+' textarea').wijtextbox();					
 	};
-	this.configurarToolbar=function(tabId){		
-			
-			var me=this;
-			
-			
+	this.configurarToolbar=function(tabId){					
+			var me=this;			
 			$(this.tabId + ' .toolbarEdicion .btnGuardar').click( function(){
 				me.guardar();
 				me.editado=true;
@@ -314,9 +298,6 @@
 				$( me.tabId + ' .gastos').fadeIn();
 				$(me.tabId+' .grid_articulos').wijgrid('ensureControl',true);
 				
-			});
-			
-			
-			
+			});			
 	};	
 }
