@@ -13,6 +13,45 @@ class viajes extends Controlador{
 	var $pk="id";
 	var $nombre="viajes";
 	
+	function buscarChoferes(){
+		$chofMod= new choferModelo();
+		$resp= $chofMod->buscar( array() );
+		
+		$res=array(
+			'rows'=>$resp['datos'],
+			'totalRows'=>$resp['total']
+		);
+		
+		echo json_encode( $res );
+		
+	}
+	
+	function buscarVehiculos(){
+		$mod= new vehiculoModelo();
+		$resp= $mod->buscar( array() );
+		
+		$res=array(
+			'rows'=>$resp['datos'],
+			'totalRows'=>$resp['total']
+		);
+		
+		echo json_encode( $res );
+		
+	}
+	
+	function buscarClientes(){
+		$mod= new clienteModelo();
+		$resp= $mod->buscar( array() );
+		
+		$res=array(
+			'rows'=>$resp['datos'],
+			'totalRows'=>$resp['total']
+		);
+		
+		echo json_encode( $res );
+		
+	}
+	
 	function nuevo(){		
 		$campos=$this->campos;
 		$vista=$this->getVista();				

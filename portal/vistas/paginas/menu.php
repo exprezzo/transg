@@ -77,7 +77,15 @@
 			<a tablink="true" href="/backend/usuarios/busqueda" titulo="Usuarios" class="link">
 				<img src="http://png.findicons.com/files/icons/2332/super_mono/64/user_card.png">		 
 				<div>Usuarios</div>
-			</a>				
+			</a>
+			<a tablink="true" href="/portal/paginas/ayuda" titulo="Ayuda" class="link">
+				<img src="http://png.findicons.com/files/icons/2166/oxygen/48/help_contents.png">		 
+				<div>Ayuda</div>
+			</a>
+			<a tablink="true" href="/portal/paginas/home" titulo="Inicio" class="link">
+				<img src="http://png.findicons.com/files/icons/1197/agua/32/home_badge.png">		 
+				<div>Menu</div>
+			</a>
 		</div>
 		<?php 
 			}

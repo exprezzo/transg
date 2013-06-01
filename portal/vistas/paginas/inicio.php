@@ -65,7 +65,84 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 		salir=function(){		
 			window.location=kore.mod_url_base+'usuarios/logout';
 		}
-		$(function () {
+		$(function () {						
+		
+			shortcut.add("Ctrl+Alt+V", 
+				function() { 
+					TabManager.add(kore.mod_url_base+'viajes/nuevo','Viajes',0);
+					
+				}, 
+				{ 'type':'keydown', 'propagate':false, 'target':document}
+			);
+			
+			shortcut.add("Ctrl+Alt+SHIFT+V", 
+				function() { 
+					TabManager.add(kore.mod_url_base+'viajes/busqueda','Viajes',1);
+					
+				}, 
+				{ 'type':'keydown', 'propagate':false, 'target':document}
+			);
+			
+			
+			
+			shortcut.add("Ctrl+Alt+A", 
+				function() { 
+					TabManager.add(kore.mod_url_base+'paginas/ayuda','Ayuda',1);
+					
+				}, 
+				{ 'type':'keydown', 'propagate':false, 'target':document}
+			);
+			
+			shortcut.add("Ctrl+Alt+M", 
+				function() { 
+					TabManager.add(kore.mod_url_base+'paginas/home','Menu',1);
+					
+				}, 
+				{ 'type':'keydown', 'propagate':false, 'target':document}
+			);
+			
+			shortcut.add("Ctrl+Alt+X", 
+				function() { 
+					//busca el tab seleccionado
+					var tab=$('#tabs > .wijmo-wijtabs-content > div[aria-hidden="false"]');
+					if (tab.length ==0) tab=$('#tabs > div[aria-hidden="false"]');					
+					var idTab=tab.attr('id');					
+					var tabs=$('#tabs > div');
+					if (idTab != undefined) TabManager.cerrarTab(idTab);					
+				},
+				{ 'type':'keydown', 'propagate':false, 'target':document} 
+			); 
+			
+			shortcut.add("Ctrl+Alt+G", 
+				function() { 
+					//busca el tab seleccionado
+					var tab=$('#tabs > .wijmo-wijtabs-content > div[aria-hidden="false"]');
+					if (tab.length ==0) tab=$('#tabs > div[aria-hidden="false"]');										
+					var tabObj = tab.data('tabObj');
+					if (tabObj!=undefined && tabObj.guardar!=undefined){
+						tabObj.guardar();
+					}
+					
+				}, 
+				{ 'type':'keydown', 'propagate':false, 'target':document}
+			);
+			
+			shortcut.add("Ctrl+Alt+B", 
+				function() { 
+					var tab=$('#tabs > .wijmo-wijtabs-content > div[aria-hidden="false"]');
+					if (tab.length ==0) tab=$('#tabs > div[aria-hidden="false"]');										
+					var tabObj = tab.data('tabObj');					
+					if (tabObj!=undefined && tabObj.borrar!=undefined){
+						tabObj.borrar();
+					}
+					
+					if (tabObj!=undefined && tabObj.eliminar!=undefined){						
+					}
+					
+				}, 
+				{ 'type':'keydown', 'propagate':false, 'target':document} 
+			); 
+			
 			
 			shortcut.add("Ctrl+Alt+L", 
 				function() { 
@@ -108,64 +185,8 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 				{ 'type':'keydown', 'propagate':false, 'target':document}
 			);
 			
-			shortcut.add("Ctrl+Alt+V", 
-				function() { 
-					TabManager.add(kore.mod_url_base+'viajes/busqueda','Viajes',1);
-					
-				}, 
-				{ 'type':'keydown', 'propagate':false, 'target':document}
-			);
-			
-			shortcut.add("Ctrl+Alt+M", 
-				function() { 
-					TabManager.add(kore.mod_url_base+'/backend/menu','Menu');
-					
-				}, 
-				{ 'type':'keydown', 'propagate':false, 'target':document}
-			);
-			
-			shortcut.add("Ctrl+Alt+G", 
-				function() { 
-					var tab=$('#tabs > div[aria-hidden="false"]');
-					var tabObj = tab.data('tabObj');
-					if (tabObj!=undefined && tabObj.guardar!=undefined){
-						tabObj.guardar();
-					}
-					
-				}, 
-				{ 'type':'keydown', 'propagate':false, 'target':document}
-			);
-			
-			shortcut.add("Ctrl+S", 
-				function() { 
-					var tab=$('#tabs > div[aria-hidden="false"]');
-					var tabObj = tab.data('tabObj');
-					if (tabObj!=undefined && tabObj.guardar!=undefined){
-						tabObj.guardar();
-					}
-					
-				}, 
-				{ 'type':'keydown', 'propagate':false, 'target':document} 
-			);  
 			
 			
-			
-			shortcut.add("Ctrl+Alt+X", 
-				function() { 
-					//busca el tab seleccionado
-					var tab=$('#tabs > div[aria-hidden="false"]');
-					var idTab=tab.attr('id');					
-					var tabs=$('#tabs > div');
-					for(var i=0; i<tabs.length; i++){
-						if ( $(tabs[i]).attr('id') == idTab ){
-							$('#tabs').wijtabs('remove', i);
-						}
-					}
-					
-					
-				}, 
-				{ 'type':'keydown', 'propagate':false, 'target':document} 
-			); 
 			
 			
 			
@@ -175,21 +196,6 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 					var tabObj = tab.data('tabObj');
 					if (tabObj!=undefined && tabObj.nuevo!=undefined){
 						tabObj.nuevo();
-					}
-					
-				}, 
-				{ 'type':'keydown', 'propagate':false, 'target':document} 
-			); 
-			
-			shortcut.add("Ctrl+Alt+B", 
-				function() { 
-					var tab=$('#tabs > div[aria-hidden="false"]');
-					var tabObj = tab.data('tabObj');
-					if (tabObj!=undefined && tabObj.borrar!=undefined){
-						tabObj.borrar();
-					}
-					
-					if (tabObj!=undefined && tabObj.eliminar!=undefined){						
 					}
 					
 				}, 
@@ -210,8 +216,8 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 			ajustarTab(); //Ajusta la altura al tamaño en relacion al tamaño de la pantalla
 			iniciarLinkTabs(); //A los objetos con atributo linkTab=true,  se les agrega comportamiento ajax para abrir tabs.
 			
-		     TabManager.add(kore.mod_url_base+'paginas/home','Inicio',1);
-			  TabManager.add(kore.mod_url_base+'viajes/busqueda','Viajes',1);
+		     TabManager.add(kore.mod_url_base+'paginas/home','Menu',1);
+			  // TabManager.add(kore.mod_url_base+'viajes/busqueda','Viajes',1);
 			 // TabManager.add(kore.mod_url_base+'paginas/entregas','Entregas',1);
 			 // TabManager.add(kore.mod_url_base+'paginas/cotizacion','Cotizaci&oacute;n',1);
 		  // TabManager.add(kore.mod_url_base+'ordencompra/busqueda','Ordenes',1);
@@ -319,8 +325,12 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 			overflow:hidden;
 		}
 		img {
-		border: none;
-	}
+			border: none;
+		}
+		.cerrar_tab{ 
+			position:absolute; top:14px; right: 14px; cursor:pointer; width: 32px; height: 32px;
+			background-image: url(http://png.findicons.com/files/icons/753/gnome_desktop/32/gnome_window_close.png);		
+		}
 	</style>	
 </head>
 <body style="padding:0; margin:0;" class="" >	

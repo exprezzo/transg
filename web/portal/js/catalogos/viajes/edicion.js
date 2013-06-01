@@ -1,8 +1,221 @@
 ﻿var Edicionviajes = function(){
 	this.editado=false;
 	this.saveAndClose=false;
-	this.borrar=function(){
+	this.configurarComboCliente=function(){
+		var fk_cliente = this.configuracion.fk_cliente;	
+		var tabId=this.tabId;
 		
+		var me=this;
+		var fields=[													
+			{name: 'label',mapping: 'razon_social'}, 
+			{name: 'value',mapping: 'id'},
+			{name: 'direccion'}, 
+			{name: 'selected',defaultValue: false}
+		];
+		
+		var myReader = new wijarrayreader(fields);
+		
+		var proxy = new wijhttpproxy({
+			url: kore.mod_url_base+'viajes/buscarClientes',
+			dataType:"json"			
+		});
+		
+		var datasource = new wijdatasource({
+			reader:  new wijarrayreader(fields),
+			proxy: proxy,			
+			 loaded: function (data) {
+				if (fk_cliente>0)
+				for (var i=0; i<data.data.length; i++){
+					if ( data.data[i].id == fk_cliente) {										 
+						$(me.tabId + ' [name="fk_cliente"]').wijcombobox("option","selectedIndex", -1);
+						$(me.tabId + ' [name="fk_cliente"]').wijcombobox("option","selectedIndex", i); 
+						
+					}				
+				}
+				fk_cliente=0;
+			 },
+			loading: function (dataSource, userData) {                            								
+				// dataSource.proxy.options.data=dataSource.proxy.options.data || {};				 
+				// dataSource.proxy.options.data.nombre = (userData) ?  userData.label : '';				 
+            }
+		});
+		
+		datasource.reader.read= function (datasource) {			
+			var totalRows=datasource.data.totalRows;			
+			datasource.data = datasource.data.rows;
+			datasource.data.totalRows = totalRows;
+			myReader.read(datasource);
+		};			
+		
+		
+		
+		var target=$( this.tabId+' [name="fk_cliente"]');
+		var combo=target.wijcombobox({
+			data: datasource,
+			showTrigger: true,
+			minLength: 1,
+			 selectedIndex:0,
+			forceSelectionText: false,
+			autoFilter: true,			
+			search: function (e, obj) {},
+			// select: function (e, item) 
+			// {							
+				// return true;
+			// }
+		});		
+		
+		  datasource.load();	
+			
+	}
+	this.configurarComboVehiculo=function(){
+		var fk_vehiculo = this.configuracion.fk_vehiculo;	
+		var tabId=this.tabId;
+		
+		var me=this;
+		var fields=[													
+			{name: 'label',mapping: 'codigo'}, 
+			{name: 'value',mapping: 'id'},
+			{name: 'fk_caja'}, 
+			{name: 'codCaja'}, 
+			{name: 'selected',defaultValue: false}
+		];
+		
+		var myReader = new wijarrayreader(fields);
+		
+		var proxy = new wijhttpproxy({
+			url: kore.mod_url_base+'viajes/buscarVehiculos',
+			dataType:"json"			
+		});
+		
+		var datasource = new wijdatasource({
+			reader:  new wijarrayreader(fields),
+			proxy: proxy,			
+			 loaded: function (data) {
+				if (fk_vehiculo>0)
+				for (var i=0; i<data.data.length; i++){
+					if ( data.data[i].id == fk_vehiculo) {										 
+						$(me.tabId + ' [name="fk_vehiculo"]').wijcombobox("option","selectedIndex", -1);
+						$(me.tabId + ' [name="fk_vehiculo"]').wijcombobox("option","selectedIndex", i); 
+						
+					}				
+				}
+				fk_vehiculo=0;
+			 },
+			loading: function (dataSource, userData) {                            								
+				// dataSource.proxy.options.data=dataSource.proxy.options.data || {};				 
+				// dataSource.proxy.options.data.nombre = (userData) ?  userData.label : '';				 
+            }
+		});
+		
+		datasource.reader.read= function (datasource) {			
+			var totalRows=datasource.data.totalRows;			
+			datasource.data = datasource.data.rows;
+			datasource.data.totalRows = totalRows;
+			myReader.read(datasource);
+		};			
+		
+		
+		
+		var target=$( this.tabId+' [name="fk_vehiculo"]');
+		var combo=target.wijcombobox({
+			data: datasource,
+			showTrigger: true,
+			minLength: 1,
+			 selectedIndex:0,
+			forceSelectionText: false,
+			autoFilter: true,			
+			search: function (e, obj) {},
+			select: function (e, item) 
+			 {							
+				console.log("item"); console.log(item);
+				alert("Seleccionar caja del carro, si no tiene, no seleccionar ninguna");
+				
+				var vaja={
+					id:1,
+					codigo:'CODIGO DE CAJA'
+				}
+				
+				
+				return true;
+			 }
+		});		
+		
+		 datasource.load();	
+			
+	}
+	this.configurarComboChofer=function(choferes){
+		var fk_chofer = this.configuracion.fk_chofer;
+		
+		var tabId=this.tabId;
+		
+		
+		var me=this;
+		var fields=[										
+			{name: 'nss'},
+			{name: 'label',mapping: 'nombre'}, 
+			{name: 'value',mapping: 'id'}, 
+			{name: 'cuenta'}, 
+			{name: 'selected',defaultValue: false}
+		];
+		
+		var myReader = new wijarrayreader(fields);
+		
+		var proxy = new wijhttpproxy({
+			url: kore.mod_url_base+'viajes/buscarChoferes',
+			dataType:"json"			
+		});
+		
+		var datasource = new wijdatasource({
+			reader:  new wijarrayreader(fields),
+			proxy: proxy,
+			data:choferes,
+			 loaded: function (data) {
+				if (fk_chofer>0)
+				for (var i=0; i<data.data.length; i++){
+					if ( data.data[i].id == fk_chofer) {										 
+						$(me.tabId + ' [name="fk_chofer"]').wijcombobox("option","selectedIndex", -1);
+						$(me.tabId + ' [name="fk_chofer"]').wijcombobox("option","selectedIndex", i); 
+						
+					}				
+				}
+				fk_chofer=0;
+			 },
+			loading: function (dataSource, userData) {                            								
+				// dataSource.proxy.options.data=dataSource.proxy.options.data || {};				 
+				// dataSource.proxy.options.data.nombre = (userData) ?  userData.label : '';				 
+            }
+		});
+		
+		datasource.reader.read= function (datasource) {			
+			var totalRows=datasource.data.totalRows;			
+			datasource.data = datasource.data.rows;
+			datasource.data.totalRows = totalRows;
+			myReader.read(datasource);
+		};			
+		
+		
+		
+		var target=$( this.tabId+' [name="fk_chofer"]');
+		var combo=target.wijcombobox({
+			data: datasource,
+			showTrigger: true,
+			minLength: 1,
+			 selectedIndex:0,
+			forceSelectionText: false,
+			autoFilter: true,			
+			search: function (e, obj) {},
+			// select: function (e, item) 
+			// {							
+				// return true;
+			// }
+		});		
+		
+		  datasource.load();	
+			
+	}
+	
+	
+	this.borrar=function(){		
 		var r=confirm("¿Eliminar Elemento?");
 		if (r==true){
 		  this.eliminar();
@@ -134,6 +347,18 @@
 		  }
 		});
 		//-----------------------------------
+		var selectedIndex = $(this.tabId+" [name='fk_chofer']").wijcombobox("option","selectedIndex");  
+		var selectedItem = $(this.tabId+" [name='fk_chofer']").wijcombobox("option","data");		
+		paramObj['fk_chofer']=selectedItem.data[selectedIndex]['id'];
+		
+		selectedIndex = $(this.tabId+" [name='fk_cliente']").wijcombobox("option","selectedIndex");  
+		selectedItem = $(this.tabId+" [name='fk_cliente']").wijcombobox("option","data");
+		paramObj['fk_cliente']=selectedItem.data[selectedIndex]['id'];
+		
+		selectedIndex = $(this.tabId+" [name='fk_vehiculo']").wijcombobox("option","selectedIndex");  
+		selectedItem = $(this.tabId+" [name='fk_vehiculo']").wijcombobox("option","data");
+		paramObj['fk_vehiculo']=selectedItem.data[selectedIndex]['id'];
+		//-------------------------------------
 		var datos=paramObj;
 		
 		var gastos=$(tabId+' .grid_articulos').wijgrid('data');
@@ -243,12 +468,8 @@
 				var idTab=$(me.tabId).attr('id');
 				var tabs=$('#tabs > div');
 				me.editado=false;
-				for(var i=0; i<tabs.length; i++){
-					if ( $(tabs[i]).attr('id') == idTab ){
-						$('#tabs').wijtabs('remove', i);
-					}
-				}
-					
+				TabManager.cerrarTab(idTab);
+				
 				$.gritter.add({
 					position: 'bottom-left',
 					title:title,
@@ -262,6 +483,9 @@
 		var me=this;
 		$(this.tabId+' input[type="text"]').wijtextbox();		
 		$(this.tabId+' textarea').wijtextbox();					
+		this.configurarComboChofer(this.configuracion.choferes);
+		this.configurarComboCliente();
+		this.configurarComboVehiculo();
 	};
 	this.configurarToolbar=function(tabId){					
 			var me=this;			

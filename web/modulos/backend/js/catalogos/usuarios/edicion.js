@@ -95,11 +95,13 @@
 	}
 	this.actualizarTitulo=function(){
 		var tabId = this.tabId;		
-		var id = $(tabId + ' .txtId').val();		
+		var id = $(this.tabId + ' [name="id"]').val();
+		
 		if (id>0){
-			
+			var nombre=$(this.tabId + ' [name="name"]').val();			
+			$('a[href="'+tabId+'"]').html(nombre);			
 		}else{
-			// $('a[href="'+tabId+'"]').html('Nuevo');
+			$('a[href="'+tabId+'"]').html('Nuevo Usuario');
 		}
 	}
 	this.nuevo=function(){

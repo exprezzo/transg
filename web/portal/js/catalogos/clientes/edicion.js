@@ -1,7 +1,12 @@
 ﻿var Edicionclientes = function(){
 	this.editado=false;
 	this.saveAndClose=false;
-	
+	this.borrar=function(){		
+		var r=confirm("¿Eliminar Elemento?");
+		if (r==true){
+		  this.eliminar();
+		}
+	}
 	this.activate=function(){
 		var tabId=this.tabId;
 		
@@ -30,7 +35,9 @@
 		var objId=params.objId;
 		
 		this.tabId= tabId;		
-		
+		$(tabId+' .cerrar_tab').bind('click', function(){
+			TabManager.cerrarTab( params.tab.id );
+		 });
 		
 		var tab=$('div'+this.tabId);
 		//estas dos linas deben estar en la hoja de estilos
@@ -63,7 +70,7 @@
 				$(this).removeClass("ui-state-hover");			
 		});
 		
-		 // tab.data('tabObj',this); //Este para que?		
+		 tab.data('tabObj',this); //Este para que?		
 	};
 	//esta funcion pasara al plugin
 	//agrega una clase al panel del contenido y a la pesta�a relacionada.

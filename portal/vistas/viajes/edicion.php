@@ -17,26 +17,35 @@
 			catalogo:{
 				nombre:'Viajes',
 				modelo:'Viaje'
-			},			
-			pk:"id"
+			},									
+			choferes:<?php echo json_encode($this->choferes); ?>,
+			pk:"id",
+			fk_chofer:<?php echo empty( $this->datos['fk_chofer'])? 0 : $this->datos['fk_chofer'] ; ?>,
+			fk_vehiculo:<?php echo empty( $this->datos['fk_vehiculo'] )? 0 : $this->datos['fk_vehiculo']; ?>,
+			fk_cliente:<?php echo empty( $this->datos['fk_cliente'] )? 0 : $this->datos['fk_cliente']; ?>
 			
 		};				
 		 var editor=new Edicionviajes();
 		 editor.init(config);		
+		 var tabId='#'+config.tab.id;
 		 
 		 $('#'+config.tab.id+' [name="fk_caja"]').wijcombobox();
-		 $('#'+config.tab.id+' [name="fk_vehiculo"]').wijcombobox();
-		 $('#'+config.tab.id+' [name="fk_cliente"]').wijcombobox();
-		 $('#'+config.tab.id+' [name="fk_chofer"]').wijcombobox();
+		 // $('#'+config.tab.id+' [name="fk_vehiculo"]').wijcombobox();
+		 // $('#'+config.tab.id+' [name="fk_cliente"]').wijcombobox();
 		 
-		 $('#'+config.tab.id+' [name="fecha_a_entregar"]').wijinputdate({ dateFormat: 'dd/MM/yyyy',showTrigger:true });
-		 $('#'+config.tab.id+' [name="hora_a_entregar"]').wijinputdate({ dateFormat: 'HH:mm',showTrigger:false });
-		 $('#'+config.tab.id+' [name="precio"]').wijinputnumber({type:'currency', decimalPlaces: 2, increment: 1, showSpinner: true});
 		 
+		 $(tabId+' [name="fecha_a_entregar"]').wijinputdate({ dateFormat: 'dd/MM/yyyy',showTrigger:true });
+		 $(tabId+' [name="hora_a_entregar"]').wijinputdate({ dateFormat: 'HH:mm',showTrigger:false });
+		 $(tabId+' [name="precio"]').wijinputnumber({type:'currency', decimalPlaces: 2, increment: 1, showSpinner: true});
+		 
+		 
+		 $(tabId+' .cerrar_tab').bind('click', function(){
+			TabManager.cerrarTab( config.tab.id );
+		 });
 		 
 		 
 		 var paramsDetalle={
-			tabId:'#'+config.tab.id,
+			tabId:tabId,
 			fk_padre:$('#'+config.tab.id + ' [name="'+config.pk+'"]').val(),
 			articulos: <?php echo json_encode($this->gastos); ?>
 		 };
@@ -101,8 +110,7 @@
 	padding-top: 3px !important;
 	padding: 3px !important;
 	background-repeat: no-repeat;
-	background-position: 7px 5px;
-	
+	background-position: 7px 5px;	
 }
 
 @-moz-document url-prefix()
@@ -129,9 +137,11 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     
 }
-</style>
 
+
+</style>	
 	<div class="pnlIzq">
+		<div style="" class="cerrar_tab"></div>
 		<?php 	
 			global $_PETICION;
 			
@@ -198,7 +208,7 @@
 				<legend>Datos internos:</legend>
 				<div class="inputBox" style="margin-bottom:8px;display:inline-block;margin-left:10px;"  >
 					<label style="">Chofer:</label>
-					<select name="fk_chofer" class="txt_fk_chofer" style="width:135px;">
+					<select name="fk_chofer" class="txt_fk_chofer" style="width:135px;" >
 						<?php
 						foreach($this->choferes as $chofer){
 							$selected = ($this->datos['fk_chofer'] == $chofer['id'] )? 'selected' : '';

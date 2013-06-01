@@ -23,11 +23,16 @@
 		 var editor=new Edicionvehiculos();
 		 editor.init(config);		
 		 
+		 $('#'+config.tab.id +' .cerrar_tab').bind('click', function(){
+			TabManager.cerrarTab( config.tab.id );
+		 });
+		 
 		 $('#'+config.tab.id + ' [name="fk_caja"]').wijcombobox();
 	});
 </script>
 
 	<div class="pnlIzq">
+		<div style="" class="cerrar_tab"></div>
 		<?php 	
 			global $_PETICION;
 			$this->mostrar('/backend/componentes/toolbar');	

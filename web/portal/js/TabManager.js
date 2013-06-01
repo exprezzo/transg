@@ -1,5 +1,21 @@
 var tab_counter = 1; 
 var TabManager={
+	cerrarTab:function(tabId){
+		var idx=-1;
+		
+		// var tabs = $('#tabs > .wijmo-wijtabs-content div[role="tabpanel"]');
+		var tabs = $('#tabs > .wijmo-wijtabs-content div[role="tabpanel"]');
+		if (tabs.length==0) tabs = $('#tabs > div[role="tabpanel"]');
+		
+		for(var i=0; i<tabs.length; i++){			
+			if ( $(tabs[i]).attr('id') == tabId ){					
+				idx=i;
+				break;
+			}
+		}
+			
+		if ( idx>-1 ) $("#tabs").wijtabs('remove', idx);
+	},
 	init:function(target){
 		$tabs = $(target).wijtabs({	
 			alignment:'left',
@@ -74,26 +90,22 @@ var TabManager={
 		});
 	},
 	seleccionarTab:function(objId){
-		// alert("asasd");
-		var selector='#tabs > div[objId="'+objId+'"]';
 		
-		console.log("selector"); console.log(selector);
+		var selector='#tabs div[objId="'+objId+'"]';		
 		var tabListaPedidos = $(selector); //role="tabPanel",		
-		
+		console.log("selector: " + selector);
 		 
-		 // alert(tabListaPedidos.length);
+
 		if (tabListaPedidos.length == 0){
 			return false;
 		}else if (tabListaPedidos.length > 0){ //Seleccionar el tab
 			var tabs = $('#tabs > .wijmo-wijtabs-content div[role="tabpanel"]');
+			if (tabs.length==0) tabs = $('#tabs > div[role="tabpanel"]');
+		
 			//busca el indice del tab
 			var idTab=$(tabListaPedidos).attr('id');
 			
-			var tabs=$('#tabs > div');
-			
-			// $('.lnkVendidos').tablink();
-			
-			
+			if (idTab != undefined)
 			for(var i=0; i<tabs.length; i++){
 				if ( $(tabs[i]).attr('id') == idTab ){
 					$("#tabs").wijtabs('select', i);

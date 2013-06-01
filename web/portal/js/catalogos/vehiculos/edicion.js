@@ -1,7 +1,12 @@
 ﻿var Edicionvehiculos = function(){
 	this.editado=false;
 	this.saveAndClose=false;
-	
+	this.borrar=function(){		
+		var r=confirm("¿Eliminar Elemento?");
+		if (r==true){
+		  this.eliminar();
+		}
+	}
 	this.activate=function(){
 		var tabId=this.tabId;
 		
@@ -63,7 +68,7 @@
 				$(this).removeClass("ui-state-hover");			
 		});
 		
-		 // tab.data('tabObj',this); //Este para que?		
+		  tab.data('tabObj',this); //Este para que?		
 	};
 	//esta funcion pasara al plugin
 	//agrega una clase al panel del contenido y a la pesta�a relacionada.
