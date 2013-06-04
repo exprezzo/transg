@@ -127,6 +127,20 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 				{ 'type':'keydown', 'propagate':false, 'target':document}
 			);
 			
+			shortcut.add("Ctrl+Alt+R", 
+				function() { 
+					//busca el tab seleccionado
+					var tab=$('#tabs > .wijmo-wijtabs-content > div[aria-hidden="false"]');
+					if (tab.length ==0) tab=$('#tabs > div[aria-hidden="false"]');										
+					var tabObj = tab.data('tabObj');
+					if (tabObj!=undefined && tabObj.buscar!=undefined){
+						tabObj.buscar();
+					}
+					
+				}, 
+				{ 'type':'keydown', 'propagate':false, 'target':document}
+			);
+			
 			shortcut.add("Ctrl+Alt+B", 
 				function() { 
 					var tab=$('#tabs > .wijmo-wijtabs-content > div[aria-hidden="false"]');

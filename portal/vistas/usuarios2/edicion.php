@@ -22,7 +22,11 @@
 		 var editor=new Edicionusuarios();
 		 editor.init(config);		
 		 
-		 $('#'+config.tab.id + ' [name="rol"]').wijcombobox();
+		 $('#'+config.tab.id + ' [name="rol"]').wijcombobox({
+			select:function(){				
+				editor.editado=true;
+			}
+		 });
 	});
 </script>
 

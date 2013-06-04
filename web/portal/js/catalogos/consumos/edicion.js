@@ -1,7 +1,12 @@
-﻿var Edicionusuarios = function(){
+﻿var Edicionconsumos = function(){
 	this.editado=false;
 	this.saveAndClose=false;
-	
+	this.borrar=function(){		
+		var r=confirm("¿Eliminar Elemento?");
+		if (r==true){
+		  this.eliminar();
+		}
+	}
 	this.activate=function(){
 		var tabId=this.tabId;
 		
@@ -31,6 +36,9 @@
 		
 		this.tabId= tabId;		
 		
+		$(tabId+' .cerrar_tab').bind('click', function(){
+			TabManager.cerrarTab( params.tab.id );
+		 });
 		
 		var tab=$('div'+this.tabId);
 		//estas dos linas deben estar en la hoja de estilos
@@ -63,7 +71,7 @@
 				$(this).removeClass("ui-state-hover");			
 		});
 		
-		  tab.data('tabObj',this); //Este para que?		
+		tab.data('tabObj',this); //Este para que?		
 	};
 	//esta funcion pasara al plugin
 	//agrega una clase al panel del contenido y a la pesta�a relacionada.
@@ -95,13 +103,11 @@
 	}
 	this.actualizarTitulo=function(){
 		var tabId = this.tabId;		
-		var id = $(this.tabId + ' [name="id"]').val();
-		
+		var id = $(this.tabId + ' [name="'+this.configuracion.pk+'"]').val();
 		if (id>0){
-			var nombre=$(this.tabId + ' [name="name"]').val();			
-			$('a[href="'+tabId+'"]').html(nombre);			
+			$('a[href="'+tabId+'"]').html(this.configuracion.catalogo.modelo +':'+id);
 		}else{
-			$('a[href="'+tabId+'"]').html('Nuevo Usuario');
+			$('a[href="'+tabId+'"]').html('Nuevo');
 		}
 	}
 	this.nuevo=function(){
@@ -129,7 +135,8 @@
 		  }
 		});
 		//-----------------------------------
-		var datos=paramObj;
+		var datos=paramObj;				
+		
 		
 		//Envia los datos al servidor, el servidor responde success true o false.
 		
@@ -196,7 +203,7 @@
 		});
 	};	
 	this.eliminar=function(){
-		var id = $('[name="'+this.configuracion.pk+'"]').val();
+		var id = $(this.tabId + ' [name="'+this.configuracion.pk+'"]').val();
 		var me=this;
 		
 		var params={};
@@ -213,10 +220,10 @@
 				var msg= (resp.msg)? resp.msg : '';
 				var title;
 				if ( resp.success == true	){					
-					icon=kore.url_base+'/web/'+kore.modulo+'/images/yes.png';
+					icon=kore.url_base+'web/'+kore.modulo+'/images/yes.png';
 					title= 'Success';									
 				}else{
-					icon= kore.url_base+'/web/'+kore.modulo+'/images/error.png';
+					icon= kore.url_base+'web/'+kore.modulo+'/images/error.png';
 					title= 'Error';
 				}
 				

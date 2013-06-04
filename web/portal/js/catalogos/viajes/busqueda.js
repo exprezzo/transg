@@ -1,5 +1,9 @@
 ﻿var Busquedaviajes=function(){
 	this.tituloNuevo='Nueva';
+	this.buscar=function(){
+		var gridBusqueda=$(this.tabId+" .grid_busqueda");				
+		gridBusqueda.wijgrid('ensureControl', true);
+	}
 	this.eliminar=function(){
 	
 	var me=this;
@@ -86,6 +90,8 @@
 		//-------------------------------------------				
 		this.configurarToolbar(tabId);		
 		 this.configurarGrid(tabId);
+		 
+		  // tab.data('tabObj',this); //Este para que?		
 	};
 	this.configurarToolbar=function(tabId){
 		var me=this;
@@ -120,7 +126,8 @@
 					case 'filtros':
 						$(me.tabId+" .filtros").toggle({duration:400});
 						$(me.tabId + ' [name="idserie"]').wijcombobox("repaint");
-						$(me.tabId + ' [name="idcliente"]').wijcombobox("repaint");
+						$(me.tabId + ' [name="fk_remitente"]').wijcombobox("repaint");
+						$(me.tabId + ' [name="fk_destinatario"]').wijcombobox("repaint");
 						// alert("mostrar filtros");
 					break;		
 					default:						 
@@ -140,15 +147,20 @@
 		});
 		
 		
-		$(this.tabId + ' [name="fechai"]').wijinputdate({showTrigger:true,dateFormat:'dd/MM/yyyy'});
-		$(this.tabId + ' [name="fechaf"]').wijinputdate({showTrigger:true,dateFormat:'dd/MM/yyyy'});
+		$(this.tabId + ' [name="fecha_c_i"]').wijinputdate({showTrigger:true,dateFormat:'dd/MM/yyyy'});
+		$(this.tabId + ' [name="fecha_c_f"]').wijinputdate({showTrigger:true,dateFormat:'dd/MM/yyyy'});
+		
+		$(this.tabId + ' [name="fecha_e_i"]').wijinputdate({showTrigger:true,dateFormat:'dd/MM/yyyy'});
+		$(this.tabId + ' [name="fecha_e_f"]').wijinputdate({showTrigger:true,dateFormat:'dd/MM/yyyy'});
+		
 		// $(this.tabId + ' [name="folioi"]').wijinputnumber({decimalPlaces: 0});
 		// $(this.tabId + ' [name="foliof"]').wijinputnumber({decimalPlaces: 0});
-		$(this.tabId + ' [name="folioi"]').wijtextbox();
-		$(this.tabId + ' [name="foliof"]').wijtextbox();
+		// $(this.tabId + ' [name="folioi"]').wijtextbox();
+		// $(this.tabId + ' [name="foliof"]').wijtextbox();
 		
-		$(this.tabId + ' [name="idserie"]').wijcombobox();
-		$(this.tabId + ' [name="idcliente"]').wijcombobox();
+		// $(this.tabId + ' [name="idserie"]').wijcombobox();
+		$(this.tabId + ' [name="fk_remitente"]').wijcombobox();
+		$(this.tabId + ' [name="fk_destinatario"]').wijcombobox();
 		
 	};
 	this.configurarGrid=function(tabId){
@@ -168,58 +180,82 @@
 			reader:new wijarrayreader(campos),
 			loading: function(e, data) { 
 				
-				var folioi=$(me.tabId + ' [name="folioi"]').val();
-				var foliof=$(me.tabId + ' [name="foliof"]').val();
-				 var idserie=$(me.tabId + ' [name="idserie"]').val();
+				// var folioi=$(me.tabId + ' [name="folioi"]').val();
+				// var foliof=$(me.tabId + ' [name="foliof"]').val();
+				 // var idserie=$(me.tabId + ' [name="idserie"]').val();
 								
 				//----------------------
-				var idcliente=$(me.tabId + ' [name="idcliente"]').val();
+				var fk_remitente=$(me.tabId + ' [name="fk_remitente"]').val();
+				var fk_destinatario=$(me.tabId + ' [name="fk_destinatario"]').val();
 				
-				if (folioi!='')
+				// if (folioi!='')
+				// data.data.filtering.push({
+					// field: 'folio',
+					// dataKey:'folioi',
+					// filterOperator:'greaterorequal',
+					// filterValue:folioi
+				// });
+				
+				// if (foliof!='')
+				// data.data.filtering.push({
+					// field: 'folio',
+					// dataKey:'foliof',
+					// filterOperator:'lessorequal',
+					// filterValue:foliof
+				// });
+				
 				data.data.filtering.push({
-					field: 'folio',
-					dataKey:'folioi',
+					field: 'fecha_carga',
+					dataKey:'fecha_c_i',
 					filterOperator:'greaterorequal',
-					filterValue:folioi
+					filterValue:$(me.tabId + ' [name="fecha_c_i"]').val()
 				});
 				
-				if (foliof!='')
 				data.data.filtering.push({
-					field: 'folio',
-					dataKey:'foliof',
+					field: 'fecha_carga',
+					dataKey:'fecha_c_f',
 					filterOperator:'lessorequal',
-					filterValue:foliof
+					filterValue:$(me.tabId + ' [name="fecha_c_f"]').val()
 				});
 				
 				data.data.filtering.push({
-					field: 'fecha_a_entregar',
-					dataKey:'fechai',
+					field: 'fecha_de_entrega',
+					dataKey:'fecha_e_i',
 					filterOperator:'greaterorequal',
-					filterValue:$(me.tabId + ' [name="fechai"]').val()
+					filterValue:$(me.tabId + ' [name="fecha_e_i"]').val()
 				});
 				
 				data.data.filtering.push({
-					field: 'fecha_a_entregar',
-					dataKey:'fechaf',
+					field: 'fecha_de_entrega',
+					dataKey:'fecha_e_f',
 					filterOperator:'lessorequal',
-					filterValue:$(me.tabId + ' [name="fechaf"]').val()
+					filterValue:$(me.tabId + ' [name="fecha_e_f"]').val()
 				});
 				
-				if (idcliente!=0)
+				if (fk_remitente!=0)
 				data.data.filtering.push({
-					 dataKey: 'idcliente',
-					 field:'v.fk_cliente',
+					 dataKey: 'fk_remitente',
+					 field:'v.fk_remitente',
 					filterOperator:'equals',
-					filterValue:idcliente
+					filterValue:fk_remitente
 				});
 				
-				if (idserie!=0)
+				if (fk_destinatario!=0)
 				data.data.filtering.push({
-					dataKey: 'serie',
-					field:'v.serie',
+					 dataKey: 'fk_destinatario',
+					 field:'v.fk_destinatario',
 					filterOperator:'equals',
-					filterValue:idserie
+					filterValue:fk_destinatario
 				});
+				
+				
+				// if (idserie!=0)
+				// data.data.filtering.push({
+					// dataKey: 'serie',
+					// field:'v.serie',
+					// filterOperator:'equals',
+					// filterValue:idserie
+				// });
 				
 				
 			}
@@ -260,11 +296,18 @@
 	} 					
 					
 },
+{ dataKey: "origen", visible:false, headerText: "Origen"},
+{ dataKey: "remitente", visible:true, headerText: "Remitente", width:100},
+{ dataKey: "fk_remitente", visible:false, headerText: "Remitente"},
 { dataKey: "fecha_a_entregar", visible:false, headerText: "Fecha E.", width:120},
-{ dataKey: "human_fecha", visible:true, headerText: "Fecha E.", width:120},
-{ dataKey: "fk_cliente", visible:false, headerText: "Cliente" },
-{ dataKey: "cliente", visible:true, headerText: "Cliente",showFilter:false },
+{ dataKey: "human_fecha_c", visible:true, headerText: "F. Carga", width:120},
+{ dataKey: "fecha_carga", visible:false, headerText: "F. Carga"},
 { dataKey: "contenido", visible:true, headerText: "Contenido" },
+{ dataKey: "direccion_carga", visible:false, headerText: "Direccion de Carga" },
+{ dataKey: "destino", visible:false, headerText: "Destino" },
+{ dataKey: "destinatario", visible:true, headerText: "Destinatario", width:100},
+{ dataKey: "fk_destinatario", visible:false, headerText: "Destinatario"},
+{ dataKey: "human_fecha", visible:true, headerText: "F. Entrega", width:120},
 { dataKey: "direccion_de_entrega", visible:false, headerText: "Direccion_de_entrega" },
 { dataKey: "costo", visible:true, headerText: "Costo",dataType:'currency' },
 { dataKey: "precio", visible:true, headerText: "Precio",dataType:'currency' },
@@ -273,7 +316,7 @@
 { dataKey: "vehiculo", visible:true, headerText: "Vehiculo" },
 { dataKey: "fk_caja", visible:false, headerText: "Fk_caja" },
 { dataKey: "fk_serie", visible:false, headerText: "folio" },
-
+{ dataKey: "condiciones_de_pago", visible:false, headerText: "Condiciones" },
 { dataKey: "folio", visible:false, headerText: "serie" },
 { dataKey: "creado", visible:false, headerText: "Creado" }
 			]

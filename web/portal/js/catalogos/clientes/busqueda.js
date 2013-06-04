@@ -1,5 +1,9 @@
 ﻿var Busquedaclientes=function(){
 	this.tituloNuevo='Nueva';
+	this.buscar=function(){
+		var gridBusqueda=$(this.tabId+" .grid_busqueda");				
+		gridBusqueda.wijgrid('ensureControl', true);
+	}
 	this.eliminar=function(){
 	
 	var me=this;

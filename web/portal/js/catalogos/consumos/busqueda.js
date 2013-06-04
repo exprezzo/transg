@@ -1,9 +1,5 @@
-﻿var Busquedavehiculos=function(){
+﻿var Busquedaconsumos=function(){
 	this.tituloNuevo='Nueva';
-	this.buscar=function(){
-		var gridBusqueda=$(this.tabId+" .grid_busqueda");				
-		gridBusqueda.wijgrid('ensureControl', true);
-	}
 	this.eliminar=function(){
 	
 	var me=this;
@@ -65,7 +61,7 @@
 		tab.addClass(clase);		
 		tab=$('a[href="'+tabId+'"]');
 		tab.addClass(clase);
-	}	
+	}
 	this.init=function(config){		
 		//-------------------------------------------Al nucleo		*/		
 		this.controlador=config.controlador;
@@ -78,10 +74,9 @@
 		var jTab=$('div'+tabId);				
 		jTab.data('tabObj',this);		
 				
-		var jTab=$('a[href="'+tabId+'"]');		//// 
+		var jTab=$('a[href="'+tabId+'"]');		//// this.agregarClase('busqueda_'+this.controlador.nombre);
 	    jTab.html(this.catalogo.nombre);		 
 		 jTab.addClass('busqueda_'+this.controlador.nombre); 
-		 
 		 this.agregarClase('tab_'+this.controlador.nombre);
 		//-------------------------------------------
 		$('div'+tabId).css('padding','0px 0 0 0');
@@ -177,14 +172,20 @@
 			columns: [ 
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
 				
-{ dataKey: "id", visible:false, headerText: "Id" },
-{ dataKey: "codigo", visible:true, headerText: "Codigo" },
-{ dataKey: "modelo", visible:true, headerText: "Modelo" },
-{ dataKey: "placas", visible:true, headerText: "Placas" },
-{ dataKey: "rendimiento", visible:true, headerText: "Rendimiento", dataType:'number' },
-{ dataKey: "kilometraje", visible:true, headerText: "Kilometraje", dataType:'number' },
-{ dataKey: "fk_caja", visible:false, headerText: "Caja" },
-{ dataKey: "codCaja", visible:true, headerText: "Caja" }
+{ dataKey: "id", visible:true, headerText: "Id" },
+{ dataKey: "fk_viaje", visible:true, headerText: "Fk_viaje" },
+{ dataKey: "distancia", visible:true, headerText: "Distancia" },
+{ dataKey: "rendimiento", visible:true, headerText: "Rendimiento" },
+{ dataKey: "consumo_diesel_lt", visible:true, headerText: "Consumo_diesel_lt" },
+{ dataKey: "precio_por_litro", visible:true, headerText: "Precio_por_litro" },
+{ dataKey: "consumo_en_pesos", visible:true, headerText: "Consumo_en_pesos" },
+{ dataKey: "kilometraje_inicial", visible:true, headerText: "Kilometraje_inicial" },
+{ dataKey: "kilometraje_final", visible:true, headerText: "Kilometraje_final" },
+{ dataKey: "kilometraje_recorrido", visible:true, headerText: "Kilometraje_recorrido" },
+{ dataKey: "consumo_diesel_calculado_lt", visible:true, headerText: "Consumo_diesel_calculado_lt" },
+{ dataKey: "consumo_diesel_calculado_pesos", visible:true, headerText: "Consumo_diesel_calculado_pesos" },
+{ dataKey: "consumo_diesel_real_pesos", visible:true, headerText: "Consumo_diesel_real_pesos" },
+{ dataKey: "diferencia", visible:true, headerText: "Diferencia" }
 			]
 		});
 		

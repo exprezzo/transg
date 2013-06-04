@@ -22,8 +22,9 @@
 		vertical-align:bottom;
 	}
 	
-	.tab_viajes .filtros .cmbCliente, .tab_viajes .filtros .cmbCliente div[role="combobox"]{
+	.tab_viajes .filtros div[role="combobox"]{
 		vertical-align:bottom;
+		top:8px;
 	}
 </style>
 
@@ -82,49 +83,23 @@
 ?>
 <div class="filtros" style="display:none;">
 	<div>
-		<div class="inputBox cmbSeries" style="margin-bottom:8px;display:inline-block;margin-left:10px;"  >
-			<label style="">Serie:</label>
-			<select name='idserie'>					
-				<?php 
-					$seleccionado=false;
-					foreach($this->series as $serie){
-						// if ($prov['idproveedor'] == $this->datos['idproveedor'] ){
-							// $selected='selected';
-							// $seleccionado=true;
-						// } 
-						echo '<option '.$selected.' value='.$serie['id'].'>'.$serie['serie'].'</option>';
-						$selected='';
-					}
-					if ( !$seleccionado ){
-						echo '<option value="0" selected>Todas</option>';
-					}					
-				?>
-			</select>				
-		</div>
-		<div class="inputBox" style="display:inline-block;margin-left:10px;"  >
-			<label style="">Folio Inicial:</label>
-			<input type="text" name="folioi" class="txt_folioi" value="" style="width:50px;" />
-		</div>
-		<div class="inputBox" style="display:inline-block;margin-left:10px;"  >
-			<label style="">Folio Final:</label>
-			<input type="text" name="foliof" class="txt_foliof" value="" style="width:50px;" />
-		</div>		
+		
 	</div>
 	<div>
 		<div class="inputBox" style="margin-bottom:8px;display:inline-block;margin-left:10px;"  >
-			<label style="">Fecha Inicial:</label>
-			<input type="text" name="fechai" class="txt_fecha" value="<?php echo '1/'.$elMes.'/'.$elAnio; ?>" style="width:150px;" />
+			<label style="width:130px;  display:inline-block;">Fecha Carga:</label>
+			<input type="text" name="fecha_c_i" class="" value="<?php echo '1/'.$elMes.'/'.$elAnio; ?>" style="width:150px;" />
 		</div>
-		<div class="inputBox" style="margin-bottom:8px;display:inline-block;margin-left:10px;"  >
-			<label style="">Fecha Final:</label>
-			<input type="text" name="fechaf" class="txt_fechaf" value="<?php echo $ultimoDia.'/'.$elMes.'/'.$elAnio; ?>" style="width:150px;" />
+		<div class="inputBox" style="margin-bottom:8px;display:inline-block;margin-left:10px;"  >			
+			<input type="text" name="fecha_c_f" class="" value="<?php echo $ultimoDia.'/'.$elMes.'/'.$elAnio; ?>" style="width:150px;" />
 		</div>
+		
 		<div class="inputBox cmbCliente" style="margin-bottom:8px;display:inline-block;margin-left:10px;"  >
-			<label style="">Cliente:</label>
-			<select name='idcliente' style="vertical-align:bottom;">					
+			<label style="width:110px; display:inline-block; ">Remitente:</label>
+			<select name='fk_remitente' style="vertical-align:bottom;">					
 				<?php 
 					$seleccionado=false;
-					foreach($this->clientes as $cli){
+					foreach($this->remitentes as $cli){
 						// if ($prov['idproveedor'] == $this->datos['idproveedor'] ){
 							// $selected='selected';
 							// $seleccionado=true;
@@ -139,8 +114,35 @@
 				?>
 			</select>				
 		</div>
+		
+		
+		
 	</div>
-	
+	<div>
+		<div class="inputBox" style="margin-bottom:8px;display:inline-block;margin-left:10px;"  >
+			<label style="width:130px; display:inline-block;">Fecha Entrega:</label>
+			<input type="text" name="fecha_e_i" class="" value="<?php echo '1/'.$elMes.'/'.$elAnio; ?>" style="width:150px;" />
+		</div>
+		<div class="inputBox" style="margin-bottom:8px;display:inline-block;margin-left:10px;"  >			
+			<input type="text" name="fecha_e_f" class="" value="<?php echo $ultimoDia.'/'.$elMes.'/'.$elAnio; ?>" style="width:150px;" />
+		</div>
+		<div class="inputBox cmbDestinatario" style="margin-bottom:8px;display:inline-block;margin-left:10px;"  >
+			<label style="width:110px; display:inline-block; ">Destinatario:</label>
+			<select name='fk_destinatario' style="vertical-align:bottom;">					
+				<?php 
+					$seleccionado=false;
+					foreach($this->destinatarios as $cli){						
+						echo '<option '.$selected.' value='.$cli['id'].'>'.$cli['razon_social'].'</option>';
+						$selected='';
+					}
+					if ( !$seleccionado ){
+						echo '<option value="0" selected>Todos</option>';
+					}
+					
+				?>
+			</select>				
+		</div>
+	</div>
 	
 	
 </div>

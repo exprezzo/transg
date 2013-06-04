@@ -22,7 +22,8 @@
 			pk:"id",
 			fk_chofer:<?php echo empty( $this->datos['fk_chofer'])? 0 : $this->datos['fk_chofer'] ; ?>,
 			fk_vehiculo:<?php echo empty( $this->datos['fk_vehiculo'] )? 0 : $this->datos['fk_vehiculo']; ?>,
-			fk_cliente:<?php echo empty( $this->datos['fk_cliente'] )? 0 : $this->datos['fk_cliente']; ?>
+			fk_destinatario:<?php echo empty( $this->datos['fk_destinatario'] )? 0 : $this->datos['fk_destinatario']; ?>,
+			fk_remitente:<?php echo empty( $this->datos['fk_remitente'] )? 0 : $this->datos['fk_remitente']; ?>
 			
 		};				
 		 var editor=new Edicionviajes();
@@ -34,8 +35,27 @@
 		 // $('#'+config.tab.id+' [name="fk_cliente"]').wijcombobox();
 		 
 		 
-		 $(tabId+' [name="fecha_a_entregar"]').wijinputdate({ dateFormat: 'dd/MM/yyyy',showTrigger:true });
-		 $(tabId+' [name="hora_a_entregar"]').wijinputdate({ dateFormat: 'HH:mm',showTrigger:false });
+		 $(tabId+' [name="fecha_carga"]').wijinputdate({ dateFormat: 'dd/MM/yyyy',showTrigger:true,
+			dateChanged: function(e, arg){
+				editor.editado=true;
+			}
+		 });
+		 $(tabId+' [name="hora_carga"]').wijinputdate({ dateFormat: 'HH:mm',showTrigger:false,
+			dateChanged: function(e, arg){
+				editor.editado=true;
+			} 
+		});
+		 
+		 $(tabId+' [name="fecha_a_entregar"]').wijinputdate({ dateFormat: 'dd/MM/yyyy',showTrigger:true,
+			dateChanged: function(e, arg){
+				editor.editado=true;
+			}
+		 });
+		 $(tabId+' [name="hora_a_entregar"]').wijinputdate({ dateFormat: 'HH:mm',showTrigger:false,
+			dateChanged: function(e, arg){
+				editor.editado=true;
+			} 
+		});
 		 $(tabId+' [name="precio"]').wijinputnumber({type:'currency', decimalPlaces: 2, increment: 1, showSpinner: true});
 		 
 		 
@@ -46,6 +66,7 @@
 		 
 		 var paramsDetalle={
 			tabId:tabId,
+			padre:editor,
 			fk_padre:$('#'+config.tab.id + ' [name="'+config.pk+'"]').val(),
 			articulos: <?php echo json_encode($this->gastos); ?>
 		 };
@@ -55,8 +76,13 @@
 </script>
 <style>
 .frmviajes.tab_viajes fieldset{
-	width:645px;
+	width:744px;
 }
+
+.frmviajes.tab_viajes [role="combobox"]{
+	vertical-align:top;
+}
+
 .frmviajes.tab_viajes .txt_hora_a_entregar{
 	width:94%;
 }
@@ -150,6 +176,7 @@
 				$this->datos=array();		
 			}
 			$this->datos['hora_a_entregar']=$this->datos['fecha_a_entregar'];
+			$this->datos['hora_carga']=$this->datos['fecha_carga'];
 			
 			if ( empty($this->datos['id']) ){
 				$this->datos['nombreSerie']=$this->series[0]['serie'];
@@ -158,7 +185,7 @@
 			$this->mostrar('/toolbar_edicion');	
 		?>
 		
-		<form class="frmEdicion" style="padding-top:10px;">	
+		<form class="frmEdicion frmGeneral" style="padding-top:10px;">	
 			
 			<div class="inputBox" style="margin-bottom:8px;display:none;margin-left:10px;width:100%;"  >
 				<label style="">Id:</label>
@@ -169,39 +196,81 @@
 			<input type="hidden" name="costo" class="txt_costo" value="<?php echo $this->datos['costo']; ?>" style="width:500px;" />										
 
 			<fieldset>
-				<legend>Datos de entrega:</legend>				
-					<div class="inputBox caja_cliente" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-						<label style="">Cliente:</label>	
-						<select name="fk_cliente" class="txt_fk_cliente" style="width:500px;">
+				<legend>Origen</legend>				
+					<div class="inputBox caja_remitente" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+						<label style="width:100px; ">Remitente:</label>	
+						<select name="fk_remitente" class="" style="width:607px;">
 							<?php
-							foreach($this->clientes as $cliente){
-								$selected = ($this->datos['fk_cliente'] == $cliente['id'] )? 'selected' : '';
+							foreach($this->remitentes as $cliente){
+								$selected = ($this->datos['fk_remitente'] == $cliente['id'] )? 'selected' : '';
 								echo '<option '.$selected.' value="'.$cliente['id'].'">'.$cliente['razon_social'].'</option>';
 							}
 							?>
 						</select>
 					</div>					
-					<div class="inputBox" style="margin-bottom:8px;display:inline-block;margin-left:10px;"  >
-						
-						<label style="">Fecha:</label>
-						<input type="text" name="fecha_a_entregar" class="txt_fecha_a_entregar" value="<?php echo $this->datos['fecha_a_entregar']; ?>" style="width:143px;" />
+					<div class="inputBox" style="margin-bottom:8px;display:inline-block;margin-left:10px;"  >						
+						<label style="">Origen:</label>
+						<input type="text" name="origen" class="" value="<?php echo $this->datos['origen']; ?>" style="width:143px;" />
 					</div>
-					<div class="inputBox" style="margin-bottom:8px;display:inline-block;margin-left:10px;"  >
-						<label style="">Hora:</label>
-						<input type="text" name="hora_a_entregar" class="txt_hora_a_entregar" value="<?php echo $this->datos['hora_a_entregar']; ?>" style="width:143px;" />
+					<div class="inputBox" style="margin-bottom:8px;display:inline-block;margin-left:0px;"  >						
+						<label style="width:80px; ">Fecha:</label>
+						<input type="text" name="fecha_carga" class="" value="<?php echo $this->datos['fecha_carga']; ?>" style="width:143px;" />
+					</div>
+					<div class="inputBox" style="margin-bottom:8px;display:inline-block;margin-left:0px;"  >
+						<label style="width:50px; ">Hora:</label>
+						<input type="text" name="hora_carga" class="" value="<?php echo $this->datos['hora_carga']; ?>" style="width:143px;" />
+					</div>
+					<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;"  >
+						<label style="">Dir. Carga:</label>
+						<input type="text" name="direccion_carga" class="" value="<?php echo $this->datos['direccion_carga']; ?>" style="width:607px;" />
 					</div>
 					<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 						<label style="">Contenido:</label>
 						<input type="text" name="contenido" class="txt_contenido" value="<?php echo $this->datos['contenido']; ?>" style="width:500px;" />
 					</div>
+			</fieldset>
+			
+			<fieldset>
+				<legend>Destino</legend>				
 					<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-						<label style="">Precio:</label>
+						<label style="">Destinatario:</label>	
+						<select name="fk_destinatario" class="" style="width:607px;">
+							<?php
+							foreach($this->destinatarios as $cliente){
+								$selected = ($this->datos['fk_destinatario'] == $cliente['id'] )? 'selected' : '';
+								echo '<option '.$selected.' value="'.$cliente['id'].'">'.$cliente['razon_social'].'</option>';
+							}
+							?>
+						</select>
+					</div>					
+					<div class="inputBox" style="margin-bottom:8px;display:inline-block;margin-left:10px;"  >						
+						<label style="">Destino:</label>
+						<input type="text" name="destino" class="" value="<?php echo $this->datos['destino']; ?>" style="width:143px;" />
+					</div>
+					<div class="inputBox" style="margin-bottom:8px;display:inline-block;margin-left:0px;"  >						
+						<label style="width:98px; ">F. Entrega:</label>
+						<input type="text" name="fecha_a_entregar" class="txt_fecha_a_entregar" value="<?php echo $this->datos['fecha_a_entregar']; ?>" style="width:143px;" />
+					</div>
+					<div class="inputBox" style="margin-bottom:8px;display:inline-block;margin-left:0px;"  >
+						<label style="width:50px; ">Hora:</label>
+						<input type="text" name="hora_a_entregar" class="txt_hora_a_entregar" value="<?php echo $this->datos['hora_a_entregar']; ?>" style="width:143px;" />
+					</div>
+					<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;"  >
+						<label style="">Direcci&oacute;n:</label>
+						<input type="text" name="direccion_de_entrega" class="" value="<?php echo $this->datos['direccion_de_entrega']; ?>" style="width:607px;" />
+					</div>					
+			</fieldset>
+			
+			<fieldset>
+					<legend>Pago</legend>
+					<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+						<label style="width: 150px; ">Precio:</label>
 						<input type="text" name="precio" class="txt_precio" value="<?php echo $this->datos['precio']; ?>" style="width:200px;" />
 					</div>
-					<div class="inputBox caja_direccion_entrega" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-						<label style="">Direccion de entrega:</label>
-						<textarea  name="direccion_de_entrega" class="txt_direccion_de_entrega"  style="width:500px;" ><?php 
-								echo htmlentities( $this->datos['direccion_de_entrega'],ENT_QUOTES | ENT_IGNORE, "UTF-8");?></textarea>
+					<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+						<label style="width: 150px; ">Cond. de pago:</label>
+						<input type="text" name="condiciones_de_pago" class="" value="<?php echo $this->datos['condiciones_de_pago']; ?>" style="width:557px;" />
+						
 					</div>
 			</fieldset>
 			<fieldset class="datos_internos">
@@ -243,8 +312,11 @@
 				
 			</fieldset>			
 		</form>
-		<div class="consumo" style="display:none;"><h1>CONSUMO EN CONSTRUCCI&Oacute;N</h1></div>
-		<div class="gastos" style="display:none;width:682px;">
+		<div class="consumo" style="display:none;width:754px;">			
+			<?php $this->mostrar('/consumo') ; ?>
+		
+		</div>
+		<div class="gastos" style="display:none;width:754px;">
 			<div class="toolbarDetalles" style="padding:none; margin-bottom:5px; ">
 				<button class="btnAgregar" style="padding:none;"></button>
 			</div>

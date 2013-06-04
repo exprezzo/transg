@@ -1,8 +1,8 @@
 ﻿var Edicionviajes = function(){
 	this.editado=false;
 	this.saveAndClose=false;
-	this.configurarComboCliente=function(){
-		var fk_cliente = this.configuracion.fk_cliente;	
+	this.configurarComboDestinatario=function(){
+		var fk_destinatario = this.configuracion.fk_destinatario;	
 		var tabId=this.tabId;
 		
 		var me=this;
@@ -16,7 +16,7 @@
 		var myReader = new wijarrayreader(fields);
 		
 		var proxy = new wijhttpproxy({
-			url: kore.mod_url_base+'viajes/buscarClientes',
+			url: kore.mod_url_base+'viajes/buscarDestinatarios',
 			dataType:"json"			
 		});
 		
@@ -24,15 +24,15 @@
 			reader:  new wijarrayreader(fields),
 			proxy: proxy,			
 			 loaded: function (data) {
-				if (fk_cliente>0)
+				if (fk_destinatario>0)
 				for (var i=0; i<data.data.length; i++){
-					if ( data.data[i].id == fk_cliente) {										 
-						$(me.tabId + ' [name="fk_cliente"]').wijcombobox("option","selectedIndex", -1);
-						$(me.tabId + ' [name="fk_cliente"]').wijcombobox("option","selectedIndex", i); 
+					if ( data.data[i].id == fk_destinatario) {										 
+						$(me.tabId + ' [name="fk_destinatario"]').wijcombobox("option","selectedIndex", -1);
+						$(me.tabId + ' [name="fk_destinatario"]').wijcombobox("option","selectedIndex", i); 
 						
 					}				
 				}
-				fk_cliente=0;
+				fk_destinatario=0;
 			 },
 			loading: function (dataSource, userData) {                            								
 				// dataSource.proxy.options.data=dataSource.proxy.options.data || {};				 
@@ -49,7 +49,7 @@
 		
 		
 		
-		var target=$( this.tabId+' [name="fk_cliente"]');
+		var target=$( this.tabId+' [name="fk_destinatario"]');
 		var combo=target.wijcombobox({
 			data: datasource,
 			showTrigger: true,
@@ -58,10 +58,74 @@
 			forceSelectionText: false,
 			autoFilter: true,			
 			search: function (e, obj) {},
-			// select: function (e, item) 
-			// {							
-				// return true;
-			// }
+			select: function (e, item) {							
+				me.editado=true;
+			}
+		});		
+		
+		  datasource.load();	
+			
+	}
+	this.configurarComboRemitente=function(){
+		var fk_remitente = this.configuracion.fk_remitente;	
+		var tabId=this.tabId;
+		
+		var me=this;
+		var fields=[													
+			{name: 'label',mapping: 'razon_social'}, 
+			{name: 'value',mapping: 'id'},
+			{name: 'direccion'}, 
+			{name: 'selected',defaultValue: false}
+		];
+		
+		var myReader = new wijarrayreader(fields);
+		
+		var proxy = new wijhttpproxy({
+			url: kore.mod_url_base+'viajes/buscarRemitentes',
+			dataType:"json"			
+		});
+		
+		var datasource = new wijdatasource({
+			reader:  new wijarrayreader(fields),
+			proxy: proxy,			
+			 loaded: function (data) {
+				if (fk_remitente>0)
+				for (var i=0; i<data.data.length; i++){
+					if ( data.data[i].id == fk_remitente) {										 
+						$(me.tabId + ' [name="fk_remitente"]').wijcombobox("option","selectedIndex", -1);
+						$(me.tabId + ' [name="fk_remitente"]').wijcombobox("option","selectedIndex", i); 
+						
+					}				
+				}
+				fk_remitente=0;
+			 },
+			loading: function (dataSource, userData) {                            								
+				// dataSource.proxy.options.data=dataSource.proxy.options.data || {};				 
+				// dataSource.proxy.options.data.nombre = (userData) ?  userData.label : '';				 
+            }
+		});
+		
+		datasource.reader.read= function (datasource) {			
+			var totalRows=datasource.data.totalRows;			
+			datasource.data = datasource.data.rows;
+			datasource.data.totalRows = totalRows;
+			myReader.read(datasource);
+		};			
+		
+		
+		
+		var target=$( this.tabId+' [name="fk_remitente"]');
+		var combo=target.wijcombobox({
+			data: datasource,
+			showTrigger: true,
+			minLength: 1,
+			 selectedIndex:0,
+			forceSelectionText: false,
+			autoFilter: true,			
+			search: function (e, obj) {},
+			select: function (e, item) {							
+				me.editado=true;
+			}
 		});		
 		
 		  datasource.load();	
@@ -127,14 +191,18 @@
 			search: function (e, obj) {},
 			select: function (e, item) 
 			 {							
-				console.log("item"); console.log(item);
-				alert("Seleccionar caja del carro, si no tiene, no seleccionar ninguna");
+				me.editado=true;
 				
-				var vaja={
-					id:1,
-					codigo:'CODIGO DE CAJA'
-				}
+				// alert("Seleccionar caja del carro, si no tiene, no seleccionar ninguna");
 				
+				var cajas=new Array();
+				cajas.push({
+					value:item.fk_caja,
+					label:item.codCaja
+				});
+				
+				$(me.tabId + ' [name="fk_caja"]').wijcombobox('option','data',cajas);
+				$(me.tabId + ' [name="fk_caja"]').wijcombobox('option','selectedIndex',0);
 				
 				return true;
 			 }
@@ -204,10 +272,10 @@
 			forceSelectionText: false,
 			autoFilter: true,			
 			search: function (e, obj) {},
-			// select: function (e, item) 
-			// {							
-				// return true;
-			// }
+			select: function (e, item) 
+			{							
+				me.editado=true;
+			}
 		});		
 		
 		  datasource.load();	
@@ -268,6 +336,11 @@
 		$(this.tabId + ' .frmEdicion input').change(function(){
 			me.editado=true;		
 		});
+		$(this.tabId + ' .frmEdicion textarea').change(function(){
+			me.editado=true;		
+		});
+		
+
 		
 		$(tabId+' .toolbarEdicion .boton:not(.btnPrint, .btnEmail)').mouseenter(function(){
 			$(this).addClass("ui-state-hover");
@@ -337,7 +410,51 @@
 		//-----------------------------------
 		// http://stackoverflow.com/questions/2403179/how-to-get-form-data-as-a-object-in-jquery
 		var paramObj = {};
-		$.each($(tabId + ' .frmEdicion').serializeArray(), function(_, kv) {
+		$.each($(tabId + ' .frmGeneral').serializeArray(), function(_, kv) {
+		  if (paramObj.hasOwnProperty(kv.name)) {
+			paramObj[kv.name] = $.makeArray(paramObj[kv.name]);
+			paramObj[kv.name].push(kv.value);
+		  }
+		  else {
+			paramObj[kv.name] = kv.value;
+		  }
+		});
+		
+		
+		
+		//-----------------------------------
+		// alert("chofer");
+		var selectedIndex = $(this.tabId+" [name='fk_chofer']").wijcombobox("option","selectedIndex");  
+		var selectedItem = $(this.tabId+" [name='fk_chofer']").wijcombobox("option","data");		
+		paramObj['fk_chofer']=selectedItem.data[selectedIndex]['id'];
+		
+		// alert("remitente");
+		selectedIndex = $(this.tabId+" [name='fk_remitente']").wijcombobox("option","selectedIndex");  
+		selectedItem = $(this.tabId+" [name='fk_remitente']").wijcombobox("option","data");
+		paramObj['fk_remitente']=selectedItem.data[selectedIndex]['id'];
+		
+		// alert("destinatario");
+		selectedIndex = $(this.tabId+" [name='fk_destinatario']").wijcombobox("option","selectedIndex");  
+		selectedItem = $(this.tabId+" [name='fk_destinatario']").wijcombobox("option","data");
+		paramObj['fk_destinatario']=selectedItem.data[selectedIndex]['id'];
+		
+		// alert("vehiculo");
+		selectedIndex = $(this.tabId+" [name='fk_vehiculo']").wijcombobox("option","selectedIndex");  
+		selectedItem = $(this.tabId+" [name='fk_vehiculo']").wijcombobox("option","data");
+		paramObj['fk_vehiculo']=selectedItem.data[selectedIndex]['id'];
+		
+		selectedIndex = $(this.tabId+" [name='fk_caja']").wijcombobox("option","selectedIndex");  
+		selectedItem = $(this.tabId+" [name='fk_caja']").wijcombobox("option","data");
+		paramObj['fk_caja']=selectedItem[selectedIndex]['value'];
+		//-------------------------------------
+		var datos=paramObj;
+		
+		var gastos=$(tabId+' .grid_articulos').wijgrid('data');
+		datos.gastos = gastos;
+		
+		//==================================================================
+		paramObj = {};
+		$.each($(tabId + ' .frmConsumo').serializeArray(), function(_, kv) {
 		  if (paramObj.hasOwnProperty(kv.name)) {
 			paramObj[kv.name] = $.makeArray(paramObj[kv.name]);
 			paramObj[kv.name].push(kv.value);
@@ -347,29 +464,14 @@
 		  }
 		});
 		//-----------------------------------
-		var selectedIndex = $(this.tabId+" [name='fk_chofer']").wijcombobox("option","selectedIndex");  
-		var selectedItem = $(this.tabId+" [name='fk_chofer']").wijcombobox("option","data");		
-		paramObj['fk_chofer']=selectedItem.data[selectedIndex]['id'];
-		
-		selectedIndex = $(this.tabId+" [name='fk_cliente']").wijcombobox("option","selectedIndex");  
-		selectedItem = $(this.tabId+" [name='fk_cliente']").wijcombobox("option","data");
-		paramObj['fk_cliente']=selectedItem.data[selectedIndex]['id'];
-		
-		selectedIndex = $(this.tabId+" [name='fk_vehiculo']").wijcombobox("option","selectedIndex");  
-		selectedItem = $(this.tabId+" [name='fk_vehiculo']").wijcombobox("option","data");
-		paramObj['fk_vehiculo']=selectedItem.data[selectedIndex]['id'];
-		//-------------------------------------
-		var datos=paramObj;
-		
-		var gastos=$(tabId+' .grid_articulos').wijgrid('data');
-		datos.gastos = gastos;
-		
+		datosConsumo=paramObj;
+		//==================================================================
 		//Envia los datos al servidor, el servidor responde success true o false.
 		
 		$.ajax({
 			type: "POST",
 			url: kore.url_base+this.configuracion.modulo.nombre+'/'+this.controlador.nombre+'/guardar',
-			data: { datos: datos}
+			data: { datos: datos, consumo:datosConsumo}
 		}).done(function( response ) {
 			
 			var resp = eval('(' + response + ')');
@@ -385,8 +487,9 @@
 				
 				title= 'Success';				
 				// tab.find('[name="'+me.configuracion.pk+'"]').val(resp.datos[me.configuracion.pk]);
-				tab.find('[name="'+me.configuracion.pk+'"]').val(resp.datos[me.configuracion.pk]);
-
+				tab.find('.frmGeneral [name="'+me.configuracion.pk+'"]').val(resp.datos[me.configuracion.pk]);
+				tab.find('.frmConsumo [name="id"]').val(resp.consumo[me.configuracion.pk]);
+				
 				tab.find('.lblFolio').html(resp.datos['folio']);
 				
 				me.actualizarTitulo();
@@ -416,12 +519,7 @@
 				if (me.saveAndClose===true){
 					//busca el indice del tab
 					var idTab=$(me.tabId).attr('id');
-					var tabs=$('#tabs > div');
-					for(var i=0; i<tabs.length; i++){
-						if ( $(tabs[i]).attr('id') == idTab ){
-							$('#tabs').wijtabs('remove', i);
-						}
-					}
+					TabManager.cerrarTab(idTab);					
 				}
 			}else{
 				icon= kore.url_base+'web/'+kore.modulo+'/images/error.png';
@@ -484,7 +582,8 @@
 		$(this.tabId+' input[type="text"]').wijtextbox();		
 		$(this.tabId+' textarea').wijtextbox();					
 		this.configurarComboChofer(this.configuracion.choferes);
-		this.configurarComboCliente();
+		this.configurarComboRemitente();
+		this.configurarComboDestinatario();
 		this.configurarComboVehiculo();
 	};
 	this.configurarToolbar=function(tabId){					
@@ -503,21 +602,21 @@
 			});
 			
 			$(this.tabId + ' .toolbarEdicion .btnGeneral').click( function(){
-				$( me.tabId + ' .frmEdicion').fadeIn();
+				$( me.tabId + ' .frmEdicion.frmGeneral').fadeIn();
 				$( me.tabId + ' .consumo').hide();
 				$( me.tabId + ' .gastos').hide();
 			});
 			
 			$(this.tabId + ' .toolbarEdicion .btnConsumo').click( function(){
-				alert("En construcción");
-				// $( me.tabId + ' .frmEdicion').hide();
-				// $( me.tabId + ' .consumo').fadeIn();
-				// $( me.tabId + ' .gastos').hide();
+				$( me.tabId + ' .frmEdicion.frmGeneral').hide();
+				$( me.tabId + ' .consumo').fadeIn();
+				$( me.tabId + ' .gastos').hide();
+				// $(me.tabId+' .grid_articulos').wijgrid('ensureControl',true);
 				
 			});
 			
 			$(this.tabId + ' .toolbarEdicion .btnDetalles').click( function(){
-				$( me.tabId + ' .frmEdicion').hide();
+				$( me.tabId + ' .frmEdicion.frmGeneral').hide();
 				$( me.tabId + ' .consumo').hide();
 				$( me.tabId + ' .gastos').fadeIn();
 				$(me.tabId+' .grid_articulos').wijgrid('ensureControl',true);

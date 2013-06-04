@@ -168,15 +168,17 @@
 			pageSize:pageSize,
 			selectionMode:'singleRow',
 			data:dataSource,
-			showFilter:true,
+			// showFilter:true,
 			columns: [ 
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
 				
-{ dataKey: "id", visible:true, headerText: "Id" },
-{ dataKey: "fk_viaje", visible:true, headerText: "Fk_viaje" },
-{ dataKey: "fk_concepto", visible:true, headerText: "Fk_concepto" },
+{ dataKey: "id", visible:false, headerText: "Id" },
+{ dataKey: "nombre", visible:true, headerText: "Nombre" },
+{ dataKey: "fk_concepto", visible:false, headerText: "Fk_concepto" },
 { dataKey: "costo", visible:true, headerText: "Costo" },
-{ dataKey: "fecha", visible:true, headerText: "Fecha" }
+{ dataKey: "fecha", visible:true, headerText: "Fecha" },
+{ dataKey: "fk_viaje", visible:true, headerText: "Viaje" },
+
 			]
 		});
 		

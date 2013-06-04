@@ -27,7 +27,12 @@
 			TabManager.cerrarTab( config.tab.id );
 		 });
 		 
-		 $('#'+config.tab.id + ' [name="fk_caja"]').wijcombobox();
+		 $('#'+config.tab.id + ' [name="fk_caja"]').wijcombobox({
+			select:function(){
+				editor.editado=true;
+			}
+		 });
+		 
 	});
 </script>
 

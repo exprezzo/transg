@@ -65,12 +65,12 @@ right: 0;" src='http://www.sistemassacsa.com/images/trailer.png' />
 				</a>				
 				<a tablink="true" href="/viajes/nuevo" titulo="Viajes" class="link">
 					<img src="http://png.findicons.com/files/icons/52/cargo_boxes/48/shipping1.png">		 
-					<div>Nuevo Viaje</div>
+					<div>Nuevo</div>
 				</a>
 				<a tablink="true" href="/viajes/busqueda" titulo="Viajes" class="link">
 					<img src="http://png.findicons.com/files/icons/52/cargo_boxes/48/shipping1.png">		 
 					<div>Buscar</div>
-				</a>
+				</a>				
 			</div>
 		</div>
 		<div class="catalogos">

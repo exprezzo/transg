@@ -93,8 +93,6 @@ var TabManager={
 		
 		var selector='#tabs div[objId="'+objId+'"]';		
 		var tabListaPedidos = $(selector); //role="tabPanel",		
-		console.log("selector: " + selector);
-		 
 
 		if (tabListaPedidos.length == 0){
 			return false;

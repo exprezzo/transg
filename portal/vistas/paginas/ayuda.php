@@ -51,7 +51,7 @@
 
 	<table>
 		<tr>
-			<td colspan="2" class="titulo">Accesos generales</td>		
+			<td colspan="2" class="titulo">Acciones generales</td>		
 		</tr>
 		<tr>
 			<td>Men&uacute; principal</td>
@@ -64,6 +64,10 @@
 		<tr>
 			<td>Cerrar pesta&ntilde;a</td>
 			<td>Ctrl + Alt + X</td>
+		</tr>
+		<tr>
+			<td>Refrescar busqueda</td>
+			<td>Ctrl + Alt + R</td>
 		</tr>
 		<tr>
 			<td>Guardar</td>
@@ -81,13 +85,17 @@
 		<tr>
 			<td>Nuevo</td>
 			<td>Ctrl + Alt + N</td>
-		</tr>
-		
-		
-			
-		
+		</tr>		
 	</table>    
-
 	<br>
-	 <span>Se recomiendo usar google chrome para obtener las mejores caracter&iacute;sticas del sistema.</span>
+	<span style="font-size:14px;">
+		<h1>Caraccterist&iacute;cas generales</h1>
+		Al intentar cerrar un formulario, el sistema verifica si el usuario realiz&oacute; alg&uacute;n cambio,<br>
+		en cuyo caso pide confirmacion para cerrar y sugiere la opcion de guardar y cerrar.
+		<br>
+		<br>
+		Se recomiendo usar google chrome para obtener las mejores caracter&iacute;sticas del sistema.
+	</span>
+	<br>
+	 <span></span>
 </div>

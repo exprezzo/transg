@@ -15,6 +15,7 @@ var DetallesViaje=function (tabId){
 		this.tabId=tabId;
 		this.padre=padre;
 		
+		
 		var params={
 			targetSelector:tabId+' .grid_articulos',
 			pageSize: 100,
@@ -107,7 +108,7 @@ var DetallesViaje=function (tabId){
 						var domCel = args.cell.tableCell();
 						combo.css('width',	$(domCel).width()-10 );
 						combo.css('height',	$(domCel).height()-10 );
-						me.configurarComboConcepto(combo);
+						me.configurarComboConcepto(combo);						
 					break;
 					case 'fecha':
 						
@@ -140,6 +141,7 @@ var DetallesViaje=function (tabId){
 				switch (args.cell.column().dataKey) {					
 					case "nombre":
 						args.value = args.cell.container().find("input").val();
+						me.padre.editado=true;
 						if (me.articulo!=undefined){
 							var row=args.cell.row();							
 							row.data.costo=me.articulo.costo;							
@@ -151,7 +153,8 @@ var DetallesViaje=function (tabId){
 						}
 						// me.padre.editado=true;
 						break;	
-					case 'fecha':
+					case 'fecha':	
+						me.padre.editado=true;
 						args.value = args.cell.container().find("input").val();
 						var row=args.cell.row();							
 						row.data.fecha =args.value;						
@@ -159,6 +162,7 @@ var DetallesViaje=function (tabId){
 						
 					break;
 					case 'costo':
+						me.padre.editado=true;
 						args.value = args.cell.container().find("input").val();
 						var row=args.cell.row();							
 						row.data.costo =args.value;												
@@ -169,7 +173,7 @@ var DetallesViaje=function (tabId){
 						args.value = args.cell.container().find("input").val();	
 						var row=args.cell.row();						
 						gridPedidos.wijgrid('ensureControl',true);						
-						console.log("DEFAULT");
+						
 				}
 				me.articulo=undefined;		
 			}			
@@ -425,7 +429,8 @@ var DetallesViaje=function (tabId){
 			autoFilter: true,			
 			search: function (e, obj) {},
 			select: function (e, item) 
-			{			
+			{		
+				me.padre.editado=true;
 				var rowdom=$(me.tabId+' .grid_articulos tbody tr:eq('+me.selected.sectionRowIndex +')');								
 				item.costo*=1;				
 				me.articulo=item;
@@ -446,6 +451,7 @@ var DetallesViaje=function (tabId){
 	};
 	
 	this.nuevo=function(){	
+		this.padre.editado=true;
 		var rec={};
 		$.each( this.fields, function(indexInArray, valueOfElement){
 			var campo=valueOfElement.name;

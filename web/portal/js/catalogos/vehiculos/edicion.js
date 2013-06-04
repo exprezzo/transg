@@ -252,7 +252,8 @@
 		var me=this;
 		$(this.tabId+' input[type="text"]').wijtextbox();		
 		$(this.tabId+' textarea').wijtextbox();		
-	
+		$(this.tabId+' textarea').wijtextbox();		
+		
 		
 		
 	
