@@ -125,12 +125,29 @@ class viajeModelo extends Modelo{
 			$fk_viaje=$params['id'];
 			$sth->bindValue(':fk_viaje', $fk_viaje);
 			$res = $sth->execute(); 
-			if ( $res ){
-				$pdo->commit( );
-			}else{
-				$pdo->rollBack( );
+			if ( !$res ){ 
+				$pdo->rollBack( ); 
+				$res= array(
+					'success'=>false,
+					'msg'=>'error al intentar borrar los gastos'
+				);
+				echo json_encode($res); exit;
 			}
 			
+			$sql='DELETE FROM trans_consumo WHERE fk_viaje=:fk_viaje';						
+			$sth = $pdo->prepare($sql);
+			$fk_viaje=$params['id'];
+			$sth->bindValue(':fk_viaje', $fk_viaje);
+			$res = $sth->execute(); 
+			if ( !$res ){ 
+				$pdo->rollBack( ); 
+				$res =  array(
+					'success'=>false,
+					'msg'=>'error al intentar borrar el consumo'
+				);
+				echo json_encode($res); exit;
+			}
+			$pdo->commit( ); 
 		}
 		return $res;
 		
@@ -146,8 +163,8 @@ class viajeModelo extends Modelo{
 		$id=$params[$this->pk];			
 		$sql = 'SELECT s.serie as nombreSerie, v.*,v.id as fk_viaje,
 		c.id as fk_consumo, c.distancia,c.rendimiento,c.consumo_diesel_lt,c.precio_por_litro,c.consumo_en_pesos,c.kilometraje_inicial,c.kilometraje_final,
-		c.kilometraje_recorrido,c.consumo_diesel_calculado_lt,c.consumo_diesel_calculado_pesos,c.consumo_diesel_real_pesos,c.diferencia
-		FROM '.$this->tabla.' v
+		c.kilometraje_recorrido,c.consumo_diesel_calculado_lt,c.consumo_diesel_calculado_pesos,c.consumo_diesel_real_pesos,c.diferencia_calculado,  
+		c.diferencia_medido FROM '.$this->tabla.' v
 		LEFT JOIN trans_consumo c ON c.fk_viaje= v.id
 		LEFT JOIN trans_serie s ON s.id = v.fk_serie WHERE v.'.$this->pk.'=:id';				
 		

@@ -1,6 +1,7 @@
 
 <script src="<?php echo $MOD_WEB_PATH; ?>js/catalogos/<?php echo $_PETICION->controlador; ?>/edicion.js"></script>
 <script src="<?php echo $MOD_WEB_PATH; ?>js/catalogos/<?php echo $_PETICION->controlador; ?>/detalles_viaje.js"></script>
+<script src="<?php echo $MOD_WEB_PATH; ?>js/catalogos/<?php echo $_PETICION->controlador; ?>/consumo.js"></script>
 
 <script>			
 	$( function(){		
@@ -72,6 +73,13 @@
 		 };
 		 var detalle=new DetallesViaje();
 		 detalle.init(paramsDetalle);
+		 
+		 consumo=new PantallaConsumo();
+		 
+		 var paramsConsumo={
+			tabId: tabId
+		 }
+		 consumo.init(paramsConsumo);
 	});	
 </script>
 <style>
@@ -185,7 +193,7 @@
 			$this->mostrar('/toolbar_edicion');	
 		?>
 		
-		<form class="frmEdicion frmGeneral" style="padding-top:10px;">	
+		<form class="frmEdicion frmGeneral" style="padding-top:10px; width:754px;">	
 			
 			<div class="inputBox" style="margin-bottom:8px;display:none;margin-left:10px;width:100%;"  >
 				<label style="">Id:</label>
