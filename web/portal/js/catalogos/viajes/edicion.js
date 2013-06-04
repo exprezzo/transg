@@ -141,6 +141,7 @@
 			{name: 'value',mapping: 'id'},
 			{name: 'fk_caja'}, 
 			{name: 'codCaja'}, 
+			{name:'rendimiento'},
 			{name: 'selected',defaultValue: false}
 		];
 		
@@ -193,7 +194,10 @@
 			 {							
 				me.editado=true;
 				
-				// alert("Seleccionar caja del carro, si no tiene, no seleccionar ninguna");
+				// console.log("item"); console.log(item);
+				// alert(item.rendimiento);
+				$(me.tabId + ' .frmConsumo [name="rendimiento"]').val(item.rendimiento);
+				
 				
 				var cajas=new Array();
 				cajas.push({

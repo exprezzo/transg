@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2013-06-04 00:56:57
+Date: 2013-06-04 15:22:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -37,7 +37,7 @@ CREATE TABLE `system_catalogos` (
   `msg_eliminado` char(255) DEFAULT NULL,
   `msg_cambios` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of system_catalogos
@@ -58,3 +58,5 @@ INSERT INTO `system_catalogos` VALUES ('53', '2', 'Viajes', 'viajes', 'viaje', '
 INSERT INTO `system_catalogos` VALUES ('54', '2', 'Gastos de Viaje', 'gastosdeviaje', 'gastodeviaje', 'trans_viaje_gasto', 'id', '', '', '', '', '', '', '', '', '');
 INSERT INTO `system_catalogos` VALUES ('55', '2', 'Series', 'series', 'serie', 'trans_serie', 'id', '', '', '', '', '', '', '', '', '');
 INSERT INTO `system_catalogos` VALUES ('56', '2', 'Consumo', 'consumos', 'consumo', 'trans_consumo', 'id', 'http://png-1.findicons.com/files/icons/2448/wpzoom_developer/48/gas.png', '', '', '', '', '', '', '', '');
+INSERT INTO `system_catalogos` VALUES ('57', '2', 'Gasto', 'gastos', 'gasto', 'trans_gasto', 'id', 'http://png.findicons.com/files/icons/1681/siena/48/currency_dollar_blue.png', '', '', '', '', '', '', '', '');
+INSERT INTO `system_catalogos` VALUES ('58', '2', 'Tipo de Gasto', 'tipogastos', 'tipogasto', 'trans_tipo_gasto', 'id', 'http://png.findicons.com/files/icons/2254/munich/32/category.png', '', '', '', '', '', '', '', '');

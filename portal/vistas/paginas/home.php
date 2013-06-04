@@ -59,9 +59,13 @@ right: 0;" src='http://www.sistemassacsa.com/images/trailer.png' />
 		<div class="operacion"> 
 			<h3>Operaci&oacute;n</h3>		 
 			<div class="submenu">			
-				<a tablink="true" href="/diario/busqueda" titulo="Diario" class="link">
+				<a tablink="true" href="/gastos/nuevo" titulo="Nuevo Gasto" class="link">
 					<img src="http://png.findicons.com/files/icons/1681/siena/48/currency_dollar_blue.png">		 
-					<div>Diario</div>
+					<div>Nuevo</div>
+				</a>				
+				<a tablink="true" href="/gastos/busqueda" titulo="Gastos" class="link">
+					<img src="http://png.findicons.com/files/icons/1681/siena/48/currency_dollar_blue.png">		 
+					<div>Buscar Gasto</div>
 				</a>				
 				<a tablink="true" href="/viajes/nuevo" titulo="Viajes" class="link">
 					<img src="http://png.findicons.com/files/icons/52/cargo_boxes/48/shipping1.png">		 
@@ -99,12 +103,15 @@ right: 0;" src='http://www.sistemassacsa.com/images/trailer.png' />
 					<div>Choferes</div>
 				</a>			
 				
-				<a tablink="true" href="/rutas/busqueda" titulo="Rutas" class="link">
+				<a tablink="true" href="/rutas/busqueda" titulo="Rutas" class="link" style="display:none; ">
 					<img src="http://png.findicons.com/files/icons/2283/upojenie/60/maps.png">
 					<div>Rutas</div>
 				</a>			
 				
-				
+				<a tablink="true" href="/tipogastos/busqueda" titulo="Tipos de gastos" class="link">
+					<img src="http://png.findicons.com/files/icons/2254/munich/32/category.png">
+					<div>T. gasto</div>
+				</a>			
 				
 			</div>
 		</div>
