@@ -11,7 +11,7 @@ require_once $APPS_PATH.$_PETICION->modulo.'/modelos/consumo_modelo.php';
 class viajes extends Controlador{
 	var $modelo="viaje";
 	
-	var $campos=array('id','origen', 'fk_remitente','fecha_carga','direccion_carga','contenido', 'destino', 'fk_destinatario','direccion_de_entrega','fecha_a_entregar', 'precio', 'condiciones_de_pago','costo','fk_chofer','fk_vehiculo','fk_caja','folio','creado');
+	var $campos=array('id','fk_serie','origen', 'fk_remitente','fecha_carga','direccion_carga','contenido', 'destino', 'fk_destinatario','direccion_de_entrega','fecha_a_entregar', 'precio', 'condiciones_de_pago','costo','fk_chofer','fk_vehiculo','fk_caja','folio','creado');
 	var $pk="id";
 	var $nombre="viajes";
 	
@@ -105,7 +105,7 @@ class viajes extends Controlador{
 		
 		$params=array(
 			'filtros'=>array(
-				array('dataKey'=>'proceso', 'filterOperator'=>'equals','filterValue'=>$this->nombre),				
+				array('dataKey'=>'proceso', 'filterOperator'=>'equals','filterValue'=>$this->nombre),
 				array('dataKey'=>'idsucursal', 'filterOperator'=>'equals','filterValue'=>( isset($_REQUEST['idsucursal'] ) )?  $_REQUEST['idsucursal'] : 0)
 			)
 		);		
@@ -116,7 +116,13 @@ class viajes extends Controlador{
 			$vista->datos['folio'] = 0;
 		}else{
 			$vista->series=$res['datos'];
-			$vista->datos['folio'] = $res['datos'][0]['sig_folio'];	
+			
+			$mes=intval( date('m') );
+			foreach($res['datos'] as $serie){
+				// echo "mes: $mes ID: ".$serie['id'];
+				if ($mes == $serie['id']) $vista->datos['folio'] = $serie['sig_folio'];
+			}
+			// $vista->datos['folio'] = $res['datos'][0]['sig_folio'];	
 		}
 		
 		
@@ -174,7 +180,7 @@ class viajes extends Controlador{
 		if ( empty($_POST['datos']['id']) ){						
 			$serieMod=new serieModelo();
 			$params=array(
-				'id'	=>7
+				'id'	=>$_POST['datos']['fk_serie']
 			);
 			$res= $serieMod->asignarFolio( $params );  //regresa el folio siguiente, y lo incrementa
 			if ( !$res['success'] ){				

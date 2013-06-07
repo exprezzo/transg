@@ -392,9 +392,11 @@
 		var tabId = this.tabId;		
 		var id = $(this.tabId + ' [name="'+this.configuracion.pk+'"]').val();
 		if (id>0){
-			var serie=$(this.tabId + ' .lblSerie').html();
+			var serie=$(this.tabId + ' [name="fk_serie"] option:selected').text()			
 			var folio=$(this.tabId + ' .lblFolio').html();
 			$('a[href="'+tabId+'"]').html(serie+' - '+folio);
+			
+			$(this.tabId +' [name="fk_serie"]').attr('disabled','disabled')			
 		}else{
 			$('a[href="'+tabId+'"]').html('Nuevo');
 		}
@@ -424,7 +426,7 @@
 		  }
 		});
 		
-		
+		paramObj['fk_serie'] = $(this.tabId+' [name="fk_serie"]').val();
 		
 		//-----------------------------------
 		// alert("chofer");

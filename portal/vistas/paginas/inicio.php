@@ -13,6 +13,7 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 	<script src="<?php echo $_APP_PATH; ?>web/libs/jquery-1.8.3.js"></script>
 	<script src="<?php echo $_APP_PATH; ?>web/libs/jquery-ui-1.9.2.custom/jquery-ui-1.9.2.custom.js"></script>  
 	
+	
 	<!--Theme-->
 	
 	<?php 
@@ -266,6 +267,7 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 			$('#btnMenu').click(function(){
 				$('#menuPrincipal').toggle( 100 );
 			});
+						
 		});
 		
 		
@@ -358,6 +360,9 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 			</div>			
 			
 			<div style="display:inline-block;margin-top: 3px;float:right;margin-left: 112px;"> 
+				<!-- ******************************************+ -->
+				
+				<!-- ******************************************+ -->			
 				<div id="btnMenu" href="#" titulo="Menu Principal">
 					<img src="http://png.findicons.com/files/icons/756/ginux/32/run.png" style="cursor: ponter;">
 				</div>

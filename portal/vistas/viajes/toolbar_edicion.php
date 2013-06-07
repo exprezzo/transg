@@ -50,7 +50,26 @@
 				<td style="text-align:right; position:relative; ">Costo</td>
 			</tr>
 			<tr>
-				<td style="font-size:30px;" class="lblSerie"><?php echo $this->datos['nombreSerie']; ?></td>
+				<td>
+				<select name="fk_serie" style="font-size:30px;">
+					<?php
+						$elMes=date('m');
+						$idx=1;
+						foreach($this->series as $serie){
+							
+							if ( empty($this->datos['id']) && $idx==$elMes ){
+								$selected="selected";
+							}else if ( $this->datos['fk_serie'] == $serie['id'] ){
+								$selected="selected";
+							}else{
+								$selected="";
+							}							
+							echo '<option '.$selected.' value="'.$serie['id'].'">'.$serie['serie'].'</option>';
+							$idx++;
+						}
+					?>
+				</select>				
+				</td>
 				<td style="font-size:30px;" class="lblFolio"><?php echo $this->datos['folio']; ?></td>					
 				<td style="width: 297px; font-size:37px; text-align:right; position:relative; " class="lblGasto">$<?php echo $this->datos['costo']; ?></td>					
 			</tr>

@@ -187,8 +187,8 @@
 			$this->datos['hora_carga']=$this->datos['fecha_carga'];
 			
 			if ( empty($this->datos['id']) ){
-				$this->datos['nombreSerie']=$this->series[0]['serie'];
-				$this->datos['folio']=$this->datos['folio'];
+				// $this->datos['nombreSerie']=$this->series[0]['serie'];
+				// $this->datos['folio']=$this->datos['folio'];
 			}			
 			$this->mostrar('/toolbar_edicion');	
 		?>
@@ -198,8 +198,8 @@
 			<div class="inputBox" style="margin-bottom:8px;display:none;margin-left:10px;width:100%;"  >
 				<label style="">Id:</label>
 				<input type="text" name="id" class="txt_id" value="<?php echo $this->datos['id']; ?>" style="width:500px;" />
-			</div>			
-			<input type="hidden" name="nombreSerie" class="txt_nombreSerie" value="<?php echo $this->datos['nombreSerie']; ?>" style="width:500px;" />
+			</div>
+			
 			<input type="hidden" name="folio" class="txt_folio" value="<?php echo $this->datos['folio']; ?>" style="width:500px;" />	
 			<input type="hidden" name="costo" class="txt_costo" value="<?php echo $this->datos['costo']; ?>" style="width:500px;" />										
 

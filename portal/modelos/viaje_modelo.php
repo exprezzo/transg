@@ -1,7 +1,7 @@
 <?php
 class viajeModelo extends Modelo{
 	var $tabla="trans_viaje";
-	var $campos=array('id','origen', 'fk_remitente','fecha_carga','direccion_carga','contenido', 'destino', 'fk_destinatario','direccion_de_entrega','fecha_a_entregar', 'precio', 'condiciones_de_pago','costo','fk_chofer','fk_vehiculo','fk_caja','folio','creado');
+	var $campos=array('id','origen','fk_serie', 'fk_remitente','fecha_carga','direccion_carga','contenido', 'destino', 'fk_destinatario','direccion_de_entrega','fecha_a_entregar', 'precio', 'condiciones_de_pago','costo','fk_chofer','fk_vehiculo','fk_caja','folio','creado');
 	var $pk="id";
 	
 	function nuevo($params){
@@ -16,6 +16,11 @@ class viajeModelo extends Modelo{
 		
 		$pdo = $this->getPdo();
 		$pdo->beginTransaction( );
+		
+		if ( !empty($params['id']) ){
+			unset( $params['fk_serie'] );
+			unset( $params['folio'] );
+		}
 		
 		$res = parent::guardar( $params );
 		
