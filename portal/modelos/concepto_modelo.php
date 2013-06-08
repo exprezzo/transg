@@ -52,9 +52,9 @@ class conceptoModelo extends Modelo{
 		if ($paginar){
 			$limit=$params['limit'];
 			$start=$params['start'];		
-			$sql = 'SELECT *,DATE_FORMAT(now(), "%d/%m/%Y" ) as fecha FROM '.$this->tabla.$filtros.' limit :start,:limit';
+			$sql = 'SELECT *,id as value, DATE_FORMAT(now(), "%d/%m/%Y" ) as fecha FROM '.$this->tabla.$filtros.' limit :start,:limit';
 		}else{			
-			$sql = 'SELECT *,DATE_FORMAT(now(), "%d/%m/%Y" ) as fecha FROM '.$this->tabla.$filtros;
+			$sql = 'SELECT *,id as value, DATE_FORMAT(now(), "%d/%m/%Y" ) as fecha FROM '.$this->tabla.$filtros;
 		}
 		// echo $sql;
 		$sth = $con->prepare($sql);

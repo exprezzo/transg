@@ -84,6 +84,22 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 				{ 'type':'keydown', 'propagate':false, 'target':document}
 			);
 			
+			shortcut.add("Ctrl+Alt+D", 
+				function() { 
+					TabManager.add(kore.mod_url_base+'gastos/nuevo','Nuevo Gasto',0);
+					
+				}, 
+				{ 'type':'keydown', 'propagate':false, 'target':document}
+			);
+			
+			shortcut.add("Ctrl+Alt+SHIFT+D", 
+				function() { 
+					TabManager.add(kore.mod_url_base+'gastos/busqueda','Gastos',1);
+					
+				}, 
+				{ 'type':'keydown', 'propagate':false, 'target':document}
+			);
+			
 			
 			
 			shortcut.add("Ctrl+Alt+A", 

@@ -45,6 +45,14 @@
 			<td>Buscar Viajes</td>
 			<td>Ctrl + Alt + SHIFT + V</td>
 		</tr>	
+		<tr>
+			<td>Nuevo Gasto</td>
+			<td>Ctrl + Alt + D</td>
+		</tr>
+		<tr>
+			<td>Gastos del dia</td>
+			<td>Ctrl + Alt + SHIFT + D</td>
+		</tr>	
 	</table>
 
 	<br /><br />
@@ -89,7 +97,7 @@
 	</table>    
 	<br>
 	<span style="font-size:14px;">
-		<h1>Caraccterist&iacute;cas generales</h1>
+		<h1>Caracterist&iacute;cas generales</h1>
 		Al intentar cerrar un formulario, el sistema verifica si el usuario realiz&oacute; alg&uacute;n cambio,<br>
 		en cuyo caso pide confirmacion para cerrar y sugiere la opcion de guardar y cerrar.
 		<br>

@@ -82,7 +82,12 @@ var DetallesViaje=function (tabId){
 				{dataKey: "costo", headerText: "Costo",editable:true, dataType: "currency",width:"150px", valueRequired: true},
 				{dataKey: "fecha", headerText: "Fecha",width:"100px"},
 				{dataKey: "fk_viaje", headerText: "fk_viaje", visible:false},
-				{dataKey: "fk_concepto", headerText: "fk_concepto", visible:false}
+				{dataKey: "fk_concepto", headerText: "fk_concepto", visible:false},
+				{dataKey: "descripcion", headerText: "descripcion", visible:false},
+				{dataKey: "documento", headerText: "documento", visible:false},
+				{dataKey: "fk_tipo_gasto", headerText: "fk_tipo_gasto", visible:false},
+				{dataKey: "tipo_gasto", headerText: "tipo_gasto", visible:false},
+				{dataKey: "fk_vehiculo", headerText: "fk_vehiculo", visible:false}
 			]
 		});
 		var me=this;
@@ -389,8 +394,8 @@ var DetallesViaje=function (tabId){
 		var me=this;
 		var fields=[										
 			{name: 'costo'},
-			{name: 'label',mapping: 'nombre'}, 
-			{name: 'value',mapping: 'id'}, 
+			{name: 'label', mapping: 'nombre'}, 
+			{name: 'value'}, 
 			{name: 'fecha'}, 
 			{name: 'selected',defaultValue: false}
 		];
@@ -435,6 +440,7 @@ var DetallesViaje=function (tabId){
 				item.costo*=1;				
 				me.articulo=item;
 				
+				console.log("item"); console.log(item);
 				
 				rowdom.find('td:eq(1) div').html( '$'+item.costo.formatMoney(2,',','.') );
 				rowdom.find('td:eq(2) div').html( item.fecha );

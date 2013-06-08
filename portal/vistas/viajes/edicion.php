@@ -172,6 +172,10 @@
     
 }
 
+button[name="estado_viaje"] span{
+	background-image: url(http://png.findicons.com/files/icons/1681/siena/24/lock_green.png);
+	background-repeat: no-repeat;background-position-y: 7px;padding-left: 28px !important;
+}
 
 </style>	
 	<div class="pnlIzq">
@@ -202,7 +206,8 @@
 			
 			<input type="hidden" name="folio" class="txt_folio" value="<?php echo $this->datos['folio']; ?>" style="width:500px;" />	
 			<input type="hidden" name="costo" class="txt_costo" value="<?php echo $this->datos['costo']; ?>" style="width:500px;" />										
-
+			<input type="hidden" name="fk_estado" class="fk_estado" value="<?php echo $this->datos['fk_estado']; ?>" style="width:500px;" />										
+			
 			<fieldset>
 				<legend>Origen</legend>				
 					<div class="inputBox caja_remitente" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
@@ -317,7 +322,9 @@
 						?>
 					</select>
 				</div>
-				
+				<div class="inputBox" style="margin-bottom:8px;display:inline-block; margin-left:10px;"  >
+					<button <?php echo ( $this->datos['fk_estado']==2 )? 'disabled="disabled"' : '';  ?> name="estado_viaje" >Cerrar</button>
+				</div>
 			</fieldset>			
 		</form>
 		<div class="consumo" style="display:none;width:754px;">			

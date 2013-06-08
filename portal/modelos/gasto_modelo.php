@@ -1,13 +1,30 @@
 <?php
 class gastoModelo extends Modelo{
 	var $tabla="trans_gasto";
-	var $campos=array('id','cantidad','descripcion','fecha','documento','fk_tipo_gasto');
+	var $campos=array('id','costo','descripcion','fecha','documento','fk_tipo_gasto','fk_viaje','fk_vehiculo');
 	var $pk="id";
 	
 	function nuevo($params){
 		return parent::nuevo($params);
 	}
 	function guardar($params){
+		switch ($params['fk_tipo_gasto'] ){
+			case 1:	
+				// echo 'VIAJE';
+				 $params['fk_vehiculo'] =0;
+			break;
+			case 2:
+				// echo 'VE';
+				 $params['fk_viaje'] =0;
+			break;
+			case 3:
+			default:	
+				// echo 'OtRO';
+				 $params['fk_vehiculo'] =0;
+				 $params['fk_viaje'] = 0;
+			break;
+		}
+		// print_r($params);
 		return parent::guardar($params);
 	}
 	function borrar($params){
@@ -59,12 +76,18 @@ class gastoModelo extends Modelo{
 		if ($paginar){
 			$limit=$params['limit'];
 			$start=$params['start'];		
-			$sql = 'SELECT g.*,t.nombre as tipo_gasto FROM '.$this->tabla.' g 
-			LEFT JOIN trans_tipo_gasto t ON t.id = g.fk_tipo_gasto'.$filtros.'
+			$sql = 'SELECT g.*,t.nombre as tipo_gasto, c.nombre, DATE_FORMAT(g.fecha, "%d/%m/%Y") as fecha,ve.codigo 
+			FROM '.$this->tabla.' g 
+			LEFT JOIN trans_tipo_gasto t ON t.id = g.fk_tipo_gasto 
+			LEFT JOIN trans_concepto c ON c.id = g.fk_concepto 
+			LEFT JOIN trans_vehiculo ve ON ve.id = g.fk_vehiculo
+			'.$filtros.'
 			ORDER BY t.nombre ASC, fecha DESC  limit :start,:limit ';
 		}else{			
-			$sql = 'SELECT g.*,t.nombre as tipo_gasto FROM '.$this->tabla.' g
+			$sql = 'SELECT g.*,t.nombre as tipo_gasto,c.nombre,DATE_FORMAT(g.fecha, "%d/%m/%Y") as fecha,ve.codigo FROM '.$this->tabla.' g
 			LEFT JOIN trans_tipo_gasto t ON t.id = g.fk_tipo_gasto
+			LEFT JOIN trans_concepto c ON c.id = g.fk_concepto
+			LEFT JOIN trans_vehiculo ve ON ve.id = g.fk_vehiculo
 			'.$filtros.' ORDER BY t.nombre ASC, fecha DESC ';
 		}
 		

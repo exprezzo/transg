@@ -4,14 +4,14 @@ require_once $APPS_PATH.$_PETICION->modulo.'/modelos/chofer_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/vehiculo_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/caja_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/cliente_modelo.php';
-require_once $APPS_PATH.$_PETICION->modulo.'/modelos/gastodeviaje_modelo.php';
+require_once $APPS_PATH.$_PETICION->modulo.'/modelos/gasto_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/concepto_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/serie_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/consumo_modelo.php';
 class viajes extends Controlador{
 	var $modelo="viaje";
 	
-	var $campos=array('id','fk_serie','origen', 'fk_remitente','fecha_carga','direccion_carga','contenido', 'destino', 'fk_destinatario','direccion_de_entrega','fecha_a_entregar', 'precio', 'condiciones_de_pago','costo','fk_chofer','fk_vehiculo','fk_caja','folio','creado');
+	var $campos=array('id','fk_serie','origen', 'fk_remitente','fecha_carga','direccion_carga','contenido', 'destino', 'fk_destinatario','direccion_de_entrega','fecha_a_entregar', 'precio', 'condiciones_de_pago','costo','fk_chofer','fk_vehiculo','fk_caja','folio','creado','fk_estado');
 	var $pk="id";
 	var $nombre="viajes";
 	
@@ -85,6 +85,8 @@ class viajes extends Controlador{
 			$obj[$campos[$i]]='';
 		}
 		$vista->datos=$obj;		
+		$vista->datos['fk_estado'] = 1;
+		
 		$vista->gastos=array();
 		
 		$choMod = new choferModelo();
@@ -237,7 +239,7 @@ class viajes extends Controlador{
 		$res = $cliMod->buscar( array() );		
 		$vista->clientes=$res['datos'];
 		
-		$gastoMod = new gastodeviajeModelo();
+		$gastoMod = new gastoModelo();
 		$res = $gastoMod->buscar(
 			array('filtros'=>array(
 				array(

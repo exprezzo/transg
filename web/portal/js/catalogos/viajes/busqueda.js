@@ -284,6 +284,21 @@
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
 				
 { dataKey: "id", visible:false, headerText: "Id" },
+{ dataKey: "fk_estado", visible:true, headerText: "Estado",cellFormatter: function (args) { 
+                            if (args.row.type & $.wijmo.wijgrid.rowType.data) { 
+								var icono = '';
+								var fk_estado=parseInt( args.row.data.fk_estado );
+								if (  fk_estado == 1) icono='http://png.findicons.com/files/icons/1681/siena/24/unlock_blue.png';
+								if (  fk_estado == 2) icono='http://png.findicons.com/files/icons/1681/siena/24/lock_red.png';								
+                                args.$container 
+                                    .css("text-align", "center") 
+                                    .empty() 
+                                    .append($("<img />") 
+                                    .attr("src", icono)); 
+  
+                                return true; 
+                            } 
+                        }  },
 { dataKey: "serie", visible:true, headerText: "Serie",showFilter:false,
 	cellFormatter: function (args) {
 		if (args.row.type & $.wijmo.wijgrid.rowType.data) {

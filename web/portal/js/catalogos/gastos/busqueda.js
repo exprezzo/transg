@@ -200,12 +200,16 @@
 			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
 				
 { dataKey: "id", visible:false, headerText: "Id" },
-{ dataKey: "tipo_gasto", visible:true, headerText: "Tipo Gasto", groupInfo: { groupSingleRow: true, position:'header' } },
+{ dataKey: "tipo_gasto", visible:false, headerText: "Tipo Gasto", groupInfo: { groupSingleRow: true, position:'header' } },
 { dataKey: "documento", visible:true, headerText: "Documento" },
-{ dataKey: "cantidad", visible:true, headerText: "Cantidad",dataType:"currency", aggregate: "sum" },
+{ dataKey: "costo", visible:true, headerText: "Costo",dataType:"currency", aggregate: "sum" },
+{ dataKey: "fk_concepto", visible:false, headerText: "fk_concepto" },
+{ dataKey: "fk_viaje", visible:false, headerText: "fk_viaje" },
+{ dataKey: "nombre", visible:true, headerText: "Concepto" },
 { dataKey: "descripcion", visible:true, headerText: "Descripcion" },
 { dataKey: "fecha", visible:true, headerText: "Fecha" },
-
+{ dataKey: "codigo", visible:true, headerText: "Vehiculo" },
+{ dataKey: "fk_vehiculo", visible:false, headerText: "fk_vehiculo" },
 { dataKey: "fk_tipo_gasto", visible:false, headerText: "Fk_tipo_gasto" },
 
 			]

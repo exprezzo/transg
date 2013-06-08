@@ -1,7 +1,7 @@
 <?php
 class viajeModelo extends Modelo{
 	var $tabla="trans_viaje";
-	var $campos=array('id','origen','fk_serie', 'fk_remitente','fecha_carga','direccion_carga','contenido', 'destino', 'fk_destinatario','direccion_de_entrega','fecha_a_entregar', 'precio', 'condiciones_de_pago','costo','fk_chofer','fk_vehiculo','fk_caja','folio','creado');
+	var $campos=array('id','origen','fk_serie', 'fk_remitente','fecha_carga','direccion_carga','contenido', 'destino', 'fk_destinatario','direccion_de_entrega','fecha_a_entregar', 'precio', 'condiciones_de_pago','costo','fk_chofer','fk_vehiculo','fk_caja','folio','creado','fk_estado');
 	var $pk="id";
 	
 	function nuevo($params){
@@ -24,16 +24,23 @@ class viajeModelo extends Modelo{
 		
 		$res = parent::guardar( $params );
 		
+		
 		if ( $res['success'] ){
-			$gastoMod = new gastodeviajeModelo();			
+			$gastoMod = new gastoModelo();			
 			
 			foreach($gastos as $art){
+				$art['descripcion'] = $art['nombre']  ;
 				 unset( $art['nombre'] ) ;
 				 unset( $art['nombreConcepto'] ) ;
 				 unset( $art['fechaa'] ) ;
 				 unset( $art['dataItemIndex'] ) ;
 				 unset( $art['sectionRowIndex'] ) ;
 				 unset( $art['tmp_id'] ) ;
+				 unset( $art['tipo_gasto'] ) ;				 
+				 unset( $art['codigo'] ) ;				 
+				 $art['fk_tipo_gasto']=1; //VIAJE
+				 $art['documento'] = $res['datos']['nombreSerie'].' '.$res['datos']['folio'];
+				 
 				// unset( $art['codigo'] ) ;
 				// $art['precio'] =$art['costo'];
 				// unset( $art['costo'] ) ;

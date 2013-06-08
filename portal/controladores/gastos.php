@@ -1,12 +1,39 @@
 <?php
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/gasto_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/tipogasto_modelo.php';
+require_once $APPS_PATH.$_PETICION->modulo.'/modelos/vehiculo_modelo.php';
 class gastos extends Controlador{
 	var $modelo="gasto";
-	var $campos=array('id','cantidad','descripcion','fecha','documento','fk_tipo_gasto');
+	var $campos=array('id','fk_viaje', 'fk_vehiculo','costo','descripcion','fecha','documento','fk_tipo_gasto');
 	var $pk="id";
 	var $nombre="gastos";
 	
+	function buscarVehiculos(){
+		$mod= new vehiculoModelo();
+		
+		
+		$sql="SELECT ve.*,if ( isnull(vi.id), codigo,  concat(codigo,' (', se.serie, ' ',vi.folio, ')' ))  as codigo FROM trans_vehiculo ve 
+		LEFT JOIN trans_viaje vi ON vi.fk_vehiculo = ve.id AND vi.fk_estado =1
+		LEFT JOIN trans_serie se ON se.id = vi.fk_serie";
+		$pdo=$mod->getPdo();
+		$sth = $pdo->prepare($sql);
+		$exito= $sth->execute();
+		if ( !$exito ){
+			$error=$mod->getError(); 
+			echo json_encode( $error );
+			exit;
+		}
+		
+		$vehiculos = $sth->fetchAll(PDO::FETCH_ASSOC);
+		
+		$res=array(
+			'rows'=>$vehiculos,
+			'totalRows'=>sizeof( $vehiculos )
+		);
+		
+		echo json_encode( $res );
+		
+	}
 	function nuevo(){		
 		$campos=$this->campos;
 		$vista=$this->getVista();				
@@ -15,10 +42,15 @@ class gastos extends Controlador{
 		}
 		$obj['hora']='';
 		$vista->datos=$obj;		
+		$vista->datos['fk_tipo_gasto']=1;		
 		
 		$tipMod = new tipogastoModelo();
 		$tipos = $tipMod->buscar( array() );		
 		$vista->tiposGasto = $tipos['datos'];
+		
+		$vemod=new vehiculoModelo();
+		$resp = $vemod->buscar( array() );
+		$vista->vehiculos = $resp['datos'];
 		
 		global $_PETICION;
 		$vista->mostrar('/'.$_PETICION->controlador.'/edicion');
@@ -41,6 +73,11 @@ class gastos extends Controlador{
 		$tipos = $tipMod->buscar( array() );		
 		$vista->tiposGasto = $tipos['datos'];
 		
+		
+		$vemod=new vehiculoModelo();
+		$resp = $vemod->buscar( array() );
+		$vista->vehiculos = $resp['datos'];
+		
 		return parent::editar();
 	}
 	function buscar(){
@@ -61,6 +98,7 @@ class gastos extends Controlador{
 			}
 			
 		}
+		
 		return parent::buscar();
 	}
 }

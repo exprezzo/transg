@@ -16,7 +16,8 @@
 			catalogo:{
 				nombre:'Gasto',
 				modelo:'Gasto'
-			},			
+			},		
+			fk_vehiculo:'<?php echo  empty( $this->datos['fk_vehiculo'] )? 0 : $this->datos['fk_vehiculo']; ?>',
 			pk:"id"
 			
 		};				
@@ -45,8 +46,8 @@
 			if (!isset($this->datos)){		
 				$this->datos=array();		
 			}
-			
-			
+			// print_r( $this->datos ); exit;
+			// print_r($this->vehiculos ); exit;
 		?>
 		
 		<form class="frmEdicion" style="padding-top:10px;">				
@@ -74,13 +75,36 @@
 					?>
 				</select>
 			</div>
-			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
-				<label style="">Documento:</label>
-				<input type="text" name="documento" class="txt_documento" value="<?php echo $this->datos['documento']; ?>" style="width:500px;" />
+			<div class="divEspecial">
+				<div class="viaje" style="<?php if ($this->datos['fk_tipo_gasto']!=1 )  echo 'display:none;'; ?> ">VIAJE</div>
+				<div class="vehiculo" style="<?php if ($this->datos['fk_tipo_gasto']!=2 ) echo 'display:none;'; ?>">
+				
+					<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+						<label style="">Vehiculo:</label>	
+						<select name="fk_vehiculo" style="width:500px;">
+							<?php								
+								
+								foreach($this->vehiculos as $obj){
+									$selected = ( intval($this->datos['fk_vehiculo']) == intval($obj['id']) )? 'selected' : '';
+									echo '<option value='.$obj['id'].' '.$selected.' >'.$obj['codigo'].'</option>';
+								}
+							?>
+						</select>
+					</div>
+					
+					
+				</div>
+				<div class="otros" style="<?php if ($this->datos['fk_tipo_gasto']!=3 )  echo 'display:none;'; ?>">
+					
+				</div>
 			</div>
+			<div class="inputBox documento" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+					<label style="">Documento:</label>
+					<input type="text" name="documento" class="txt_documento" value="<?php echo $this->datos['documento']; ?>" style="width:500px;" />
+				</div>
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Cantidad:</label>
-				<input type="text" name="cantidad" class="txt_cantidad" value="<?php echo $this->datos['cantidad']; ?>" style="width:500px;" />
+				<input type="text" name="costo" class="txt_cantidad" value="<?php echo $this->datos['costo']; ?>" style="width:500px;" />
 			</div>
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Descripcion:</label>

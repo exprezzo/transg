@@ -1,6 +1,90 @@
 ﻿var Ediciongastos = function(){
 	this.editado=false;
 	this.saveAndClose=false;
+	this.configurarComboVehiculo=function(){
+		var fk_vehiculo = this.configuracion.fk_vehiculo;	
+		var tabId=this.tabId;
+		
+		var me=this;
+		var fields=[													
+			{name: 'label',mapping: 'codigo'}, 
+			{name: 'value',mapping: 'id'},
+			{name: 'fk_caja'}, 
+			{name: 'codCaja'}, 
+			{name:'rendimiento'},
+			{name: 'selected',defaultValue: false}
+		];
+		
+		var myReader = new wijarrayreader(fields);
+		
+		var proxy = new wijhttpproxy({
+			url: kore.mod_url_base+'gastos/buscarVehiculos',
+			dataType:"json"			
+		});
+		
+		var datasource = new wijdatasource({
+			reader:  new wijarrayreader(fields),
+			proxy: proxy,			
+			 loaded: function (data) {
+				if (fk_vehiculo>0)
+				for (var i=0; i<data.data.length; i++){
+					if ( data.data[i].id == fk_vehiculo) {										 
+						$(me.tabId + ' [name="fk_vehiculo"]').wijcombobox("option","selectedIndex", -1);
+						$(me.tabId + ' [name="fk_vehiculo"]').wijcombobox("option","selectedIndex", i); 
+						
+					}				
+				}
+				fk_vehiculo=0;
+			 },
+			loading: function (dataSource, userData) {                            								
+				// dataSource.proxy.options.data=dataSource.proxy.options.data || {};				 
+				// dataSource.proxy.options.data.nombre = (userData) ?  userData.label : '';				 
+            }
+		});
+		
+		datasource.reader.read= function (datasource) {			
+			var totalRows=datasource.data.totalRows;			
+			datasource.data = datasource.data.rows;
+			datasource.data.totalRows = totalRows;
+			myReader.read(datasource);
+		};			
+		
+		
+		
+		var target=$( this.tabId+' [name="fk_vehiculo"]');
+		var combo=target.wijcombobox({
+			data: datasource,
+			showTrigger: true,
+			minLength: 1,
+			 selectedIndex:0,
+			forceSelectionText: false,
+			autoFilter: true,			
+			search: function (e, obj) {},
+			select: function (e, item) 
+			 {							
+				me.editado=true;
+				
+				// console.log("item"); console.log(item);
+				// alert(item.rendimiento);
+				// $(me.tabId + ' .frmConsumo [name="rendimiento"]').val(item.rendimiento);
+				
+				
+				// var cajas=new Array();
+				// cajas.push({
+					// value:item.fk_caja,
+					// label:item.codCaja
+				// });
+				
+				// $(me.tabId + ' [name="fk_caja"]').wijcombobox('option','data',cajas);
+				// $(me.tabId + ' [name="fk_caja"]').wijcombobox('option','selectedIndex',0);
+				
+				return true;
+			 }
+		});		
+		
+		 datasource.load();	
+			
+	}
 	this.borrar=function(){		
 		var r=confirm("¿Eliminar Elemento?");
 		if (r==true){
@@ -134,6 +218,11 @@
 			paramObj[kv.name] = kv.value;
 		  }
 		});
+		//----------------------------------
+		var selectedIndex = $(this.tabId+" [name='fk_vehiculo']").wijcombobox("option","selectedIndex");  
+		var selectedItem = $(this.tabId+" [name='fk_vehiculo']").wijcombobox("option","data");		
+		paramObj['fk_vehiculo']=selectedItem.data[selectedIndex]['id'];
+		
 		//-----------------------------------
 		var datos=paramObj;
 		
@@ -248,14 +337,52 @@
 	},
 	
 
-	
-	
+	this.mostrarDivOtros=function(){
+		$( this.tabId + ' .divEspecial .otros').fadeIn();
+		$( this.tabId + ' .divEspecial .vehiculo').hide();
+		$( this.tabId + ' .divEspecial .viaje').hide();				
+		$( this.tabId + ' .inputBox.documento').fadeIn();
+	};
+	this.mostrarDivVehiculo=function(){
+		$( this.tabId + ' .divEspecial .vehiculo').fadeIn();
+		$( this.tabId + ' .divEspecial .viaje').hide();		
+		$( this.tabId + ' .divEspecial .otros').hide();
+		$(this.tabId + ' [name="fk_vehiculo"]').wijcombobox("repaint");
+		
+		$( this.tabId + ' .inputBox.documento').fadeIn();
+		
+	};
+	this.mostrarDivViaje=function(){
+		$( this.tabId + ' .divEspecial .viaje').fadeIn();
+		$( this.tabId + ' .divEspecial .vehiculo').hide();
+		$( this.tabId + ' .divEspecial .otros').hide();
+		$( this.tabId + ' .inputBox.documento').hide();
+	};
 	this.configurarFormulario=function(tabId){		
 		var me=this;
 		$(this.tabId+' input[type="text"]').wijtextbox();		
 		$(this.tabId+' textarea').wijtextbox();		
 	
-		$(this.tabId+' [name="fk_tipo_gasto"]').wijcombobox();		
+		this.configurarComboVehiculo();
+		
+		$(this.tabId+' [name="fk_tipo_gasto"]').wijcombobox({select:function(e, item){
+			// console.log("item"); console.log(item);
+			switch (parseInt (item.value) ){
+			case 1:
+				me.mostrarDivViaje();
+				// alert("Tipo viaje");
+			break;
+			case 2:
+				me.mostrarDivVehiculo();
+				// alert("Tipo vehiculo");
+			break;
+			case 3:				
+			default:
+				me.mostrarDivOtros();
+				// alert("Otro Tipo ");
+			break;
+			}
+		}});		
 		
 	
 		

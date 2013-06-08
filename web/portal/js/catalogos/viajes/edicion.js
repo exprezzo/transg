@@ -1,6 +1,15 @@
 ﻿var Edicionviajes = function(){
 	this.editado=false;
 	this.saveAndClose=false;
+	this.configurarBotonEstadoViaje=function(){
+		var me = this;
+		$(this.tabId + ' button[name="estado_viaje"]').button().click(function(event){			
+			 event.preventDefault();			 
+			 $(me.tabId + ' button[name="estado_viaje"]').removeClass('ui-state-hover');
+			$(me.tabId + ' [name="fk_estado"]').val(2);
+			me.guardar();			
+		});
+	};
 	this.configurarComboDestinatario=function(){
 		var fk_destinatario = this.configuracion.fk_destinatario;	
 		var tabId=this.tabId;
@@ -400,6 +409,17 @@
 		}else{
 			$('a[href="'+tabId+'"]').html('Nuevo');
 		}
+		
+		var fk_estado = $(this.tabId + ' [name="fk_estado"]').val();
+		fk_estado = parseInt( fk_estado );
+		if (fk_estado==2){
+			$(this.tabId + ' button[name="estado_viaje"]').attr('disabled','disabled');
+			$(this.tabId + ' button[name="estado_viaje"]').addClass('ui-button-disabled');
+			$(this.tabId + ' button[name="estado_viaje"]').addClass('ui-state-disabled');
+			
+		}
+		
+		
 	}
 	this.nuevo=function(){
 		var tabId=this.tabId;
@@ -498,6 +518,8 @@
 				
 				tab.find('.lblFolio').html(resp.datos['folio']);
 				
+				tab.find('[name="fk_estado"]').html(resp.datos['fk_estado']);
+				
 				me.actualizarTitulo();
 				me.editado=false;
 				var objId = '/'+me.configuracion.modulo.nombre+'/'+me.controlador.nombre+'/editar?id='+resp.datos.id;
@@ -591,6 +613,7 @@
 		this.configurarComboRemitente();
 		this.configurarComboDestinatario();
 		this.configurarComboVehiculo();
+		this.configurarBotonEstadoViaje();
 	};
 	this.configurarToolbar=function(tabId){					
 			var me=this;			

@@ -1,6 +1,8 @@
 <?php
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/vehiculo_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/caja_modelo.php';
+require_once $APPS_PATH.$_PETICION->modulo.'/modelos/gasto_modelo.php';
+
 class vehiculos extends Controlador{
 	var $modelo="vehiculo";
 	var $campos=array('id','modelo','codigo','placas','rendimiento','fk_caja','kilometraje');
@@ -36,6 +38,9 @@ class vehiculos extends Controlador{
 		$res = $cajaMod->buscar( array() );		
 		$vista=$this->getVista();
 		$vista->cajas=$res['datos'];
+		
+		
+		
 		
 		return parent::editar();
 	}
