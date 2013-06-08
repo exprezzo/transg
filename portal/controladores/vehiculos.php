@@ -39,8 +39,18 @@ class vehiculos extends Controlador{
 		$vista=$this->getVista();
 		$vista->cajas=$res['datos'];
 		
-		
-		
+		$sql="SELECT g.* FROM trans_gasto g WHERE g.fk_vehiculo=:fk_vehiculo";
+		$mod=$this->getModel();
+		$pdo=$mod->getPdo();
+		$sth = $pdo->prepare($sql);		
+		$sth->bindValue(':fk_vehiculo', $_REQUEST['id'],PDO::PARAM_INT );
+		$exito=$sth->execute();
+		if ( !$exito ){
+			$error=$mod->getError( $sth );
+			echo json_encode($error); exit;
+		}
+		$gastos = $sth->fetchAll(PDO::FETCH_ASSOC);				
+		$vista->gastos = $gastos;
 		
 		return parent::editar();
 	}
