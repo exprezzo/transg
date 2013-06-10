@@ -18,6 +18,7 @@
 				modelo:'Gasto'
 			},		
 			fk_vehiculo:'<?php echo  empty( $this->datos['fk_vehiculo'] )? 0 : $this->datos['fk_vehiculo']; ?>',
+			fk_viaje:'<?php echo  empty( $this->datos['fk_viaje'] )? 0 : $this->datos['fk_viaje']; ?>',
 			pk:"id"
 			
 		};				
@@ -76,29 +77,37 @@
 				</select>
 			</div>
 			<div class="divEspecial">
-				<div class="viaje" style="<?php if ($this->datos['fk_tipo_gasto']!=1 )  echo 'display:none;'; ?> ">VIAJE</div>
-				<div class="vehiculo" style="<?php if ($this->datos['fk_tipo_gasto']!=2 ) echo 'display:none;'; ?>">
-				
+				<div class="viaje" style="<?php if ($this->datos['fk_tipo_gasto']!=1 )  echo 'display:none;'; ?> ">
+					<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+						<label style="">Viaje:</label>	
+						<select name="fk_viaje" style="width:500px;">
+							<?php																
+								foreach($this->viajes as $obj){
+									$selected = ( intval($this->datos['fk_viaje']) == intval($obj['id']) )? 'selected' : '';
+									echo '<option value='.$obj['id'].' '.$selected.' >'.$obj['serie'].' '.$obj['folio'].'</option>';
+								}
+							?>
+						</select>
+					</div>								
+				</div>
+				<div class="vehiculo" style="<?php if ($this->datos['fk_tipo_gasto']!=2 ) echo 'display:none;'; ?>">				
 					<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 						<label style="">Vehiculo:</label>	
 						<select name="fk_vehiculo" style="width:500px;">
-							<?php								
-								
+							<?php																
 								foreach($this->vehiculos as $obj){
 									$selected = ( intval($this->datos['fk_vehiculo']) == intval($obj['id']) )? 'selected' : '';
 									echo '<option value='.$obj['id'].' '.$selected.' >'.$obj['codigo'].'</option>';
 								}
 							?>
 						</select>
-					</div>
-					
-					
+					</div>										
 				</div>
 				<div class="otros" style="<?php if ($this->datos['fk_tipo_gasto']!=3 )  echo 'display:none;'; ?>">
 					
 				</div>
 			</div>
-			<div class="inputBox documento" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+			<div class="inputBox documento" style="margin-bottom:8px;display:block;margin-left:10px;width:100%; <?php if ($this->datos['fk_tipo_gasto']==1 ) echo 'display:none;'; ?>"  >
 					<label style="">Documento:</label>
 					<input type="text" name="documento" class="txt_documento" value="<?php echo $this->datos['documento']; ?>" style="width:500px;" />
 				</div>

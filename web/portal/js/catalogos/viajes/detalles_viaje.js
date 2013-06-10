@@ -83,8 +83,9 @@ var DetallesViaje=function (tabId){
 				{dataKey: "fecha", headerText: "Fecha",width:"100px"},
 				{dataKey: "fk_viaje", headerText: "fk_viaje", visible:false},
 				{dataKey: "fk_concepto", headerText: "fk_concepto", visible:false},
-				{dataKey: "descripcion", headerText: "descripcion", visible:false},
+				{dataKey: "descripcion", headerText: "Descripcion", visible:true},
 				{dataKey: "documento", headerText: "documento", visible:false},
+				{dataKey: "codigo", headerText: "codigo", visible:false},
 				{dataKey: "fk_tipo_gasto", headerText: "fk_tipo_gasto", visible:false},
 				{dataKey: "tipo_gasto", headerText: "tipo_gasto", visible:false},
 				{dataKey: "fk_vehiculo", headerText: "fk_vehiculo", visible:false}

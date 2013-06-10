@@ -2,11 +2,40 @@
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/gasto_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/tipogasto_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/vehiculo_modelo.php';
+require_once $APPS_PATH.$_PETICION->modulo.'/modelos/viaje_modelo.php';
 class gastos extends Controlador{
 	var $modelo="gasto";
 	var $campos=array('id','fk_viaje', 'fk_vehiculo','costo','descripcion','fecha','documento','fk_tipo_gasto');
 	var $pk="id";
 	var $nombre="gastos";
+	
+	function buscarViajes(){
+		$mod= $this->getModel();
+		
+		
+		$sql="SELECT v.id, concat(se.serie,' ',v.folio, ' (', ve.codigo, ')') as viaje,concat(se.serie,' ',v.folio) as documento,v.fk_vehiculo FROM trans_viaje v
+		LEFT JOIN trans_serie se ON se.id = v.fk_serie 
+		LEFT JOIN trans_vehiculo ve ON ve.id = v.fk_vehiculo
+		WHERE v.fk_estado=1";
+		$pdo=$mod->getPdo();
+		$sth = $pdo->prepare($sql);
+		$exito= $sth->execute();
+		if ( !$exito ){
+			$error=$mod->getError( $sth ); 
+			echo json_encode( $error );
+			exit;
+		}
+		
+		$viajes = $sth->fetchAll(PDO::FETCH_ASSOC);
+		
+		$res=array(
+			'rows'=>$viajes,
+			'totalRows'=>sizeof( $viajes )
+		);
+		
+		echo json_encode( $res );
+		
+	}
 	
 	function buscarVehiculos(){
 		$mod= new vehiculoModelo();
@@ -48,6 +77,19 @@ class gastos extends Controlador{
 		$tipos = $tipMod->buscar( array() );		
 		$vista->tiposGasto = $tipos['datos'];
 		
+		$viMod = new viajeModelo();		
+		$res = $viMod->buscar( 
+			array('filtros'=>array(
+				array(
+					'filterOperator'=>'equals',
+					'dataKey'		=>'fk_estado',
+					'filterValue'	=>1
+				)
+			))
+		);
+		$vista->viajes=$res['datos'];		
+		// print_r($res); exit;
+		
 		$vemod=new vehiculoModelo();
 		$resp = $vemod->buscar( array() );
 		$vista->vehiculos = $resp['datos'];
@@ -73,6 +115,17 @@ class gastos extends Controlador{
 		$tipos = $tipMod->buscar( array() );		
 		$vista->tiposGasto = $tipos['datos'];
 		
+		$viMod = new viajeModelo();		
+		$res = $viMod->buscar( 
+			array('filtros'=>array(
+				array(
+					'filterOperator'=>'equals',
+					'dataKey'		=>'fk_estado',
+					'filterValue'	=>1
+				)
+			))
+		);
+		$vista->viajes=$res['datos'];				
 		
 		$vemod=new vehiculoModelo();
 		$resp = $vemod->buscar( array() );

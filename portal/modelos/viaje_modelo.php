@@ -29,7 +29,7 @@ class viajeModelo extends Modelo{
 			$gastoMod = new gastoModelo();			
 			
 			foreach($gastos as $art){
-				$art['descripcion'] = $art['nombre']  ;
+				 // if ( !empty($art['nombre']) )  $art['descripcion'] = $art['nombre'];
 				 unset( $art['nombre'] ) ;
 				 unset( $art['nombreConcepto'] ) ;
 				 unset( $art['fechaa'] ) ;
@@ -78,7 +78,7 @@ class viajeModelo extends Modelo{
 					}					
 				}else{
 					unset( $art['eliminado'] ) ;
-					if ( !empty($art['fk_concepto']) ){
+					if ( !empty($art['fk_concepto']) || !empty($art['descripcion']) ){
 						$resp=$gastoMod->guardar( $art );					
 						if ( !$resp['success'] ) {
 							$pdo->rollBack( );

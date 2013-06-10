@@ -85,6 +85,90 @@
 		 datasource.load();	
 			
 	}
+	this.configurarComboViajes=function(){
+		
+		var fk_viaje = this.configuracion.fk_viaje;	
+		var tabId=this.tabId;
+		
+		var me=this;
+		var fields=[													
+			{name: 'label',mapping: 'viaje'}, 
+			{name: 'value',mapping: 'id'},			
+			{name: 'fk_vehiculo'},			
+			{name: 'documento'},
+			{name: 'selected',defaultValue: false}
+		];
+		
+		var myReader = new wijarrayreader(fields);
+		
+		var proxy = new wijhttpproxy({
+			url: kore.mod_url_base+'gastos/buscarViajes',
+			dataType:"json"			
+		});
+		
+		var datasource = new wijdatasource({
+			reader:  new wijarrayreader(fields),
+			proxy: proxy,			
+			 loaded: function (data) {
+				if (fk_viaje>0)
+				for (var i=0; i<data.data.length; i++){
+					if ( data.data[i].id == fk_viaje) {										 
+						$(me.tabId + ' [name="fk_viaje"]').wijcombobox("option","selectedIndex", -1);
+						$(me.tabId + ' [name="fk_viaje"]').wijcombobox("option","selectedIndex", i); 
+						
+					}				
+				}
+				fk_viaje=0;
+			 },
+			loading: function (dataSource, userData) {                            								
+				// dataSource.proxy.options.data=dataSource.proxy.options.data || {};				 
+				// dataSource.proxy.options.data.nombre = (userData) ?  userData.label : '';				 
+            }
+		});
+		
+		datasource.reader.read= function (datasource) {			
+			var totalRows=datasource.data.totalRows;			
+			datasource.data = datasource.data.rows;
+			datasource.data.totalRows = totalRows;
+			myReader.read(datasource);
+		};			
+		
+		
+		
+		var target=$( this.tabId+' [name="fk_viaje"]');
+		var combo=target.wijcombobox({
+			data: datasource,
+			showTrigger: true,
+			minLength: 1,
+			 selectedIndex:0,
+			forceSelectionText: false,
+			autoFilter: true,			
+			search: function (e, obj) {},
+			select: function (e, item) 
+			 {							
+				me.editado=true;
+				
+				 // console.log("item"); console.log(item);
+				// alert(item.documento);
+				$(me.tabId + ' [name="documento"]').val(item.documento);
+				
+				
+				// var cajas=new Array();
+				// cajas.push({
+					// value:item.fk_caja,
+					// label:item.codCaja
+				// });
+				
+				// $(me.tabId + ' [name="fk_caja"]').wijcombobox('option','data',cajas);
+				// $(me.tabId + ' [name="fk_caja"]').wijcombobox('option','selectedIndex',0);
+				
+				return true;
+			 }
+		});		
+		
+		 datasource.load();	
+			
+	}
 	this.borrar=function(){		
 		var r=confirm("¿Eliminar Elemento?");
 		if (r==true){
@@ -137,6 +221,8 @@
 		this.configurarToolbar(this.tabId);		
 		// this.notificarAlCerrar();			
 		this.actualizarTitulo();				
+		
+		this.configurarComboViajes();
 		
 		var me=this;
 		$(this.tabId + ' .frmEdicion input').change(function(){
