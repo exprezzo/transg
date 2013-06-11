@@ -220,22 +220,24 @@
 				var title;
 				if ( resp.success == true	){					
 					icon=kore.url_base+'web/'+kore.modulo+'/images/yes.png';
-					title= 'Success';									
+					title= 'Success';		
+					
+					//cierra el tab
+					var idTab=$(me.tabId).attr('id');
+					var tabs=$('#tabs > div');
+					me.editado=false;
+					for(var i=0; i<tabs.length; i++){
+						if ( $(tabs[i]).attr('id') == idTab ){
+							$('#tabs').wijtabs('remove', i);
+						}
+					}
 				}else{
 					icon= kore.url_base+'web/'+kore.modulo+'/images/error.png';
 					title= 'Error';
 				}
 				
-				//cuando es true, envia tambien los datos guardados.
-				//actualiza los valores del formulario.
-				var idTab=$(me.tabId).attr('id');
-				var tabs=$('#tabs > div');
-				me.editado=false;
-				for(var i=0; i<tabs.length; i++){
-					if ( $(tabs[i]).attr('id') == idTab ){
-						$('#tabs').wijtabs('remove', i);
-					}
-				}
+				
+				
 					
 				$.gritter.add({
 					position: 'bottom-left',

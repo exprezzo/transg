@@ -17,6 +17,7 @@
 				nombre:'Gasto',
 				modelo:'Gasto'
 			},		
+			viajes:<?php echo json_encode( $this->viajes ); ?>,
 			fk_vehiculo:'<?php echo  empty( $this->datos['fk_vehiculo'] )? 0 : $this->datos['fk_vehiculo']; ?>',
 			fk_viaje:'<?php echo  empty( $this->datos['fk_viaje'] )? 0 : $this->datos['fk_viaje']; ?>',
 			pk:"id"

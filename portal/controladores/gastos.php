@@ -106,8 +106,37 @@ class gastos extends Controlador{
 		unset( $_POST['datos']['hora'] ); 
 		return parent::guardar();
 	}
-	function borrar(){
-		return parent::borrar();
+	function eliminar(){
+		$modObj= $this->getModel();
+		$params=array(
+			'id'=>$_POST[$this->pk]
+		);
+		
+		$res = $modObj->obtener( $params );
+		if ( !empty($res['fk_tipo_gasto']) && $res['fk_tipo_gasto'] == 1 && !empty($res['fk_viaje']) ){
+			$params['fk_viaje'] = $res['fk_viaje'];
+			$params['fk_tipo_gasto'] = $res['fk_tipo_gasto'];
+		}
+		
+		
+		$res=$modObj->borrar($params);
+		if ($res){
+			if ( isset($res['datos']) && !$res['datos'] ) return $res;
+			
+			$response=array(
+				'success'=>$res,
+				'msg'	 =>'Registro Eliminado'
+			);
+		}else{
+			$response=array(
+				'success'=>$res,
+				'msg'	 =>'No eliminado, error'
+			);
+		}
+		
+		echo json_encode($response);
+		exit;
+		return parent::eliminar();
 	}
 	function editar(){
 		$vista=$this->getVista();

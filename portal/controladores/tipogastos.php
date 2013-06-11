@@ -23,8 +23,22 @@ class tipogastos extends Controlador{
 	function guardar(){
 		return parent::guardar();
 	}
-	function borrar(){
-		return parent::borrar();
+	function eliminar(){
+		
+		$modObj= $this->getModel();
+		$params=array('id'=>$_POST['id'] );		
+		$res=$modObj->borrar($params);
+		
+		// print_r($res);
+		if ( $res && isset($res['success']) ){
+			echo json_encode($res);
+		}else{
+			$response=array(
+				'success'=>$res,
+				'msg'=>'Registro Eliminado'
+			);
+			echo json_encode($response);
+		}
 	}
 	function editar(){
 		return parent::editar();

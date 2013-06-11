@@ -26,7 +26,7 @@
 			reader:  new wijarrayreader(fields),
 			proxy: proxy,			
 			 loaded: function (data) {
-				if (fk_vehiculo>0)
+				if (fk_vehiculo>0)				
 				for (var i=0; i<data.data.length; i++){
 					if ( data.data[i].id == fk_vehiculo) {										 
 						$(me.tabId + ' [name="fk_vehiculo"]').wijcombobox("option","selectedIndex", -1);
@@ -110,15 +110,28 @@
 			reader:  new wijarrayreader(fields),
 			proxy: proxy,			
 			 loaded: function (data) {
-				if (fk_viaje>0)
-				for (var i=0; i<data.data.length; i++){
-					if ( data.data[i].id == fk_viaje) {										 
-						$(me.tabId + ' [name="fk_viaje"]').wijcombobox("option","selectedIndex", -1);
-						$(me.tabId + ' [name="fk_viaje"]').wijcombobox("option","selectedIndex", i); 
+				
+				var id=$(me.tabId+' [name="id"]').val();				
+				id = parseInt( id );
+				
+				if ( id==0 || isNaN(id) && me.configuracion.viajes && me.configuracion.viajes.length > 0 ){
 						
-					}				
+					$(me.tabId + ' [name="fk_viaje"]').wijcombobox("option","selectedIndex", -1);
+					$(me.tabId + ' [name="fk_viaje"]').wijcombobox("option","selectedIndex", 0); 
+					var sel =$(me.tabId + ' [name="fk_viaje"]').wijcombobox("option","data").data[0]; 
+					
+					$(me.tabId + ' [name="documento"]').val(sel.documento); 
+					
+				}else if ( id > 0 && fk_viaje>0 ){				
+					for (var i=0; i<data.data.length; i++){
+						if ( data.data[i].id == fk_viaje) {										 
+							$(me.tabId + ' [name="fk_viaje"]').wijcombobox("option","selectedIndex", -1);
+							$(me.tabId + ' [name="fk_viaje"]').wijcombobox("option","selectedIndex", i); 
+							
+						}				
+					}
+					fk_viaje=0;
 				}
-				fk_viaje=0;
 			 },
 			loading: function (dataSource, userData) {                            								
 				// dataSource.proxy.options.data=dataSource.proxy.options.data || {};				 

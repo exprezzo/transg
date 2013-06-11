@@ -25,10 +25,70 @@ class gastoModelo extends Modelo{
 			break;
 		}
 		// print_r($params);
-		return parent::guardar($params);
+		$res =  parent::guardar($params);
+		
+		if ( $params['fk_tipo_gasto'] == 1 && !empty( $params['fk_viaje'] ) ){
+			$paramsFind=array(
+				'filtros'=>array(
+					array('dataKey'=>'fk_viaje', 'filterOperator'=>'equals','filterValue'=>$params['fk_viaje'] ),
+				)
+			);
+			$gastosDelViaje = $this->buscar( $paramsFind );
+			
+			// print_r( $gastosDelViaje ); 
+			
+			if ( !$gastosDelViaje['success'] ) return $gastosDelViaje;
+			
+			$total=0;
+			foreach($gastosDelViaje['datos'] as $gasto){
+				$total = $total + ($gasto['costo'] * 1);
+			}
+			
+			// echo 'total: '.$total;
+			
+			$viajeMod=new ViajeModelo();
+			$viaje=array('id'=>$params['fk_viaje'], 'costo'=>$total );
+			
+			// print_r( $viaje );
+			$resSave = $viajeMod->guardar( $viaje );
+			// echo 'resSave:'.$resSave['success'];
+			if ( !$resSave['success'] ) return $resSave;			
+		}
+		return $res;
 	}
 	function borrar($params){
-		return parent::borrar($params);
+		$res =  parent::borrar($params);
+		if ( !$res ) return $res;
+		
+		
+		if ( !empty($params['fk_tipo_gasto']) && $params['fk_tipo_gasto'] == 1 && !empty( $params['fk_viaje'] ) ){
+			$paramsFind=array(
+				'filtros'=>array(
+					array('dataKey'=>'fk_viaje', 'filterOperator'=>'equals','filterValue'=>$params['fk_viaje'] ),
+				)
+			);
+			$gastosDelViaje = $this->buscar( $paramsFind );
+			
+			// print_r( $gastosDelViaje ); 
+			
+			if ( !$gastosDelViaje['success'] ) return $gastosDelViaje;
+			
+			$total=0;
+			foreach($gastosDelViaje['datos'] as $gasto){
+				$total = $total + ($gasto['costo'] * 1);
+			}
+			
+			// echo 'total: '.$total;
+			
+			$viajeMod=new ViajeModelo();
+			$viaje=array('id'=>$params['fk_viaje'], 'costo'=>$total );
+			
+			// print_r( $viaje );
+			$resSave = $viajeMod->guardar( $viaje );
+			// echo 'resSave:'.$resSave['success'];
+			if ( !$resSave['success'] ) return $resSave;			
+		}
+		return $res;
 	}
 	function editar($params){
 		return parent::obtener($params);

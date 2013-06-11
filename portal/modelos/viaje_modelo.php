@@ -1,4 +1,5 @@
 <?php
+require_once '../portal/modelos/consumo_modelo.php';
 class viajeModelo extends Modelo{
 	var $tabla="trans_viaje";
 	var $campos=array('id','origen','fk_serie', 'fk_remitente','fecha_carga','direccion_carga','contenido', 'destino', 'fk_destinatario','direccion_de_entrega','fecha_a_entregar', 'precio', 'condiciones_de_pago','costo','fk_chofer','fk_vehiculo','fk_caja','folio','creado','fk_estado');
@@ -65,7 +66,8 @@ class viajeModelo extends Modelo{
 				if ($fecha)
 				$art['fecha'] =  $fecha->format('Y-m-d');				
 				
-				if ( !empty( $art['eliminado'] ) ){					
+				if ( !empty( $art['eliminado'] ) ){	
+					unset ( $art['fk_viaje'] ); //esta linea es necesaria, esta variable afecta a la funcion GastoModelo->eliminar();
 					$resp = $gastoMod->eliminar( $art );	
 					if ( !$resp ) {
 						$pdo->rollBack( );
@@ -104,18 +106,17 @@ class viajeModelo extends Modelo{
 			exit;			
 		}
 		
-		$consumoMod=new consumoModelo();
-		
-		$this->consumo['fk_viaje'] = $res['datos']['id'];		
-		$resC = $consumoMod->guardar( $this->consumo );
-		
-		if ( !$resC['success'] ){
-			$pdo->rollBack( );
-			echo json_encode( $resC );
-			exit;			
+		if ( !empty($this->consumo) ){
+			$consumoMod=new consumoModelo();		
+			$this->consumo['fk_viaje'] = $res['datos']['id'];				
+			$resC = $consumoMod->guardar( $this->consumo );		
+			if ( !$resC['success'] ){
+				$pdo->rollBack( );
+				echo json_encode( $resC );
+				exit;			
+			}
+			$this->consumo=$resC['datos'];
 		}
-		$this->consumo=$resC['datos'];
-		
 		
 		$pdo->commit( );
 		
@@ -132,7 +133,7 @@ class viajeModelo extends Modelo{
 			$pdo->rollBack( );
 		}else{
 			
-			$sql='DELETE FROM trans_viaje_gasto WHERE fk_viaje=:fk_viaje';
+			$sql='DELETE FROM trans_gasto WHERE fk_viaje=:fk_viaje';
 			$sth = $pdo->prepare($sql);
 			$fk_viaje=$params['id'];
 			$sth->bindValue(':fk_viaje', $fk_viaje);
@@ -189,11 +190,13 @@ class viajeModelo extends Modelo{
 		
 		if ( empty($modelos) ){
 			//throw new Exception(); //TODO: agregar numero de error, crear una exception MiEscepcion
-			echo $sql;
-			return array('success'=>false,'error'=>'no encontrado','msg'=>'no encontrado '.$this->pk.':'.$id);
+			// echo $sql;
+			return array('success'=>false,'error'=>'no encontrado','msg'=>'elemento no encontrado '.$this->pk.':'.$id);
 		}
 		
 		if ( sizeof($modelos) > 1 ){
+			
+			// echo $sql."id: $id pk: ".$this->pk;
 			throw new Exception("El identificador está duplicado"); //TODO: agregar numero de error, crear una exception MiEscepcion
 		}
 		// echo '<pre>'; 

@@ -79,7 +79,7 @@
 		jTab.data('tabObj',this);		
 				
 		var jTab=$('a[href="'+tabId+'"]');		//// this.agregarClase('busqueda_'+this.controlador.nombre);
-	    jTab.html(this.catalogo.nombre);		 
+	    jTab.html('Gastos');		 
 		 jTab.addClass('busqueda_'+this.controlador.nombre); 
 		 this.agregarClase('tab_'+this.controlador.nombre);
 		//-------------------------------------------
