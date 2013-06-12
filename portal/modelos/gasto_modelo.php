@@ -10,8 +10,10 @@ class gastoModelo extends Modelo{
 	function guardar($params, $actualizarViaje=true){
 		switch ($params['fk_tipo_gasto'] ){
 			case 1:	
-				// echo 'VIAJE';
-				 $params['fk_vehiculo'] =0;
+				// 'VIAJE';
+				// print_r( $params );
+				 $params['fk_vehiculo'] =  ( isset( $params['vehicle'] ) )? $params['fk_vehiculo'] : 0;				
+				 
 			break;
 			case 2:
 				// echo 'VE';
@@ -24,7 +26,7 @@ class gastoModelo extends Modelo{
 				 $params['fk_viaje'] = 0;
 			break;
 		}
-		
+		unset( $params['vehicle'] );
 		if ( !empty($params['id']) ){
 			//revisa que solo el admin pueda modificar gastos
 			if ( !( $_SESSION['userInfo']['rol']==2) ){

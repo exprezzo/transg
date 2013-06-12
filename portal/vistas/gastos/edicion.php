@@ -91,7 +91,12 @@
 								}
 							?>
 						</select>
-					</div>								
+					</div>	
+					<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+						<label style=""></label>	
+						<input type="checkbox" name="vehicle" value="ambos" <?php if ($this->datos['vehicle']) echo 'checked'; ?> > Agregar al veh&iacute;culo
+					</div>	
+					
 				</div>
 				<div class="vehiculo" style="<?php if ($this->datos['fk_tipo_gasto']!=2 ) echo 'display:none;'; ?>">				
 					<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >

@@ -89,6 +89,8 @@ class gastos extends Controlador{
 			$obj[$campos[$i]]='';
 		}
 		$obj['hora']='';
+		$obj['vehicle']=0;
+		
 		$vista->datos=$obj;		
 		$vista->datos['fk_tipo_gasto']=1;		
 		
@@ -186,7 +188,21 @@ class gastos extends Controlador{
 		$vista->conceptos=$res['datos'];
 		
 		
-		return parent::editar();
+		// return parent::editar();
+		$id=empty($_REQUEST['id'])? 0 : $_REQUEST['id'];
+		$model=$this->getModel();
+		$params=array('id'=>$id);				
+		$obj=$model->obtener( $params );	
+		
+		if ( $obj['fk_tipo_gasto']==1 && !empty($obj['fk_vehiculo']) ){			
+			$obj['vehicle']=1;
+		}else{
+			$obj['vehicle']=0;
+		}
+		$vista->datos=$obj;		
+		
+		global $_PETICION;
+		$vista->mostrar('/'.$_PETICION->controlador.'/edicion');
 	}
 	function buscar(){
 		if ( !empty($_GET['filtering']) )
