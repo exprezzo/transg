@@ -39,7 +39,9 @@ class vehiculos extends Controlador{
 		$vista=$this->getVista();
 		$vista->cajas=$res['datos'];
 		
-		$sql="SELECT g.* FROM trans_gasto g WHERE g.fk_vehiculo=:fk_vehiculo";
+		$sql="SELECT g.*,c.nombre as concepto FROM trans_gasto g 
+		LEFT JOIN trans_concepto c ON c.id=g.fk_concepto
+		WHERE g.fk_vehiculo=:fk_vehiculo";
 		$mod=$this->getModel();
 		$pdo=$mod->getPdo();
 		$sth = $pdo->prepare($sql);		

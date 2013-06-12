@@ -206,9 +206,9 @@
 { dataKey: "fk_concepto", visible:false, headerText: "fk_concepto" },
 { dataKey: "fk_viaje", visible:false, headerText: "fk_viaje" },
 { dataKey: "nombre", visible:true, headerText: "Concepto" },
-{ dataKey: "descripcion", visible:true, headerText: "Descripcion" },
+{ dataKey: "descripcion", visible:true, headerText: "Descripción" },
 { dataKey: "fecha", visible:true, headerText: "Fecha" },
-{ dataKey: "codigo", visible:true, headerText: "Vehiculo" },
+{ dataKey: "codigo", visible:true, headerText: "Vehículo" },
 { dataKey: "fk_vehiculo", visible:false, headerText: "fk_vehiculo" },
 { dataKey: "fk_tipo_gasto", visible:false, headerText: "Fk_tipo_gasto" },
 

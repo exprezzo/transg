@@ -7,7 +7,7 @@ class gastoModelo extends Modelo{
 	function nuevo($params){
 		return parent::nuevo($params);
 	}
-	function guardar($params){
+	function guardar($params, $actualizarViaje=true){
 		switch ($params['fk_tipo_gasto'] ){
 			case 1:	
 				// echo 'VIAJE';
@@ -24,10 +24,23 @@ class gastoModelo extends Modelo{
 				 $params['fk_viaje'] = 0;
 			break;
 		}
-		// print_r($params);
+		
+		if ( !empty($params['id']) ){
+			//revisa que solo el admin pueda modificar gastos
+			if ( !( $_SESSION['userInfo']['rol']==2) ){
+			// if ( !($_SESSION['userInfo']['rol']==1 || $_SESSION['userInfo']['rol']==2) ){
+				$res=array(
+					'success'=>false,
+					'msg'=>'No tiene privilegios para modificar gastos'
+				);
+				echo json_encode( $res ); exit;
+			}
+		}
+		
 		$res =  parent::guardar($params);
 		
-		if ( $params['fk_tipo_gasto'] == 1 && !empty( $params['fk_viaje'] ) ){
+		if ( $params['fk_tipo_gasto'] == 1 && !empty( $params['fk_viaje'] ) && $actualizarViaje ){
+			// echo 'AKI ESTA EL BOLETO';
 			$paramsFind=array(
 				'filtros'=>array(
 					array('dataKey'=>'fk_viaje', 'filterOperator'=>'equals','filterValue'=>$params['fk_viaje'] ),
@@ -57,6 +70,14 @@ class gastoModelo extends Modelo{
 		return $res;
 	}
 	function borrar($params){
+		if ( !( $_SESSION['userInfo']['rol']==2) ){
+		// if ( !($_SESSION['userInfo']['rol']==1 || $_SESSION['userInfo']['rol']==2) ){
+			$res=array(
+				'success'=>false,
+				'msg'=>'No tiene privilegios para eliminar gastos'
+			);
+			echo json_encode( $res ); exit;
+		}
 		$res =  parent::borrar($params);
 		if ( !$res ) return $res;
 		
@@ -107,10 +128,7 @@ class gastoModelo extends Modelo{
 		
 		if ( isset($params['filtros']) ){
 			$this->bindFiltros($sth, $params['filtros']);
-		}
-		
-		
-		
+		}		
 		$exito = $sth->execute();
 		
 		

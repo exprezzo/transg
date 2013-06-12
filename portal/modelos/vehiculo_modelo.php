@@ -11,6 +11,29 @@ class vehiculoModelo extends Modelo{
 		return parent::guardar($params);
 	}
 	function borrar($params){
+		//Obtener los gastos, si el viaje tiene gastos ,revisa que solo el admin pueda borrarlos			
+		$sql='SELECT * FROM trans_gasto WHERE fk_vehiculo=:fk_vehiculo';
+		$pdo=$this->getPdo();
+		$sth = $pdo->prepare($sql);
+		$fk_vehiculo=$params['id'];
+		$sth->bindValue(':fk_vehiculo', $fk_vehiculo);
+		$res = $sth->execute(); 
+		if ( !$res ){ 			
+			$res= array(
+				'success'=>false,
+				'msg'=>'error al intentar obtener los gastos del vehiculo'
+			);
+			echo json_encode($res); exit;
+		}
+		$gastos = $sth->fetchAll(PDO::FETCH_ASSOC);
+		if ( sizeof($gastos)>0 && $_SESSION['userInfo']['rol']!=2 ){			
+			$res=array(
+				'success'=>false,
+				'msg'=>'El vehiculo tiene gastos asociados, primero debe borrar los gastos asociados'
+			);
+			
+			echo json_encode( $res ); exit;
+		}
 		return parent::borrar($params);
 	}
 	function editar($params){

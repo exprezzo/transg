@@ -18,8 +18,10 @@
 				modelo:'Gasto'
 			},		
 			viajes:<?php echo json_encode( $this->viajes ); ?>,
+			conceptos:<?php echo json_encode( $this->conceptos ); ?>,
 			fk_vehiculo:'<?php echo  empty( $this->datos['fk_vehiculo'] )? 0 : $this->datos['fk_vehiculo']; ?>',
 			fk_viaje:'<?php echo  empty( $this->datos['fk_viaje'] )? 0 : $this->datos['fk_viaje']; ?>',
+			fk_concepto:'<?php echo  empty( $this->datos['fk_concepto'] )? 0 : $this->datos['fk_concepto']; ?>',
 			pk:"id"
 			
 		};				
@@ -111,7 +113,20 @@
 			<div class="inputBox documento" style="margin-bottom:8px;display:block;margin-left:10px;width:100%; <?php if ($this->datos['fk_tipo_gasto']==1 ) echo 'display:none;'; ?>"  >
 					<label style="">Documento:</label>
 					<input type="text" name="documento" class="txt_documento" value="<?php echo $this->datos['documento']; ?>" style="width:500px;" />
-				</div>
+			</div>
+			<div class="concepto" style="">				
+				<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
+					<label style="">Concepto:</label>	
+					<select name="fk_concepto" style="width:500px;">
+						<?php																
+							foreach($this->conceptos as $obj){
+								$selected = ( intval($this->datos['fk_concepto']) == intval($obj['id']) )? 'selected' : '';
+								echo '<option value='.$obj['id'].' '.$selected.' >'.$obj['nombre'].'</option>';
+							}
+						?>
+					</select>
+				</div>										
+			</div>
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >
 				<label style="">Cantidad:</label>
 				<input type="text" name="costo" class="txt_cantidad" value="<?php echo $this->datos['costo']; ?>" style="width:500px;" />

@@ -3,11 +3,9 @@
 	this.saveAndClose=false;
 	
 	this.activate=function(){
-		var tabId=this.tabId;
-		
+		var tabId=this.tabId;		
 	}
 	this.close=function(){
-		
 		if (this.editado){
 			var res=confirm('¿Guardar antes de salir?');
 			if (res===true){
@@ -33,7 +31,7 @@
 		
 		
 		var tab=$('div'+this.tabId);
-		//estas dos linas deben estar en la hoja de estilos
+		//estas dos lineas deben estar en la hoja de estilos
 		tab.css('padding','0');
 		tab.css('border','0 1px 1px 1px');
 		
@@ -196,11 +194,11 @@
 		});
 	};	
 	this.eliminar=function(){
-		var id = $('[name="'+this.configuracion.pk+'"]').val();
+		var id = $(this.tabId + ' [name="id"]').val();
 		var me=this;
 		
 		var params={};
-		params[this.configuracion.pk]=id;
+		params['id']=id;
 		
 		
 		$.ajax({
@@ -214,22 +212,24 @@
 				var title;
 				if ( resp.success == true	){					
 					icon=kore.url_base+'/web/'+kore.modulo+'/images/yes.png';
-					title= 'Success';									
+					title= 'Success';	
+
+					//cierra el tab
+				
+					var idTab=$(me.tabId).attr('id');
+					var tabs=$('#tabs > div');
+					me.editado=false;
+					for(var i=0; i<tabs.length; i++){
+						if ( $(tabs[i]).attr('id') == idTab ){
+							$('#tabs').wijtabs('remove', i);
+						}
+					}
 				}else{
-					icon= kore.url_base+'/web/'+kore.modulo+'/images/error.png';
+					icon= kore.url_base+'/web/'+kore.modulo+'/images/error.png';					
 					title= 'Error';
 				}
 				
-				//cuando es true, envia tambien los datos guardados.
-				//actualiza los valores del formulario.
-				var idTab=$(me.tabId).attr('id');
-				var tabs=$('#tabs > div');
-				me.editado=false;
-				for(var i=0; i<tabs.length; i++){
-					if ( $(tabs[i]).attr('id') == idTab ){
-						$('#tabs').wijtabs('remove', i);
-					}
-				}
+				
 					
 				$.gritter.add({
 					position: 'bottom-left',

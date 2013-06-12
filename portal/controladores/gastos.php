@@ -3,11 +3,30 @@ require_once $APPS_PATH.$_PETICION->modulo.'/modelos/gasto_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/tipogasto_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/vehiculo_modelo.php';
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/viaje_modelo.php';
+require_once $APPS_PATH.$_PETICION->modulo.'/modelos/concepto_modelo.php';
+
 class gastos extends Controlador{
 	var $modelo="gasto";
 	var $campos=array('id','fk_viaje', 'fk_vehiculo','costo','descripcion','fecha','documento','fk_tipo_gasto');
 	var $pk="id";
 	var $nombre="gastos";
+	
+	function buscarConceptos(){
+		$concepto=new conceptoModelo();
+		
+		
+		$params=array(
+			'filtros'=>array(
+				array('dataKey'=>'nombre', 'filterOperator'=>'contains','filterValue'=>$_REQUEST['nombre'])
+			)				
+		);
+		$res = $concepto->buscar( $params );
+		
+		$respuesta=array(
+			'rows'=>$res['datos']
+		);
+		echo json_encode($respuesta);	
+	}
 	
 	function buscarViajes(){
 		$mod= $this->getModel();
@@ -94,6 +113,8 @@ class gastos extends Controlador{
 		$resp = $vemod->buscar( array() );
 		$vista->vehiculos = $resp['datos'];
 		
+		$vista->conceptos=array();
+		
 		global $_PETICION;
 		$vista->mostrar('/'.$_PETICION->controlador.'/edicion');
 		
@@ -159,6 +180,11 @@ class gastos extends Controlador{
 		$vemod=new vehiculoModelo();
 		$resp = $vemod->buscar( array() );
 		$vista->vehiculos = $resp['datos'];
+		
+		$concepto=new conceptoModelo();		
+		$res = $concepto->buscar( array() );
+		$vista->conceptos=$res['datos'];
+		
 		
 		return parent::editar();
 	}

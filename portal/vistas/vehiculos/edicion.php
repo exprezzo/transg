@@ -112,7 +112,7 @@
 				<legend>Gastos</legend>
 			<table class="grid_articulos">
 				<thead>
-					
+						<th>Concepto</th>
 						<th>Descripci&oacute;n</th>
 						<th>Costo</th>
 						<th>Fecha</th>
@@ -123,6 +123,7 @@
 						foreach($this->gastos as $gasto){
 							$fecha=new DateTime($gasto['fecha'] );
 							echo '<tr>';
+							echo '<td>'.$gasto['concepto'].'</td>';
 							echo '<td>'.$gasto['descripcion'].'</td>';
 							echo '<td class="numero">'.'$'.number_format($gasto['costo'],2,'.',',') .'</td>';
 							echo '<td>'.$fecha->format('d/m/Y H:i:s') .'</td>';

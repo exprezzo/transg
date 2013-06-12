@@ -583,7 +583,12 @@
 				var title;
 				if ( resp.success == true	){					
 					icon=kore.url_base+'web/'+kore.modulo+'/images/yes.png';
-					title= 'Success';									
+					title= 'Success';	
+
+					var idTab=$(me.tabId).attr('id');
+					var tabs=$('#tabs > div');
+					me.editado=false;
+					TabManager.cerrarTab(idTab);
 				}else{
 					icon= kore.url_base+'web/'+kore.modulo+'/images/error.png';
 					title= 'Error';
@@ -591,10 +596,7 @@
 				
 				//cuando es true, envia tambien los datos guardados.
 				//actualiza los valores del formulario.
-				var idTab=$(me.tabId).attr('id');
-				var tabs=$('#tabs > div');
-				me.editado=false;
-				TabManager.cerrarTab(idTab);
+				
 				
 				$.gritter.add({
 					position: 'bottom-left',

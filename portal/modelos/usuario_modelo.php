@@ -56,6 +56,7 @@ class usuarioModelo extends Modelo{
 	}
 	
 	function guardar( $params ){
+		
 		global $DB_CONFIG;
 		$_PASS_AES = $DB_CONFIG['PASS_AES'];
 		$dbh=$this->getConexion();

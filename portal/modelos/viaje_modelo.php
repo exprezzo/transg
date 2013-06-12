@@ -16,7 +16,9 @@ class viajeModelo extends Modelo{
 		unset( $params['gastos'] );
 		
 		$pdo = $this->getPdo();
+		
 		$pdo->beginTransaction( );
+		
 		
 		if ( !empty($params['id']) ){
 			unset( $params['fk_serie'] );
@@ -81,7 +83,9 @@ class viajeModelo extends Modelo{
 				}else{
 					unset( $art['eliminado'] ) ;
 					if ( !empty($art['fk_concepto']) || !empty($art['descripcion']) ){
-						$resp=$gastoMod->guardar( $art );					
+						
+						$resp=$gastoMod->guardar( $art, false );					
+						
 						if ( !$resp['success'] ) {
 							$pdo->rollBack( );
 							echo json_encode( $resp );
@@ -132,6 +136,30 @@ class viajeModelo extends Modelo{
 		if ( !$res ){
 			$pdo->rollBack( );
 		}else{
+			//Obtener los gastos, si el viaje tiene gastos ,revisa que solo el admin pueda borrarlos			
+			$sql='SELECT * FROM trans_gasto WHERE fk_viaje=:fk_viaje';
+			$sth = $pdo->prepare($sql);
+			$fk_viaje=$params['id'];
+			$sth->bindValue(':fk_viaje', $fk_viaje);
+			$res = $sth->execute(); 
+			if ( !$res ){ 
+				$pdo->rollBack( ); 
+				$res= array(
+					'success'=>false,
+					'msg'=>'error al intentar obtenre los gastos para borrarlos'
+				);
+				echo json_encode($res); exit;
+			}
+			$gastos = $sth->fetchAll(PDO::FETCH_ASSOC);
+			if ( sizeof($gastos)>0 && $_SESSION['userInfo']['rol']!=2 ){
+				$pdo->rollBack( );
+				$res=array(
+					'success'=>false,
+					'msg'=>'No tiene privilegios para eliminar gastos'
+				);
+				
+				echo json_encode( $res ); exit;
+			}
 			
 			$sql='DELETE FROM trans_gasto WHERE fk_viaje=:fk_viaje';
 			$sth = $pdo->prepare($sql);
