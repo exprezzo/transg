@@ -4,12 +4,12 @@
 	
 	RewriteRule ^backend$ core/entrada.php/backend/backend/inicio$1 [L]	
 	
-	RewriteRule ^portal/usuarios/(.*)$ core/entrada.php/portal/usuarios2/$1 [L]	
-	RewriteRule ^login$ core/entrada.php/portal/usuarios2/login$1 [L]
-	RewriteRule ^login/$ core/entrada.php/portal/usuarios2/login$1 [L]		
+	RewriteRule ^sistema/usuarios/(.*)$ core/entrada.php/sistema/usuarios2/$1 [L]	
+	RewriteRule ^login$ core/entrada.php/sistema/usuarios2/login$1 [L]
+	RewriteRule ^login/$ core/entrada.php/sistema/usuarios2/login$1 [L]		
 	
-	RewriteRule ^$ core/entrada.php/portal/paginas/inicio$1 [L]
-	RewriteRule ^/$ core/entrada.php/portal/portal/index$1 [L]
+	RewriteRule ^$ core/entrada.php/sistema/paginas/inicio$1 [L]
+	RewriteRule ^/$ core/entrada.php/sistema/paginas/index$1 [L]
 	
 	RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
