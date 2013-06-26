@@ -88,6 +88,8 @@ class viajes extends Controlador{
 		$vista->datos=$obj;		
 		$vista->datos['fk_estado'] = 1;
 		
+		$vista->datos['comision'] = 0;
+		
 		$vista->gastos=array();
 		
 		$choMod = new choferModelo();

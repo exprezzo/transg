@@ -219,8 +219,8 @@ button[name="estado_viaje"] span{
 			<input type="hidden" name="folio" class="txt_folio" value="<?php echo $this->datos['folio']; ?>" style="width:500px;" />	
 			<input type="hidden" name="costo" class="txt_costo" value="<?php echo $this->datos['costo']; ?>" style="width:500px;" />										
 			<input type="hidden" name="fk_estado" class="fk_estado" value="<?php echo $this->datos['fk_estado']; ?>" style="width:500px;" />										
-			<input type="text" name="efectivo"  value="<?php echo $this->datos['efectivo']; ?>" />
-			<input type="text" name="comision"  value="<?php echo $this->datos['comision']; ?>"  />
+			<input type="hidden" name="efectivo"  value="<?php echo $this->datos['efectivo']; ?>" />
+			<input type="hidden" name="comision"  value="<?php echo $this->datos['comision']; ?>"  />
 			
 			<fieldset>
 				<legend>Origen</legend>				

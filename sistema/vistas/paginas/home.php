@@ -58,7 +58,17 @@ opacity: .2;
 right: 0;" src='http://www.sistemassacsa.com/images/trailer.png' />
 	<div class="menu">
 		<div class="operacion"> 
-			
+			<div class="submenu" style="display:inline-block;margin-right:50px;">			
+				<h3>Dep&oacute;sitos</h3>		 
+				<a tablink="true" href="/gastos/nuevo" titulo="Nuevo Gasto" class="link">
+					<img src="http://png.findicons.com/files/icons/1681/siena/48/currency_dollar_blue.png">		 
+					<div>Nuevo</div>
+				</a>				
+				<a tablink="true" href="/gastos/busqueda" titulo="Gastos" class="link">
+					<img src="http://png.findicons.com/files/icons/1681/siena/48/currency_dollar_blue.png">		 
+					<div>Buscar</div>
+				</a>
+			</div>
 			<div class="submenu" style="display:inline-block;margin-right:50px;">			
 				<h3>Gastos</h3>		 
 				<a tablink="true" href="/gastos/nuevo" titulo="Nuevo Gasto" class="link">
@@ -137,5 +147,5 @@ right: 0;" src='http://www.sistemassacsa.com/images/trailer.png' />
 			</div>
 		</div>
 	</div>
-	<h1 style="text-align: left; width: 168px; padding: 20px;"><?php echo $APP_CONFIG['nombre']; ?></h1>
+	<h1 style="text-align: left; width: 168px; padding: 20px;"><?php //echo $APP_CONFIG['nombre']; ?></h1>
 </div>
