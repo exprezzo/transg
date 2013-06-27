@@ -41,6 +41,7 @@
 
 	<div class="pnlIzq">
 		<div style="" class="cerrar_tab"></div>
+		<div style="display:inline-block;">
 		<?php 	
 			global $_PETICION;
 			$this->mostrar('/backend/componentes/toolbar');	
@@ -48,7 +49,7 @@
 				$this->datos=array();		
 			}
 		?>
-		
+		</div><h2 style="display:inline-block; padding:0; margin:0;">Dep&oacute;sitos</h2>
 		<form class="frmEdicion" style="padding-top:10px;">				
 			<input type="hidden" name="id" class="txt_id" value="<?php echo $this->datos['id']; ?>" style="width:500px;" />
 			<div class="inputBox" style="margin-bottom:8px;display:block;margin-left:10px;width:100%;"  >

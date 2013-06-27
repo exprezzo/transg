@@ -205,8 +205,7 @@
 		var tabId = this.tabId;		
 		var id = $(this.tabId + ' [name="'+this.configuracion.pk+'"]').val();
 		if (id>0){
-			$('a[href="'+tabId+'"]').html(this.configuracion.catalogo.modelo +':'+id);
-			console.log(tabId + ' [name="fk_viaje"]');
+			$('a[href="'+tabId+'"]').html('D:'+id);			
 			 $(tabId + ' [name="fk_viaje"]').wijcombobox( "option", "disabled", true );
 		}else{
 			$('a[href="'+tabId+'"]').html('Nuevo');
