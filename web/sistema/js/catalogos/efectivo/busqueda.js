@@ -79,7 +79,7 @@
 		jTab.data('tabObj',this);		
 				
 		var jTab=$('a[href="'+tabId+'"]');		//// this.agregarClase('busqueda_'+this.controlador.nombre);
-	    jTab.html(this.catalogo.nombre);		 
+	    jTab.html('Depósitos');		 
 		 jTab.addClass('busqueda_'+this.controlador.nombre); 
 		 this.agregarClase('tab_'+this.controlador.nombre);
 		//-------------------------------------------
@@ -117,7 +117,9 @@
 						var gridBusqueda=$(me.tabId+" .grid_busqueda");
 						gridBusqueda.wijgrid('ensureControl', true);
 					break;
-										
+					case 'filtros':
+						$(me.tabId+" .filtros").toggle({duration:400});						
+					break;									
 					default:						 
 						$.gritter.add({
 							position: 'bottom-left',
@@ -151,7 +153,22 @@
 				dataType: "json"
 			}),
 			dynamic:true,
-			reader:new wijarrayreader(campos)
+			reader:new wijarrayreader(campos),
+			loading:function(e, data){
+				data.data.filtering.push({
+					field: 'fecha',
+					dataKey:'fecha_i',
+					filterOperator:'greaterorequal',
+					filterValue:$(me.tabId + ' [name="fecha_i"]').val()
+				});
+				
+				data.data.filtering.push({
+					field: 'fecha',
+					dataKey:'fecha_f',
+					filterOperator:'lessorequal',
+					filterValue:$(me.tabId + ' [name="fecha_f"]').val()
+				});
+			}
 		});
 				
 		dataSource.reader.read= function (datasource) {						
@@ -172,16 +189,15 @@
 			pageSize:pageSize,
 			selectionMode:'singleRow',
 			data:dataSource,
-			showFilter:true,
-			columns: [ 
-			    // { dataKey: "id", hidden:true, visible:true, headerText: "ID" }						
-				
-{ dataKey: "id", visible:true, headerText: "Id" },
-{ dataKey: "importe", visible:true, headerText: "Importe" },
-{ dataKey: "fecha", visible:true, headerText: "Fecha" },
-{ dataKey: "concepto", visible:true, headerText: "Concepto" },
-{ dataKey: "forma_deposito", visible:true, headerText: "Forma_deposito" },
-{ dataKey: "fk_viaje", visible:true, headerText: "Fk_viaje" }
+			showFilter:false,
+			columns: [
+				{ dataKey: "id", visible:false, headerText: "Id" },
+				{ dataKey: "importe", visible:true, headerText: "Importe",dataType:'currency' },
+				{ dataKey: "fecha", visible:true, headerText: "Fecha" },
+				{ dataKey: "concepto", visible:true, headerText: "Concepto" },
+				{ dataKey: "forma_deposito", visible:true, headerText: "Forma Dep." },
+				{ dataKey: "fk_viaje", visible:false, headerText: "Fk_viaje" },
+				{ dataKey: "viaje", visible:false, headerText: "Viaje", groupInfo: { groupSingleRow: true, position:'header' } },				
 			]
 		});
 		

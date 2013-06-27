@@ -76,11 +76,12 @@ var EfectivoViaje=function (tabId){
 			},
 			columns: [
 				{dataKey: "id", visible:false, headerText: "ID"},
-				{dataKey: "importe", headerText: "Importe",width:"300px", valueRequired: true},
+				{dataKey: "importe", headerText: "Importe",width:"300px", valueRequired: true, dataType: "currency"},
 				{dataKey: "fecha", headerText: "Fecha",width:"300px", valueRequired: true},
 				{dataKey: "concepto", headerText: "Concepto",width:"300px", valueRequired: true},
 				{dataKey: "forma_deposito", headerText: "Forma Deposito",width:"300px", valueRequired: true},
-				{dataKey: "fk_viaje", headerText: "fk_viaje", visible:false}				
+				{dataKey: "fk_viaje", headerText: "fk_viaje", visible:false},
+				{dataKey: "viaje", headerText: "Viaje", visible:false}
 			]
 		});
 		var me=this;

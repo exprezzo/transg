@@ -18,9 +18,10 @@
 				modelo:'Gasto'
 			},		
 			viajes:<?php echo json_encode( $this->viajes ); ?>,
+			fk_viaje:'<?php echo  empty( $this->datos['fk_viaje'] )? 0 : $this->datos['fk_viaje']; ?>',
 			conceptos:<?php echo json_encode( $this->conceptos ); ?>,
 			fk_vehiculo:'<?php echo  empty( $this->datos['fk_vehiculo'] )? 0 : $this->datos['fk_vehiculo']; ?>',
-			fk_viaje:'<?php echo  empty( $this->datos['fk_viaje'] )? 0 : $this->datos['fk_viaje']; ?>',
+			
 			fk_concepto:'<?php echo  empty( $this->datos['fk_concepto'] )? 0 : $this->datos['fk_concepto']; ?>',
 			pk:"id"
 			

@@ -189,6 +189,15 @@ button[name="estado_viaje"] span{
 	background-repeat: no-repeat;background-position-y: 7px;padding-left: 28px !important;
 }
 
+.toolbarEdicion .boton.btnCerrar .icon{
+	background-image: url(http://png.findicons.com/files/icons/1681/siena/24/lock_green.png);
+}
+
+.toolbarEdicion .boton.btnCerrar.disabled .icon{
+	background-image: url(http://png.findicons.com/files/icons/1681/siena/24/lock_red.png);
+}
+
+h2.lblGasto{display: inline-block;float: right;padding: 0;margin: 0;}
 </style>	
 	<div class="pnlIzq">
 		<div style="" class="cerrar_tab"></div>
@@ -336,9 +345,7 @@ button[name="estado_viaje"] span{
 						?>
 					</select>
 				</div>
-				<div class="inputBox" style="margin-bottom:8px;display:inline-block; margin-left:10px;"  >
-					<button <?php echo ( $this->datos['fk_estado']==2 )? 'disabled="disabled"' : '';  ?> name="estado_viaje" >Cerrar</button>
-				</div>
+				
 			</fieldset>			
 		</form>
 		<div class="consumo" style="display:none;width:754px;">			
@@ -347,7 +354,7 @@ button[name="estado_viaje"] span{
 		</div>
 		<div class="gastos" style="display:none;width:754px;">
 			<div class="toolbarDetalles" style="padding:none; margin-bottom:5px; ">
-				<button class="btnAgregar" style="padding:none;"></button><h2 style="display: inline-block;padding: 0 0 0 10px;margin: 0;">GASTOS</h2>
+				<button class="btnAgregar" style="padding:none;"></button><h2 style="display: inline-block;padding: 0 0 0 10px;margin: 0;">GASTOS</h2><h2 class="lblGasto"></h2>
 			</div>
 			<table class="grid_articulos">
 				<thead><th>col0</th></thead>

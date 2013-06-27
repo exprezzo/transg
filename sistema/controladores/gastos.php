@@ -159,7 +159,7 @@ class gastos extends Controlador{
 		
 		echo json_encode($response);
 		exit;
-		return parent::eliminar();
+		// return parent::eliminar();
 	}
 	function editar(){
 		$vista=$this->getVista();

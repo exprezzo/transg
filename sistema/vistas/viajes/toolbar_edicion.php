@@ -8,15 +8,24 @@
 		</div>		
 	</div>
 	
+	<div style="text-align:center;" class="boton <?php echo ( $this->datos['fk_estado']==2 )? 'disabled' : '';  ?> btnCerrar">
+		<div class="iconWrap">				
+			<div class="icon"></div>
+		</div>
+		<div>
+			<span style="color:black;"><?php echo ( $this->datos['fk_estado']==2 )? 'cerrado' : 'cerrar';  ?></span>
+		</div>		
+	</div>			
+	
 	<div style="text-align:center;" class="boton btnDelete">
 		<div class="iconWrap">		
 			<div class="icon"></div>
 		</div>
 		<div>
-			<span>Borrar</span>
+			<span >Borrar</span>
 		</div>		
 	</div>				
-	
+	<div style="display:inline-block; ">-</div>
 	<div style="text-align:center;" class="boton btnGeneral">
 		<div class="iconWrap">		
 			<div class="icon" style="background-size:16px; background-image:url(http://png.findicons.com/files/icons/1581/silk/16/application_form.png)"></div>
@@ -79,7 +88,7 @@
 				</select>				
 				</td>
 				<td style="font-size:30px;" class="lblFolio"><?php echo $this->datos['folio']; ?></td>					
-				<td style="width: 297px; font-size:37px; text-align:right; position:relative; " class="lblGasto">$<?php echo $this->datos['costo']; ?></td>					
+				
 			</tr>
 		</table>
 </div>

@@ -1,5 +1,7 @@
 <?php
 require_once $APPS_PATH.$_PETICION->modulo.'/modelos/consumo_modelo.php';
+require_once $APPS_PATH.$_PETICION->modulo.'/modelos/efectivo_modelo.php';
+require_once $APPS_PATH.$_PETICION->modulo.'/modelos/gasto_modelo.php';
 class viajeModelo extends Modelo{
 	var $tabla="trans_viaje";
 	var $campos=array('id','origen','fk_serie', 'fk_remitente','fecha_carga','direccion_carga','contenido', 'destino', 'fk_destinatario','direccion_de_entrega','fecha_a_entregar', 'precio', 'condiciones_de_pago','costo','fk_chofer','fk_vehiculo','fk_caja','folio','creado','fk_estado','efectivo','comision');
@@ -25,6 +27,18 @@ class viajeModelo extends Modelo{
 		if ( !empty($params['id']) ){
 			unset( $params['fk_serie'] );
 			unset( $params['folio'] );
+		}
+		
+		//si el viaje esta cerrado impedir guardar
+		if ( !empty($params['id']) ){
+			$viajeOld=$this->obtener($params);
+			if ($viajeOld['fk_estado']==2){
+				$pdo->rollBack( );
+				return array(
+					'success'=>false,
+					'msg'=>'Un viaje cerrado no puede modificarse',					
+				);
+			}
 		}
 		
 		$res = parent::guardar( $params );
@@ -81,8 +95,9 @@ class viajeModelo extends Modelo{
 			$depositoMod = new efectivoModelo();
 			foreach($depositos as $art){	
 				unset( $art['dataItemIndex'] ) ;
-				 unset( $art['sectionRowIndex'] ) ;
-				 unset( $art['tmp_id'] ) ;
+				unset( $art['sectionRowIndex'] ) ;
+				unset( $art['tmp_id'] );
+				unset( $art['viaje'] ) ;
 				 
 				$art['fk_viaje']=$res['datos']['id'];
 				
@@ -157,6 +172,19 @@ class viajeModelo extends Modelo{
 	function borrar($params){
 		$pdo = $this->getPdo();
 		$pdo->beginTransaction( );
+		
+		if ( !empty( $params['id'] )  ){
+			
+			$viajeOld=$this->obtener(array('id'=>$params['id'] ) );
+			
+			if ($viajeOld['fk_estado']==2){
+				$pdo->rollBack( );
+				echo json_encode( array(
+					'success'=>false,
+					'msg'=>'Un viaje cerrado no puede eliminarse',					
+				) ); exit;
+			}
+		}
 		$res =  parent::borrar($params);
 		if ( !$res ){
 			$pdo->rollBack( );
@@ -210,6 +238,20 @@ class viajeModelo extends Modelo{
 				$res =  array(
 					'success'=>false,
 					'msg'=>'error al intentar borrar el consumo'
+				);
+				echo json_encode($res); exit;
+			}
+			
+			$sql='DELETE FROM trans_efectivo_de_viaje WHERE fk_viaje=:fk_viaje';						
+			$sth = $pdo->prepare($sql);
+			$fk_viaje=$params['id'];
+			$sth->bindValue(':fk_viaje', $fk_viaje);
+			$res = $sth->execute(); 
+			if ( !$res ){ 
+				$pdo->rollBack( ); 
+				$res =  array(
+					'success'=>false,
+					'msg'=>'error al intentar borrar los deposito'
 				);
 				echo json_encode($res); exit;
 			}
@@ -274,7 +316,7 @@ class viajeModelo extends Modelo{
 		
 				
 		$sth = $con->prepare($sql);
-		if ( isset($params['filtros']) ){
+		if ( isset($params['filtros']) ){			
 			$this->bindFiltros($sth, $params['filtros']);
 		}
 		

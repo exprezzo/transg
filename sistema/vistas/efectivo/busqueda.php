@@ -1,6 +1,10 @@
 
 <script src="<?php echo $MOD_WEB_PATH; ?>js/catalogos/<?php echo $_PETICION->controlador; ?>/busqueda.js"></script>
-
+<style>
+	[headers="Fecha"]{
+		text-align:right;
+	}
+</style>
 <script>			
 	$( function(){		
 		var config={
@@ -22,11 +26,15 @@
 		};				
 		 var lista=new Busquedaefectivo();
 		 lista.init(config);		
+		
+		$('#'+config.tab.id+' [name="fecha_i"]').wijinputdate({ dateFormat: 'dd/MM/yyyy',showTrigger:true});		 
+		$('#'+config.tab.id+' [name="fecha_f"]').wijinputdate({ dateFormat: 'dd/MM/yyyy',showTrigger:true});		 
+		
 	});
 </script>
 <?php 	
 	global $_PETICION;
-	$this->mostrar('/backend/componentes/busqueda_toolbar');
+	$this->mostrar('/busqueda_toolbar');
 ?>
 <div >	
 	<table class="grid_busqueda">

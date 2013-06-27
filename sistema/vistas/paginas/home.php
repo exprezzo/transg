@@ -60,12 +60,12 @@ right: 0;" src='http://www.sistemassacsa.com/images/trailer.png' />
 		<div class="operacion"> 
 			<div class="submenu" style="display:inline-block;margin-right:50px;">			
 				<h3>Dep&oacute;sitos</h3>		 
-				<a tablink="true" href="/gastos/nuevo" titulo="Nuevo Gasto" class="link">
-					<img src="http://png.findicons.com/files/icons/1681/siena/48/currency_dollar_blue.png">		 
+				<a tablink="true" href="/efectivo/nuevo" titulo="Nuevo Gasto" class="link">
+					<img src="http://png.findicons.com/files/icons/918/gamble/48/dollars.png">		 
 					<div>Nuevo</div>
 				</a>				
-				<a tablink="true" href="/gastos/busqueda" titulo="Gastos" class="link">
-					<img src="http://png.findicons.com/files/icons/1681/siena/48/currency_dollar_blue.png">		 
+				<a tablink="true" href="/efectivo/busqueda" titulo="Gastos" class="link">
+					<img src="http://png.findicons.com/files/icons/918/gamble/48/dollars.png">		 
 					<div>Buscar</div>
 				</a>
 			</div>

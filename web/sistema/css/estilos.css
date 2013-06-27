@@ -39,10 +39,19 @@ li.ui-page{ padding:8px 15px 8px 15px; }
 /* Toolbar Edicion */
 .toolbarEdicion{padding:10px;}
 .toolbarEdicion .boton{ 	border-radius:9px;	border:#e3e2d9 1px solid;display: inline-block; padding: 10px 3px 10px 3px; cursor:pointer; }
+.toolbarEdicion .boton.disabled{ border-width:0px !important; cursor:auto;}
+
 .toolbarEdicion  span{ margin-top: 5px;display: inline-block;border-radius: 6px;	padding: 0px 6px 0px 6px;border: #e3e2d9 1px solid;font-family:arial; color:white; font-size: 12px; font-family: cursive; font-weight: normal;}
+.toolbarEdicion .boton.disabled span{ border-width:0px !important;}
 .iconWrap{	border: #9b9b9b 1px solid; display: inline-block; border-radius: 45px; padding: 2px; }
+
+.toolbarEdicion .boton.disabled .iconWrap{ border-width:0px !important;}
+
 .iconWrap .icon{ width: 20px;height: 20px; background-color: rgb(228, 226, 226); background-repeat: no-repeat; background-position: 50%; border-radius: 45px; padding: 3px; }
 .boton.btnNew .icon{ background: #8db817 url('../images/document_new.png') no-repeat scroll center;  }		
+
+.toolbarEdicion .boton.disabled .icon{ background:transparent; }
+
 .boton.btnNew span{background: #8db817; }	
 .boton.btnGuardar .icon{ background: white url('../images/save.png') no-repeat scroll center; width:21px; background-size:18px;}		
 .boton.btnGuardar .iconWrap{background:black;}

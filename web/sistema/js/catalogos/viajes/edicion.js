@@ -2,13 +2,13 @@
 	this.editado=false;
 	this.saveAndClose=false;
 	this.configurarBotonEstadoViaje=function(){
-		var me = this;
-		$(this.tabId + ' button[name="estado_viaje"]').button().click(function(event){			
-			 event.preventDefault();			 
-			 $(me.tabId + ' button[name="estado_viaje"]').removeClass('ui-state-hover');
-			$(me.tabId + ' [name="fk_estado"]').val(2);
-			me.guardar();			
-		});
+		// var me = this;
+		// $(this.tabId + ' button[name="estado_viaje"]').button().click(function(event){			
+			 // event.preventDefault();			 
+			 // $(me.tabId + ' button[name="estado_viaje"]').removeClass('ui-state-hover');
+			// $(me.tabId + ' [name="fk_estado"]').val(2);
+			// me.guardar();			
+		// });
 	};
 	this.configurarComboDestinatario=function(){
 		var fk_destinatario = this.configuracion.fk_destinatario;	
@@ -355,12 +355,13 @@
 		
 
 		
-		$(tabId+' .toolbarEdicion .boton:not(.btnPrint, .btnEmail)').mouseenter(function(){
+		$(tabId+' .toolbarEdicion .boton:not(.btnPrint, .btnEmail, .disabled)').mouseenter(function(){
 			$(this).addClass("ui-state-hover");
 		});
 		
 		$(tabId+' .toolbarEdicion .boton *').mouseenter(function(){						
-			 $(this).parent('.boton').addClass("ui-state-hover");						
+			
+			 $(this).parent('.boton:not(.disabled)').addClass("ui-state-hover");
 		});
 		
 		$(tabId+' .toolbarEdicion .boton').mouseleave(function(e){			 
@@ -413,9 +414,14 @@
 		var fk_estado = $(this.tabId + ' [name="fk_estado"]').val();
 		fk_estado = parseInt( fk_estado );
 		if (fk_estado==2){
-			$(this.tabId + ' button[name="estado_viaje"]').attr('disabled','disabled');
-			$(this.tabId + ' button[name="estado_viaje"]').addClass('ui-button-disabled');
-			$(this.tabId + ' button[name="estado_viaje"]').addClass('ui-state-disabled');
+			// $(this.tabId + ' button[name="estado_viaje"]').attr('disabled','disabled');
+			// $(this.tabId + ' button[name="estado_viaje"]').addClass('ui-button-disabled');
+			// $(this.tabId + ' button[name="estado_viaje"]').addClass('ui-state-disabled');
+			// $(this.tabId + ' button[name="estado_viaje"]').addClass('ui-state-disabled');
+			$(this.tabId + ' .toolbarEdicion .btnCerrar').addClass('disabled');
+			$(this.tabId + ' .toolbarEdicion .btnCerrar').removeClass('ui-state-hover');
+			$(this.tabId + ' .toolbarEdicion .btnCerrar').unbind();
+			$(this.tabId + ' .toolbarEdicion .btnCerrar span').html('cerrado');
 			
 		}
 		
@@ -653,6 +659,16 @@
 			$(this.tabId + ' .toolbarEdicion .btnGuardar').click( function(){
 				me.guardar();
 				me.editado=true;
+			});
+			
+		
+			$(this.tabId + ' .toolbarEdicion .btnCerrar:not(.disabled)').click( function(){
+				var r=confirm("Cerrar Viaje? ");
+				if (r==true){
+					$(me.tabId + ' [name="fk_estado"]').val(2);
+				  me.guardar();
+				  // me.editado=false;
+				}
 			});
 			
 			$(this.tabId + ' .toolbarEdicion .btnDelete').click( function(){

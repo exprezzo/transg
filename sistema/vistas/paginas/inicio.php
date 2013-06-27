@@ -1,5 +1,5 @@
 <?php
-if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){	
+if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){		
 	header ('Location: /'.$APP_CONFIG['main_app'].'/usuarios/login'); exit;
 }
 ?>

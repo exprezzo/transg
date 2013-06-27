@@ -1,18 +1,115 @@
 ﻿var Edicionefectivo = function(){
 	this.editado=false;
 	this.saveAndClose=false;
-	this.borrar=function(){		
+	this.configurarComboViajes=function(){
+		
+		var fk_viaje = this.configuracion.fk_viaje;	
+		var tabId=this.tabId;
+		
+		var me=this;
+		var fields=[													
+			{name: 'label',mapping: 'viaje'}, 
+			{name: 'value',mapping: 'id'}			
+			// {name: 'fk_vehiculo'},			
+			// {name: 'documento'},
+			// {name: 'selected',defaultValue: false}
+		];
+		
+		// var myReader = new wijarrayreader(fields);
+		
+		var proxy = new wijhttpproxy({
+			url: kore.mod_url_base+'efectivo/buscarViajes',
+			dataType:"json"			
+		});
+		
+		var datasource = new wijdatasource({
+			reader:  new wijarrayreader(fields),
+			// proxy: proxy,	
+			data:me.configuracion.viajes,
+			 loaded: function (data) {
+				 return true;
+				var id=$(me.tabId+' [name="id"]').val();				
+				id = parseInt( id );
+				
+				if ( id==0 || isNaN(id) && me.configuracion.viajes && me.configuracion.viajes.length > 0 ){
+						
+					$(me.tabId + ' [name="fk_viaje"]').wijcombobox("option","selectedIndex", -1);
+					$(me.tabId + ' [name="fk_viaje"]').wijcombobox("option","selectedIndex", 0); 
+					var sel =$(me.tabId + ' [name="fk_viaje"]').wijcombobox("option","data").data[0]; 
+					
+					$(me.tabId + ' [name="documento"]').val(sel.documento); 
+					
+				}else if ( id > 0 && fk_viaje>0 ){				
+					for (var i=0; i<data.data.length; i++){
+						if ( data.data[i].id == fk_viaje) {										 
+							$(me.tabId + ' [name="fk_viaje"]').wijcombobox("option","selectedIndex", -1);
+							$(me.tabId + ' [name="fk_viaje"]').wijcombobox("option","selectedIndex", i); 
+							
+						}				
+					}
+					fk_viaje=0;
+				}
+				me.configuracion.viajes=new Array();
+			 },
+			loading: function (dataSource, userData) {                            								
+				// dataSource.proxy.options.data=dataSource.proxy.options.data || {};				 
+				// dataSource.proxy.options.data.nombre = (userData) ?  userData.label : '';				 
+            }
+		});
+		
+		// datasource.reader.read= function (datasource) {			
+			// var totalRows=datasource.data.totalRows;			
+			// datasource.data = datasource.data.rows;
+			// datasource.data.totalRows = totalRows;
+			// myReader.read(datasource);
+		// };			
+		
+		// datasource = me.configuracion.viajes;
+		  
+		var target=$( this.tabId+' [name="fk_viaje"]');
+		var combo=target.wijcombobox({
+			// data: datasource,
+			showTrigger: true,
+			minLength: 1,
+			 selectedIndex:0,
+			forceSelectionText: false,
+			autoFilter: false,			
+			search: function (e, obj) {},
+			select: function (e, item) 
+			 {							
+				me.editado=true;
+				
+				 // console.log("item"); console.log(item);
+				// alert(item.documento);
+				// $(me.tabId + ' [name="documento"]').val(item.documento);
+				
+				
+				// var cajas=new Array();
+				// cajas.push({
+					// value:item.fk_caja,
+					// label:item.codCaja
+				// });
+				
+				// $(me.tabId + ' [name="fk_caja"]').wijcombobox('option','data',cajas);
+				// $(me.tabId + ' [name="fk_caja"]').wijcombobox('option','selectedIndex',0);
+				
+				return true;
+			 }
+		});		
+		
+		  // datasource.load();	
+			
+	};
+	this.borrar=function(){
 		var r=confirm("¿Eliminar Elemento?");
 		if (r==true){
 		  this.eliminar();
 		}
 	}
 	this.activate=function(){
-		var tabId=this.tabId;
-		
+		var tabId=this.tabId;		
 	}
-	this.close=function(){
-		
+	this.close=function(){		
 		if (this.editado){
 			var res=confirm('¿Guardar antes de salir?');
 			if (res===true){
@@ -51,7 +148,8 @@
 		
 		this.configurarFormulario(this.tabId);
 		this.configurarToolbar(this.tabId);		
-		// this.notificarAlCerrar();			
+		// this.notificarAlCerrar();	
+		this.configurarComboViajes();		
 		this.actualizarTitulo();				
 		
 		var me=this;
@@ -71,7 +169,9 @@
 				$(this).removeClass("ui-state-hover");			
 		});
 		
-		tab.data('tabObj',this); //Este para que?		
+		tab.data('tabObj',this); //control de tabs
+		
+		
 	};
 	//esta funcion pasara al plugin
 	//agrega una clase al panel del contenido y a la pesta�a relacionada.
@@ -106,6 +206,8 @@
 		var id = $(this.tabId + ' [name="'+this.configuracion.pk+'"]').val();
 		if (id>0){
 			$('a[href="'+tabId+'"]').html(this.configuracion.catalogo.modelo +':'+id);
+			console.log(tabId + ' [name="fk_viaje"]');
+			 $(tabId + ' [name="fk_viaje"]').wijcombobox( "option", "disabled", true );
 		}else{
 			$('a[href="'+tabId+'"]').html('Nuevo');
 		}
@@ -220,22 +322,24 @@
 				var title;
 				if ( resp.success == true	){					
 					icon=kore.url_base+'web/'+kore.modulo+'/images/yes.png';
-					title= 'Success';									
+					title= 'Success';	
+					
+					//cuando es true, envia tambien los datos guardados.
+					//actualiza los valores del formulario.
+					var idTab=$(me.tabId).attr('id');
+					var tabs=$('#tabs > div');
+					me.editado=false;
+					for(var i=0; i<tabs.length; i++){
+						if ( $(tabs[i]).attr('id') == idTab ){
+							$('#tabs').wijtabs('remove', i);
+						}
+					}
 				}else{
 					icon= kore.url_base+'web/'+kore.modulo+'/images/error.png';
 					title= 'Error';
 				}
 				
-				//cuando es true, envia tambien los datos guardados.
-				//actualiza los valores del formulario.
-				var idTab=$(me.tabId).attr('id');
-				var tabs=$('#tabs > div');
-				me.editado=false;
-				for(var i=0; i<tabs.length; i++){
-					if ( $(tabs[i]).attr('id') == idTab ){
-						$('#tabs').wijtabs('remove', i);
-					}
-				}
+				
 					
 				$.gritter.add({
 					position: 'bottom-left',
