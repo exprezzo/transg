@@ -290,8 +290,13 @@ if ( !isset($_SESSION['isLoged'])|| $_SESSION['isLoged']!=true ){
 	</script>
 	<style type="text/css">				
 		
+		tr.eliminado {
+			display: none;
+		}
+		
 		.eliminado td{
 			background-color:#F9DADA !important;
+			
 		}		
 		
 		.lista_toolbar > ul[role="tablist"]{

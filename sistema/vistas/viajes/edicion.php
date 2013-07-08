@@ -28,9 +28,12 @@
 			fk_remitente:<?php echo empty( $this->datos['fk_remitente'] )? 0 : $this->datos['fk_remitente']; ?>
 			
 		};				
+		var tabId='#'+config.tab.id;
+		 $(tabId+' [name="precio"]').wijinputnumber({type:'currency', decimalPlaces: 2, increment: 1, showSpinner: true});
+		 
 		 var editor=new Edicionviajes();
 		 editor.init(config);		
-		 var tabId='#'+config.tab.id;
+		 
 		 
 		 $('#'+config.tab.id+' [name="fk_caja"]').wijcombobox();
 		 // $('#'+config.tab.id+' [name="fk_vehiculo"]').wijcombobox();
@@ -58,7 +61,7 @@
 				editor.editado=true;
 			} 
 		});
-		 $(tabId+' [name="precio"]').wijinputnumber({type:'currency', decimalPlaces: 2, increment: 1, showSpinner: true});
+		
 		 
 		 
 		 $(tabId+' .cerrar_tab').bind('click', function(){

@@ -61,33 +61,33 @@ right: 0;" src='http://www.sistemassacsa.com/images/trailer.png' />
 			<div class="submenu" style="display:inline-block;margin-right:50px;">			
 				<h3>Dep&oacute;sitos</h3>		 
 				<a tablink="true" href="/efectivo/nuevo" titulo="Nuevo Gasto" class="link">
-					<img src="http://png.findicons.com/files/icons/918/gamble/48/dollars.png">		 
+					<img src="/web/sistema/images/dollars_add.png">		 
 					<div>Nuevo</div>
 				</a>				
 				<a tablink="true" href="/efectivo/busqueda" titulo="Gastos" class="link">
-					<img src="http://png.findicons.com/files/icons/918/gamble/48/dollars.png">		 
+					<img src="/web/sistema/images/dollars_buscar.png">		 
 					<div>Buscar</div>
 				</a>
 			</div>
 			<div class="submenu" style="display:inline-block;margin-right:50px;">			
 				<h3>Gastos</h3>		 
 				<a tablink="true" href="/gastos/nuevo" titulo="Nuevo Gasto" class="link">
-					<img src="http://png.findicons.com/files/icons/1681/siena/48/currency_dollar_blue.png">		 
+					<img src="/web/sistema/images/currency_dollar_blue_add.png">		 
 					<div>Nuevo</div>
 				</a>				
 				<a tablink="true" href="/gastos/busqueda" titulo="Gastos" class="link">
-					<img src="http://png.findicons.com/files/icons/1681/siena/48/currency_dollar_blue.png">		 
+					<img src="/web/sistema/images/currency_dollar_blue_buscar.png">		 
 					<div>Buscar</div>
 				</a>
 			</div>
 			<div class="submenu" style="display:inline-block;">
 				<h3>Viajes</h3>		 
 				<a tablink="true" href="/viajes/nuevo" titulo="Viajes" class="link">
-					<img src="http://png.findicons.com/files/icons/52/cargo_boxes/48/shipping1.png">		 
+					<img src="/web/sistema/images/shipping1_add.png">		 
 					<div>Nuevo</div>
-				</a>
+				</a>				
 				<a tablink="true" href="/viajes/busqueda" titulo="Viajes" class="link">
-					<img src="http://png.findicons.com/files/icons/52/cargo_boxes/48/shipping1.png">		 
+					<img src="/web/sistema/images/shipping1_buscar.png">		 
 					<div>Buscar</div>
 				</a>
 			</div>

@@ -297,7 +297,7 @@
 	
 	
 	this.borrar=function(){		
-		var r=confirm("¿Eliminar Elemento?");
+		var r=confirm("¿Eliminar Viaje?");
 		if (r==true){
 		  this.eliminar();
 		}
@@ -404,9 +404,9 @@
 		if (id>0){
 			var serie=$(this.tabId + ' [name="fk_serie"] option:selected').text()			
 			var folio=$(this.tabId + ' .lblFolio').html();
-			$('a[href="'+tabId+'"]').html(serie+' - '+folio);
-			
-			$(this.tabId +' [name="fk_serie"]').attr('disabled','disabled')			
+			$('a[href="'+tabId+'"]').html(serie+' - '+folio);			
+			$(this.tabId +' [name="fk_serie"]').attr('disabled','disabled');
+			this.actualizarComision();
 		}else{
 			$('a[href="'+tabId+'"]').html('Nuevo');
 		}
@@ -454,29 +454,54 @@
 		
 		paramObj['fk_serie'] = $(this.tabId+' [name="fk_serie"]').val();
 		
-		//-----------------------------------
-		// alert("chofer");
+		//-----------------------------------		
 		var selectedIndex = $(this.tabId+" [name='fk_chofer']").wijcombobox("option","selectedIndex");  
 		var selectedItem = $(this.tabId+" [name='fk_chofer']").wijcombobox("option","data");		
+		if (selectedIndex == -1){
+			alert("Seleccione un Chofer"); return false;
+		}	
 		paramObj['fk_chofer']=selectedItem.data[selectedIndex]['id'];
 		
-		// alert("remitente");
+		
+		
 		selectedIndex = $(this.tabId+" [name='fk_remitente']").wijcombobox("option","selectedIndex");  
 		selectedItem = $(this.tabId+" [name='fk_remitente']").wijcombobox("option","data");
+		if (selectedIndex == -1){
+			alert("Seleccione un Remitente"); return false;
+		}
 		paramObj['fk_remitente']=selectedItem.data[selectedIndex]['id'];
+				
 		
-		// alert("destinatario");
 		selectedIndex = $(this.tabId+" [name='fk_destinatario']").wijcombobox("option","selectedIndex");  
 		selectedItem = $(this.tabId+" [name='fk_destinatario']").wijcombobox("option","data");
-		paramObj['fk_destinatario']=selectedItem.data[selectedIndex]['id'];
+		if (selectedIndex == -1){
+			alert("Seleccione un Destinatario");return false;
+		}
+		paramObj['fk_destinatario']=selectedItem.data[selectedIndex]['id'];		
+		if (selectedIndex == -1){
+			alert("Seleccione un Vehiculo");
+			return false;
+		}
 		
-		// alert("vehiculo");
 		selectedIndex = $(this.tabId+" [name='fk_vehiculo']").wijcombobox("option","selectedIndex");  
 		selectedItem = $(this.tabId+" [name='fk_vehiculo']").wijcombobox("option","data");
+		if (selectedIndex == -1){
+			alert("Seleccione un Vehiculo");return false;
+		}
 		paramObj['fk_vehiculo']=selectedItem.data[selectedIndex]['id'];
 		
 		selectedIndex = $(this.tabId+" [name='fk_caja']").wijcombobox("option","selectedIndex");  
 		selectedItem = $(this.tabId+" [name='fk_caja']").wijcombobox("option","data");
+		if (selectedIndex == -1){
+			alert("Seleccione una Caja");return false;
+			// $.gritter.add({
+					// position: 'bottom-left',
+					// title:'Información incompleta',
+					// text: 'Seleccione una Caja',
+					// image: icon,
+					// class_name: 'my-sticky-class'
+				// });
+		}
 		paramObj['fk_caja']=selectedItem[selectedIndex]['value'];
 		//-------------------------------------
 		var datos=paramObj;
@@ -638,22 +663,27 @@
 		this.configurarBotonEstadoViaje();
 		
 		$(this.tabId+' input[name="precio"]').bind('change',function(){
-			var precio = $(this).wijinputnumber("getPostValue");
-			me.precio= precio ;
-			me.comision =  me.precio * .15;
-			
-			
-			$(me.tabId + ' .lblComision').html( "$" +me.comision.formatMoney(2,',','.') );
-			$(me.tabId + ' [name="comision"]').val( me.comision );
-			
-			if ( me.diferencia != undefined){
-				me.pagar = me.comision -me.diferencia;
-				$(me.tabId + ' .lblPagar').html( "$" +me.pagar.formatMoney(2,',','.') );
-			}
-			
-			
+			me.actualizarComision();			
 		});		
 	};
+	this.actualizarComision=function(){		
+	
+		var precio = $(this.tabId+' input[name="precio"]').wijinputnumber("getPostValue");
+		var me=this;
+		me.precio= precio;
+		me.comision =  me.precio * .15;
+		
+		
+		$(me.tabId + ' .lblComision').html( "$" +me.comision.formatMoney(2,',','.') );
+		$(me.tabId + ' [name="comision"]').val( me.comision );
+		
+		if ( me.diferencia != undefined){
+			me.pagar = me.comision -me.diferencia;
+			$(me.tabId + ' .lblPagar').html( "$" +me.pagar.formatMoney(2,',','.') );
+		}
+		
+	};
+	
 	this.configurarToolbar=function(tabId){					
 			var me=this;			
 			$(this.tabId + ' .toolbarEdicion .btnGuardar').click( function(){
@@ -672,7 +702,7 @@
 			});
 			
 			$(this.tabId + ' .toolbarEdicion .btnDelete').click( function(){
-				var r=confirm("¿Eliminar?");
+				var r=confirm("¿Eliminar Viaje?");
 				if (r==true){
 				  me.eliminar();
 				  me.editado=true;

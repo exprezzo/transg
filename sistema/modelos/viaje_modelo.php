@@ -65,7 +65,7 @@ class viajeModelo extends Modelo{
 				if ($fecha)
 				$art['fecha'] =  $fecha->format('Y-m-d');				
 				
-				if ( !empty( $art['eliminado'] ) ){	
+				if ( !empty($art['eliminado']) && !empty($art['id']) ){	
 					unset ( $art['fk_viaje'] ); //esta linea es necesaria, esta variable afecta a la funcion GastoModelo->eliminar();
 					$resp = $gastoMod->eliminar( $art );	
 					if ( !$resp ) {
@@ -105,8 +105,9 @@ class viajeModelo extends Modelo{
 				if ($fecha)
 				$art['fecha'] =  $fecha->format('Y-m-d');				
 				
-				if ( !empty( $art['eliminado'] ) ){						
-					$resp = $depositoMod->eliminar( $art );	
+				if ( !empty($art['eliminado']) && !empty($art['id']) ){			
+					// echo 'AKI'; exit;
+					$resp = $depositoMod->borrar( $art, false );	
 					if ( !$resp ) {
 						$pdo->rollBack( );
 						$resp=array(
@@ -272,7 +273,7 @@ class viajeModelo extends Modelo{
 		$sql = 'SELECT s.serie as nombreSerie, v.*,v.id as fk_viaje,
 		c.id as fk_consumo, c.distancia,c.rendimiento,c.consumo_diesel_lt,c.precio_por_litro,c.consumo_en_pesos,c.kilometraje_inicial,c.kilometraje_final,
 		c.kilometraje_recorrido,c.consumo_diesel_calculado_lt,c.consumo_diesel_calculado_pesos,c.consumo_diesel_real_pesos,c.diferencia_calculado,  
-		c.diferencia_medido FROM '.$this->tabla.' v
+		c.diferencia_medido, v.efectivo, v.comision FROM '.$this->tabla.' v
 		LEFT JOIN trans_consumo c ON c.fk_viaje= v.id
 		LEFT JOIN trans_serie s ON s.id = v.fk_serie WHERE v.'.$this->pk.'=:id';				
 		
